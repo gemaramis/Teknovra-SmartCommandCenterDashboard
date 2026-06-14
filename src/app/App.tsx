@@ -15,7 +15,7 @@ import { ListMediaPanel } from "./components/ListMediaPanel";
 import { TopIssuePanel } from "./components/TopIssuePanel";
 import { TopSocialPanel } from "./components/TopSocialPanel";
 import { LiveTicker } from "./components/LiveTicker";
-import { ReportGeneratorModal } from "./components/ReportGeneratorModal";
+import { ReportPage } from "./components/ReportPage";
 import { ProjectSettingsSheet } from "./components/ProjectSettingsSheet";
 const TIME_FILTERS = ["1H", "6H", "24H", "7D"];
 
@@ -32,7 +32,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<"general" | "crisis">("general");
   const [timeFilter, setTimeFilter] = useState("24H");
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
-  const [isReportOpen, setIsReportOpen] = useState(false);
+  const [currentView, setCurrentView] = useState<"dashboard" | "report">("dashboard");
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const now = useTime();
 
@@ -40,6 +40,10 @@ export default function App() {
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
   const dayStr = `${dayNames[now.getDay()]}, ${now.getDate()} ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
   const timeStr = `${String(now.getHours()).padStart(2, "0")}.${String(now.getMinutes()).padStart(2, "0")} WIB`;
+
+  if (currentView === "report") {
+    return <ReportPage onClose={() => setCurrentView("dashboard")} />;
+  }
 
   return (
     <div
@@ -68,7 +72,7 @@ export default function App() {
 
         <div className="flex-1" />
 
-        <button onClick={() => setIsReportOpen(true)} className="p-1.5 rounded hover:bg-[#EDE8F9] transition-colors" title="Generate Report">
+        <button onClick={() => setCurrentView("report")} className="p-1.5 rounded hover:bg-[#EDE8F9] transition-colors" title="Generate Report">
           <FileText size={16} style={{ color: "#7B6BAA" }} />
         </button>
         <button onClick={() => setIsSettingsOpen(true)} className="p-1.5 rounded hover:bg-[#EDE8F9] transition-colors" title="Project Settings">
@@ -218,7 +222,6 @@ export default function App() {
 
       <LiveTicker />
 
-      <ReportGeneratorModal isOpen={isReportOpen} onClose={() => setIsReportOpen(false)} />
       <ProjectSettingsSheet isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </div>
   );
