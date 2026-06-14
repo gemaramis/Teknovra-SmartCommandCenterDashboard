@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import { FileText, Download, Mail, Presentation, FileSpreadsheet, X, ArrowLeft, CheckSquare, Square, Printer, Calendar as CalendarIcon, Settings, Target, Check } from "lucide-react";
+import { FileText, Download, Mail, Presentation, FileSpreadsheet, X, ArrowLeft, CheckSquare, Square, Printer, Calendar as CalendarIcon, Settings, Target, Check, Database } from "lucide-react";
 import { toast } from "sonner";
 import { useMockData } from "../contexts/MockDataContext";
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
@@ -56,6 +56,10 @@ export function ReportPage() {
         toast.error("Invalid email address");
       }
     }
+  };
+
+  const removeEmail = (emailToRemove: string) => {
+    setEmails(emails.filter(e => e !== emailToRemove));
   };
 
   const handleGenerate = () => {
