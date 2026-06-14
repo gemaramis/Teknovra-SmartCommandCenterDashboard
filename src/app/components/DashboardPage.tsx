@@ -3,6 +3,7 @@ import { Search, LayoutDashboard, Clock, Settings, FileText } from "lucide-react
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "./ui/dialog";
 import { Calendar } from "./ui/calendar";
 import { DateRange } from "react-day-picker";
 import { format } from "date-fns";
@@ -34,7 +35,17 @@ export function DashboardPage() {
   const [timeFilter, setTimeFilter] = useState("24H");
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const now = useTime();
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      setIsSearchOpen(false);
+      navigate(`/trends/${encodeURIComponent(searchQuery)}`);
+    }
+  };
 
   const dayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
@@ -76,7 +87,7 @@ export function DashboardPage() {
         <button onClick={() => toast.success("Dashboard layout refreshed")} className="p-1.5 rounded hover:bg-[#EDE8F9] transition-colors">
           <LayoutDashboard size={16} style={{ color: "#7B6BAA" }} />
         </button>
-        <button onClick={() => toast.info("Search feature coming soon")} className="p-1.5 rounded hover:bg-[#EDE8F9] transition-colors">
+        <button onClick={() => setIsSearchOpen(true)} className="p-1.5 rounded hover:bg-[#EDE8F9] transition-colors">
           <Search size={16} style={{ color: "#7B6BAA" }} />
         </button>
 
@@ -218,6 +229,32 @@ export function DashboardPage() {
       <LiveTicker />
 
       <ProjectSettingsSheet isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
+
+      {/* Search Modal */}
+      <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+        <DialogContent className="sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>Deep Intelligence Search</DialogTitle>
+            <DialogDescription>Enter an issue, keyword, or entity to scrape comprehensive trend data.</DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSearchSubmit} className="flex gap-2 mt-2">
+            <div className="flex-1 flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:border-purple-500 focus-within:ring-1 focus-within:ring-purple-500 transition-all">
+              <Search className="text-gray-400 mr-2" size={18} />
+              <input 
+                type="text" 
+                autoFocus
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search across all channels..."
+                className="flex-1 outline-none text-sm text-gray-800 bg-transparent placeholder-gray-400"
+              />
+            </div>
+            <button type="submit" className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold rounded-lg transition-colors shadow-sm">
+              Scrape
+            </button>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
