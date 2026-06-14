@@ -1,7 +1,8 @@
 import { useState } from "react";
 import {
-  LineChart,
-  Line,
+  BarChart,
+  Bar,
+  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -107,16 +108,14 @@ function DetailModal({ issue, onClose }: { issue: string; onClose: () => void })
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
+  const data = payload[0];
   return (
     <div className="rounded-xl p-3 shadow-xl" style={{ background: "#fff", border: "1px solid rgba(123,47,214,0.2)", fontSize: "0.75rem" }}>
-      <div style={{ color: "#7B6BAA", marginBottom: "0.5rem" }}>{label}</div>
-      {payload.map((p: any) => (
-        <div key={p.dataKey} className="flex items-center gap-2 mb-1">
-          <span className="w-2 h-2 rounded-full" style={{ background: p.color }} />
-          <span style={{ color: "#4B3F80" }}>{p.dataKey}</span>
-          <span style={{ color: "#1A1230", fontWeight: 700, marginLeft: "auto" }}>{p.value}</span>
-        </div>
-      ))}
+      <div className="flex items-center gap-2">
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: data.payload.color || data.color }} />
+        <span style={{ color: "#1A1230", fontWeight: 700 }}>{label}</span>
+        <span style={{ color: "#7B2FD6", fontWeight: 700, marginLeft: "auto" }}>{data.value} Vol Index</span>
+      </div>
     </div>
   );
 };
@@ -124,28 +123,37 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 export function IssueBenchmark() {
   const { issueData } = useMockData();
   const [selectedIssue, setSelectedIssue] = useState<string | null>(null);
-  const latestValues: any = issueData[issueData.length - 1];
+  const latestValues: any = issueData[issueData.length - 1] || {};
+
+  // Transform latest values to sorted array from highest to lowest
+  const chartData = Object.entries(COLORS)
+    .map(([key, color]) => ({
+      name: key,
+      value: latestValues[key] || 0,
+      color,
+    }))
+    .sort((a, b) => b.value - a.value);
 
   return (
     <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "#fff", border: "1px solid rgba(123,47,214,0.12)", boxShadow: "0 2px 12px rgba(123,47,214,0.06)" }}>
-      <div className="flex items-start justify-between mb-2">
+      <div className="flex items-start justify-between mb-2 flex-shrink-0">
         <div>
           <div style={{ color: "#7B6BAA", fontSize: "0.6875rem", letterSpacing: "0.08em" }}>ISSUE BENCHMARK</div>
           <div className="flex items-baseline gap-2 mt-0.5">
-            <span style={{ color: "#1A1230", fontSize: "1.75rem", fontWeight: 700 }}>106.2</span>
-            <span style={{ color: "#7B6BAA", fontSize: "0.75rem" }}>Vol Index</span>
+            <span style={{ color: "#1A1230", fontSize: "1.75rem", fontWeight: 700 }}>{chartData[0]?.value || 0}</span>
+            <span style={{ color: "#7B6BAA", fontSize: "0.75rem" }}>Max Vol Index</span>
           </div>
         </div>
         <div className="flex flex-wrap justify-end gap-x-3 gap-y-1">
-          {Object.entries(COLORS).map(([key, color]) => (
+          {chartData.map(({ name, color, value }) => (
             <button
-              key={key}
-              onClick={() => setSelectedIssue(key)}
+              key={name}
+              onClick={() => setSelectedIssue(name)}
               className="flex items-center gap-1.5 hover:opacity-70 transition-opacity cursor-pointer"
             >
               <span className="w-2 h-2 rounded-full" style={{ background: color }} />
-              <span style={{ color: "#4B3F80", fontSize: "0.6875rem" }}>{key}</span>
-              <span style={{ color: "#1A1230", fontSize: "0.6875rem", fontWeight: 700 }}>{latestValues[key]}</span>
+              <span style={{ color: "#4B3F80", fontSize: "0.6875rem" }}>{name}</span>
+              <span style={{ color: "#1A1230", fontSize: "0.6875rem", fontWeight: 700 }}>{value}</span>
             </button>
           ))}
         </div>
@@ -153,24 +161,26 @@ export function IssueBenchmark() {
 
       <div className="flex-1 min-h-0">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={issueData} margin={{ top: 5, right: 8, left: -20, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(123,47,214,0.08)" />
-            <XAxis dataKey="month" tick={{ fill: "#7B6BAA", fontSize: 10 }} axisLine={false} tickLine={false} />
-            <YAxis tick={{ fill: "#7B6BAA", fontSize: 10 }} axisLine={false} tickLine={false} />
+          <BarChart
+            layout="vertical"
+            data={chartData}
+            margin={{ top: 5, right: 15, left: 10, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(123,47,214,0.08)" horizontal={false} />
+            <XAxis type="number" tick={{ fill: "#7B6BAA", fontSize: 10 }} axisLine={false} tickLine={false} />
+            <YAxis dataKey="name" type="category" tick={{ fill: "#7B6BAA", fontSize: 10 }} axisLine={false} tickLine={false} width={65} />
             <Tooltip content={<CustomTooltip />} />
-            {Object.entries(COLORS).map(([key, color]) => (
-              <Line
-                key={key}
-                type="monotone"
-                dataKey={key}
-                stroke={color}
-                strokeWidth={2}
-                dot={{ fill: color, r: 3, strokeWidth: 0 }}
-                activeDot={{ r: 5, strokeWidth: 0, onClick: () => setSelectedIssue(key) }}
-                style={{ cursor: "pointer" }}
-              />
-            ))}
-          </LineChart>
+            <Bar
+              dataKey="value"
+              radius={[0, 4, 4, 0]}
+              onClick={(entry: any) => setSelectedIssue(entry.name)}
+              style={{ cursor: "pointer" }}
+            >
+              {chartData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Bar>
+          </BarChart>
         </ResponsiveContainer>
       </div>
 
