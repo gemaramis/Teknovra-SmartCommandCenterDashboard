@@ -7,7 +7,7 @@ import { Calendar } from "./ui/calendar";
 import { DateRange } from "react-day-picker";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
-import logoTeknovra from "../imports/logo_teknovra.png";
+import logoTeknovra from "../../imports/logo_teknovra.png";
 import { IssueBenchmark } from "./IssueBenchmark";
 import { LiveDistPanel } from "./LiveDistPanel";
 import { AlertPanel } from "./AlertPanel";
