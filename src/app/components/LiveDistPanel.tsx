@@ -2,7 +2,8 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { toast } from "sonner";
 import { useMockData } from "../contexts/MockDataContext";
 export function LiveDistPanel() {
-  const { sentimentData } = useMockData();
+  const { sentimentData, alerts } = useMockData();
+  const totalNegativeAlerts = alerts.length;
   return (
     <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "#fff", border: "1px solid rgba(123,47,214,0.12)", boxShadow: "0 2px 12px rgba(123,47,214,0.06)" }}>
       <div className="flex items-center justify-between mb-3">
@@ -10,13 +11,6 @@ export function LiveDistPanel() {
           <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#D97706" }} />
           <span style={{ color: "#1A1230", fontSize: "0.8125rem", fontWeight: 600, letterSpacing: "0.05em" }}>LIVE DIST.</span>
         </div>
-        <button
-          onClick={() => toast.success("Live stream synchronized!")}
-          className="flex items-center gap-1 rounded px-2 py-0.5 text-xs transition-opacity hover:opacity-80"
-          style={{ background: "rgba(217,70,239,0.1)", color: "#D946EF", border: "1px solid rgba(217,70,239,0.3)" }}
-        >
-          + LIVE
-        </button>
       </div>
 
       <div className="flex-1 min-h-0 relative flex items-center justify-center">
@@ -51,17 +45,24 @@ export function LiveDistPanel() {
       </div>
 
       <div className="grid grid-cols-2 gap-2">
-        <div className="rounded-xl p-2.5" style={{ background: "#F4F2F9" }}>
-          <div style={{ color: "#7B6BAA", fontSize: "0.625rem", letterSpacing: "0.08em" }}>SLA WATCH</div>
-          <div style={{ color: "#1A1230", fontSize: "1.25rem", fontWeight: 700 }}>26:55</div>
-          <div style={{ color: "#EF4444", fontSize: "0.6rem" }}>DEADLINE APPROACHING</div>
-          <div style={{ color: "#7B6BAA", fontSize: "0.6rem" }}>Avg: 12m</div>
+        <div className="rounded-xl p-2.5 flex flex-col justify-between" style={{ background: "#F4F2F9" }}>
+          <div style={{ color: "#7B6BAA", fontSize: "0.625rem", letterSpacing: "0.08em", marginBottom: "0.25rem" }}>CRISIS MONITORING</div>
+          <div className="flex gap-2 items-center flex-1">
+            <div className="w-1.5 h-[32px] bg-gray-200 rounded-full flex flex-col justify-end overflow-hidden">
+              <div className="w-full h-[85%] bg-red-500 rounded-full" />
+            </div>
+            <div>
+              <div style={{ color: "#1A1230", fontSize: "1.1rem", fontWeight: 800, lineHeight: 1 }}>DANGER</div>
+              <div style={{ color: "#EF4444", fontSize: "0.55rem", fontWeight: 700, marginTop: "2px" }}>LEVEL 4 ALERT</div>
+            </div>
+          </div>
         </div>
-        <div className="rounded-xl p-2.5" style={{ background: "#F4F2F9" }}>
-          <div style={{ color: "#7B6BAA", fontSize: "0.625rem", letterSpacing: "0.08em" }}>TIERING</div>
-          <div style={{ color: "#1A1230", fontSize: "1.25rem", fontWeight: 700 }}>82%</div>
-          <div style={{ color: "#7B6BAA", fontSize: "0.6rem" }}>TIER 1 FOCUS</div>
-          <div style={{ color: "#059669", fontSize: "0.6rem" }}>-2.4%</div>
+        <div className="rounded-xl p-2.5 flex flex-col justify-between" style={{ background: "#F4F2F9" }}>
+          <div style={{ color: "#7B6BAA", fontSize: "0.625rem", letterSpacing: "0.08em" }}>NEGATIVE ISSUES</div>
+          <div>
+            <div style={{ color: "#1A1230", fontSize: "1.5rem", fontWeight: 800, lineHeight: 1 }}>{totalNegativeAlerts}</div>
+            <div style={{ color: "#EF4444", fontSize: "0.6rem", fontWeight: 600, marginTop: "2px" }}>ACTIVE ALERTS</div>
+          </div>
         </div>
       </div>
     </div>
