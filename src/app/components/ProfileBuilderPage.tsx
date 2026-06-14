@@ -34,7 +34,7 @@ export function ProfileBuilderPage() {
     setActiveProfile(null);
 
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
       
       const verificationPrompt = `You are an intelligence gathering AI. Check if the person "${name}" (${details}) is a known public figure or has enough internet exposure to build a profile. Reply ONLY with "YES" or "NO".`;
       const verifyResult = await model.generateContent(verificationPrompt);
@@ -73,8 +73,8 @@ ISSUES
       });
 
       toast.success("Profile synthesis complete.");
-    } catch (error) {
-      toast.error("Failed to build profile due to a network error.");
+    } catch (error: any) {
+      toast.error(`Error: ${error.message || "Failed to build profile."}`);
       console.error(error);
     } finally {
       setIsSearching(false);

@@ -37,7 +37,7 @@ export function GenerateActionPage() {
     const targetIssue = alerts.find(a => a.id.toString() === selectedIssueId);
     
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
       
       let textResult = "";
       if (format === "Text" || format === "Both") {
@@ -62,8 +62,8 @@ export function GenerateActionPage() {
       }
 
       toast.success("Generation complete!");
-    } catch (error) {
-      toast.error("Failed to generate content. Please check API key or try again.");
+    } catch (error: any) {
+      toast.error(`Error: ${error.message || "Failed to generate content."}`);
       console.error(error);
     } finally {
       setIsGenerating(false);
