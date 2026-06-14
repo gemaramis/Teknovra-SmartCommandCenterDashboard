@@ -42,7 +42,12 @@ export default function App() {
   const timeStr = `${String(now.getHours()).padStart(2, "0")}.${String(now.getMinutes()).padStart(2, "0")} WIB`;
 
   if (currentView === "report") {
-    return <ReportPage onClose={() => setCurrentView("dashboard")} />;
+    return (
+      <>
+        <Toaster position="top-right" richColors />
+        <ReportPage onClose={() => setCurrentView("dashboard")} />
+      </>
+    );
   }
 
   return (
