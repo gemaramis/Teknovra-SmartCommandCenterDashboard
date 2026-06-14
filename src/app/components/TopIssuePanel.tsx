@@ -12,7 +12,7 @@ export function TopIssuePanel() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-2 flex-1">
+      <div className="grid grid-cols-2 gap-2 flex-1 overflow-y-auto min-h-0 pr-1 pb-1">
         {issues.map((iss) => (
           <div
             key={iss.label}
