@@ -1,20 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import { FileText, Download, Mail, Presentation, FileSpreadsheet, X, ArrowLeft, CheckSquare, Square, Printer, Calendar as CalendarIcon, Settings, Target } from "lucide-react";
 import { toast } from "sonner";
 import { useMockData } from "../contexts/MockDataContext";
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
 
-interface Props {
-  onClose: () => void;
-}
+export function ReportPage() {
+  const navigate = useNavigate();
 
-const COLORS = {
-  Positif: "#10B981",
-  Negatif: "#EF4444",
-  Netral: "#9CA3AF"
-};
+  const COLORS = {
+    Positif: "#10B981",
+    Negatif: "#EF4444",
+    Netral: "#9CA3AF"
+  };
 
-export function ReportPage({ onClose }: Props) {
   // Config States
   const [reportType, setReportType] = useState("Weekly");
   const [customStart, setCustomStart] = useState("");
@@ -64,7 +63,7 @@ export function ReportPage({ onClose }: Props) {
     setTimeout(() => {
       toast.success("Document compiled successfully.");
       if (emails.length > 0) toast.success(`Dispatched to ${emails.length} addresses.`);
-      setTimeout(onClose, 2000);
+      setTimeout(() => navigate("/"), 2000);
     }, 2000);
   };
 
@@ -80,7 +79,7 @@ export function ReportPage({ onClose }: Props) {
       {/* Header */}
       <header className="flex items-center gap-4 px-6 py-2 flex-shrink-0 bg-white border-b border-gray-200">
         <button 
-          onClick={onClose} 
+          onClick={() => navigate("/")} 
           className="flex items-center gap-2 px-3 py-1.5 rounded hover:bg-gray-100 transition-colors text-xs font-bold text-gray-600 uppercase tracking-wider"
         >
           <ArrowLeft size={14} />
