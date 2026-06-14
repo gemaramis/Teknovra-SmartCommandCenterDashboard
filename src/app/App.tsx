@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Search, LayoutDashboard, Clock } from "lucide-react";
+import { Search, LayoutDashboard, Clock, Settings, FileText } from "lucide-react";
 import { Toaster, toast } from "sonner";
 import { Popover, PopoverContent, PopoverTrigger } from "./components/ui/popover";
 import { Calendar } from "./components/ui/calendar";
@@ -15,7 +15,8 @@ import { ListMediaPanel } from "./components/ListMediaPanel";
 import { TopIssuePanel } from "./components/TopIssuePanel";
 import { TopSocialPanel } from "./components/TopSocialPanel";
 import { LiveTicker } from "./components/LiveTicker";
-
+import { ReportGeneratorModal } from "./components/ReportGeneratorModal";
+import { ProjectSettingsSheet } from "./components/ProjectSettingsSheet";
 const TIME_FILTERS = ["1H", "6H", "24H", "7D"];
 
 function useTime() {
@@ -31,6 +32,8 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<"general" | "crisis">("general");
   const [timeFilter, setTimeFilter] = useState("24H");
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const [isReportOpen, setIsReportOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const now = useTime();
 
   const dayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
@@ -57,14 +60,20 @@ export default function App() {
         <div style={{ width: "1px", height: "24px", background: "rgba(123,47,214,0.2)" }} />
 
         <div>
-          <div style={{ color: "#1A1230", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.12em" }}>
-            EXECUTIVE HUB
+          <div style={{ color: "#1A1230", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+            Smart Dashboard
           </div>
           <div style={{ color: "#7B6BAA", fontSize: "0.5625rem" }}>UPDATE {timeStr}</div>
         </div>
 
         <div className="flex-1" />
 
+        <button onClick={() => setIsReportOpen(true)} className="p-1.5 rounded hover:bg-[#EDE8F9] transition-colors" title="Generate Report">
+          <FileText size={16} style={{ color: "#7B6BAA" }} />
+        </button>
+        <button onClick={() => setIsSettingsOpen(true)} className="p-1.5 rounded hover:bg-[#EDE8F9] transition-colors" title="Project Settings">
+          <Settings size={16} style={{ color: "#7B6BAA" }} />
+        </button>
         <button onClick={() => toast.success("Dashboard layout refreshed")} className="p-1.5 rounded hover:bg-[#EDE8F9] transition-colors">
           <LayoutDashboard size={16} style={{ color: "#7B6BAA" }} />
         </button>
@@ -208,6 +217,9 @@ export default function App() {
       )}
 
       <LiveTicker />
+
+      <ReportGeneratorModal isOpen={isReportOpen} onClose={() => setIsReportOpen(false)} />
+      <ProjectSettingsSheet isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </div>
   );
 }
