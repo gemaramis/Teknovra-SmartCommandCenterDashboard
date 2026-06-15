@@ -55,10 +55,14 @@ export function GenerateActionPage() {
       }
 
       if (format === "Image" || format === "Both") {
-        const imagePromptRequest = `Write a highly detailed, comma-separated image generation prompt based on this PR response goal: ${prompt}. Only output the prompt, nothing else. Maximum 30 words.`;
-        
-        const result = await model.generateContent(imagePromptRequest);
-        const imagePrompt = result.response.text().trim();
+        let imagePrompt = prompt;
+        try {
+          const imagePromptRequest = `Write a highly detailed, comma-separated image generation prompt based on this PR response goal: ${prompt}. Only output the prompt, nothing else. Maximum 30 words.`;
+          const result = await model.generateContent(imagePromptRequest);
+          imagePrompt = result.response.text().trim();
+        } catch (promptError) {
+          console.warn("Gemini failed to optimize image prompt (likely 503 or 429), falling back to raw prompt:", promptError);
+        }
         
         // Use Puter.js for free, high-quality AI image generation
         const imgElement = await puter.ai.txt2img(imagePrompt, { model: "black-forest-labs/flux-schnell" });
@@ -69,6 +73,8 @@ export function GenerateActionPage() {
     } catch (error: any) {
       if (error.message && (error.message.includes("429") || error.message.includes("quota"))) {
         toast.error("Rate limit exceeded. Please wait a minute before generating again.");
+      } else if (error.message && error.message.includes("503")) {
+        toast.error("Google's Gemini servers are temporarily overloaded (503). Please try again in a few moments.");
       } else {
         toast.error(`Error: ${error.message || "Failed to generate content."}`);
       }
