@@ -74,7 +74,11 @@ ISSUES
 
       toast.success("Profile synthesis complete.");
     } catch (error: any) {
-      toast.error(`Error: ${error.message || "Failed to build profile."}`);
+      if (error.message && (error.message.includes("429") || error.message.includes("quota"))) {
+        toast.error("Rate limit exceeded. Please wait a minute before building another profile.");
+      } else {
+        toast.error(`Error: ${error.message || "Failed to build profile."}`);
+      }
       console.error(error);
     } finally {
       setIsSearching(false);

@@ -73,7 +73,11 @@ IMPORTANT: Output ONLY the raw <svg>...</svg> code. Do NOT wrap it in markdown b
 
       toast.success("Generation complete!");
     } catch (error: any) {
-      toast.error(`Error: ${error.message || "Failed to generate content."}`);
+      if (error.message && (error.message.includes("429") || error.message.includes("quota"))) {
+        toast.error("Rate limit exceeded. Please wait a minute before generating again.");
+      } else {
+        toast.error(`Error: ${error.message || "Failed to generate content."}`);
+      }
       console.error(error);
     } finally {
       setIsGenerating(false);
