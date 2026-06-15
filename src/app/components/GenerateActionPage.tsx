@@ -4,7 +4,6 @@ import { ArrowLeft, Sparkles, Send, CheckCircle2, AlertCircle, RefreshCw, Image 
 import { toast } from "sonner";
 import { useMockData } from "../contexts/MockDataContext";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { puter } from "@heyputer/puter.js";
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
 const genAI = new GoogleGenerativeAI(API_KEY);
@@ -55,18 +54,41 @@ export function GenerateActionPage() {
       }
 
       if (format === "Image" || format === "Both") {
-        let imagePrompt = prompt;
+        let svgString = "";
         try {
-          const imagePromptRequest = `Write a highly detailed, comma-separated image generation prompt based on this PR response goal: ${prompt}. Only output the prompt, nothing else. Maximum 30 words.`;
+          const imagePromptRequest = `Create a beautiful, highly detailed, modern, abstract SVG vector graphic representing this PR response goal: ${prompt}.
+The SVG MUST be exactly 800x400. Use a modern, premium corporate color palette (vibrant purples, blues, greens, gradients).
+Include futuristic data charts, abstract networks, or relevant political/economic icons, and bold typography summarizing the topic.
+IMPORTANT: Output ONLY the raw <svg>...</svg> code. Do NOT wrap it in markdown block quotes (no \`\`\`xml). Just the raw SVG string.`;
+          
           const result = await model.generateContent(imagePromptRequest);
-          imagePrompt = result.response.text().trim();
+          svgString = result.response.text().trim();
+          
+          // Strip markdown formatting if Gemini accidentally adds it
+          if (svgString.startsWith("```")) {
+            svgString = svgString.replace(/^```[a-z]*\n/i, "").replace(/\n```$/i, "");
+          }
         } catch (promptError) {
-          console.warn("Gemini failed to optimize image prompt (likely 503 or 429), falling back to raw prompt:", promptError);
+          console.warn("Gemini failed to generate SVG (likely 503 or 429), falling back to hardcoded SVG:", promptError);
+          // Hardcoded fallback SVG
+          svgString = `<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#9333EA;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grad)" />
+            <circle cx="400" cy="200" r="150" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="40" />
+            <circle cx="400" cy="200" r="100" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="20" />
+            <text x="50%" y="50%" fill="white" font-size="28" font-family="sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="middle">
+              ${prompt.substring(0, 50)}...
+            </text>
+          </svg>`;
         }
         
-        // Use Puter.js for free, high-quality AI image generation
-        const imgElement = await puter.ai.txt2img(imagePrompt, { model: "black-forest-labs/flux-schnell" });
-        setGeneratedImageUrl(imgElement.src);
+        const dataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(svgString)}`;
+        setGeneratedImageUrl(dataUrl);
       }
 
       toast.success("Generation complete!");
