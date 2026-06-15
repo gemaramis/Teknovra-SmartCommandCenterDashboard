@@ -54,11 +54,11 @@ export function GenerateActionPage() {
       }
 
       if (format === "Image" || format === "Both") {
-        const imagePromptRequest = `Write a highly detailed, comma-separated image generation prompt based on this goal: ${prompt}. Only output the prompt, nothing else.`;
+        const imagePromptRequest = `Write a highly detailed, short, comma-separated image generation prompt based on this goal: ${prompt}. Only output the prompt, nothing else. Maximum 20 words.`;
         const result = await model.generateContent(imagePromptRequest);
         const imagePrompt = result.response.text();
         const safePrompt = encodeURIComponent(imagePrompt.trim());
-        setGeneratedImageUrl(`https://image.pollinations.ai/prompt/${safePrompt}?nologo=true&width=800&height=400`);
+        setGeneratedImageUrl(`https://pollinations.ai/p/${safePrompt}?width=800&height=400&nologo=true`);
       }
 
       toast.success("Generation complete!");

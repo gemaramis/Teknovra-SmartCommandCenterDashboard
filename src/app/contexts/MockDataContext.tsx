@@ -130,25 +130,7 @@ export const MockDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           if (next.issueData.length > 15) next.issueData.shift(); // Keep last 15 points
         }
 
-        // 2. Alert Panel
-        if (Math.random() > 0.7) {
-          const randomAlert = DUMMY_ALERTS[Math.floor(Math.random() * DUMMY_ALERTS.length)];
-          const newAlert: AlertData = {
-            id: Date.now(),
-            level: randomAlert.level,
-            issueType: randomAlert.issueType,
-            timeLeft: "12:00",
-            remaining: "100% Remaining",
-            impact: "Unknown Exposure",
-            title: randomAlert.title,
-            source: `${randomAlert.source} · Detected ${new Date().getHours()}:${new Date().getMinutes()}`,
-            mentions: "1.2K",
-            mentionLabel: "Baru",
-            topChannel: randomAlert.source,
-            systemHealth: "100% Stable"
-          };
-          next.alerts = [newAlert, ...next.alerts].slice(0, 3);
-        }
+        // 2. Alert Panel (Static to prevent jumping in Generate Action module)
 
         // 3. Sentiments
         next.sentimentData = prev.sentimentData.map(s => {
