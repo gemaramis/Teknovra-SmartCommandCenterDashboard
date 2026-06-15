@@ -56,6 +56,7 @@ export function GenerateActionPage() {
       if (format === "Image" || format === "Both") {
         const imagePromptRequest = `Write a highly detailed, short, comma-separated image generation prompt based on this goal: ${prompt}. Only output the prompt, nothing else. Maximum 20 words.`;
         const result = await model.generateContent(imagePromptRequest);
+        const imagePrompt = result.response.text();
         const safePrompt = encodeURIComponent(imagePrompt.slice(0, 50).trim());
         // Pollinations.ai is currently returning 402 Payment Required for free tiers.
         // Using a deterministic high-quality photo placeholder based on the prompt seed.
