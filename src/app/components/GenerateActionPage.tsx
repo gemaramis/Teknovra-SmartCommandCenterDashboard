@@ -54,13 +54,21 @@ export function GenerateActionPage() {
       }
 
       if (format === "Image" || format === "Both") {
-        const imagePromptRequest = `Write a highly detailed, short, comma-separated image generation prompt based on this goal: ${prompt}. Only output the prompt, nothing else. Maximum 20 words.`;
+        const imagePromptRequest = `Create a beautiful, highly detailed, modern, abstract SVG vector graphic representing this PR response goal: ${prompt}.
+The SVG MUST be exactly 800x400. Use a modern, premium corporate color palette (vibrant purples, blues, greens, gradients).
+Include futuristic data charts, abstract networks, or relevant political/economic icons, and bold typography summarizing the topic.
+IMPORTANT: Output ONLY the raw <svg>...</svg> code. Do NOT wrap it in markdown block quotes (no \`\`\`xml). Just the raw SVG string.`;
+        
         const result = await model.generateContent(imagePromptRequest);
-        const imagePrompt = result.response.text();
-        const safePrompt = encodeURIComponent(imagePrompt.slice(0, 50).trim());
-        // Pollinations.ai is currently returning 402 Payment Required for free tiers.
-        // Using a deterministic high-quality photo placeholder based on the prompt seed.
-        setGeneratedImageUrl(`https://picsum.photos/seed/${safePrompt}/800/400`);
+        let svgString = result.response.text().trim();
+        
+        // Strip markdown formatting if Gemini accidentally adds it
+        if (svgString.startsWith("```")) {
+          svgString = svgString.replace(/^```[a-z]*\n/i, "").replace(/\n```$/i, "");
+        }
+        
+        const dataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(svgString)}`;
+        setGeneratedImageUrl(dataUrl);
       }
 
       toast.success("Generation complete!");
