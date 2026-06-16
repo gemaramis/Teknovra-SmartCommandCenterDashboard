@@ -55,7 +55,7 @@ export function DashboardPage() {
   return (
     <div
       className="flex flex-col h-screen w-screen overflow-hidden select-none"
-      style={{ background: "linear-gradient(135deg, #E6E0F8 0%, #F5E3F0 50%, #E2EDF8 100%)", color: "#1A1230", fontFamily: "'Outfit', system-ui, sans-serif" }}
+      style={{ background: "linear-gradient(135deg, #E6E0F8 0%, #F5E3F0 50%, #E2EDF8 100%)", color: "#1A1230" }}
     >
       {/* Header */}
       <header
@@ -63,7 +63,13 @@ export function DashboardPage() {
         style={{ background: "rgba(255, 255, 255, 0.7)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderBottom: "1px solid rgba(255, 255, 255, 0.5)", height: "56px", boxShadow: "0 4px 24px -4px rgba(123,47,214,0.08)", zIndex: 50 }}
       >
         {/* Logo */}
-        <div className="flex items-center gap-2 flex-shrink-0">
+        <div className="flex items-center gap-4 flex-shrink-0">
+          <button 
+            onClick={() => navigate("/")}
+            className="w-8 h-8 flex items-center justify-center bg-gray-100/50 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors shadow-sm"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
           <img src={logoTeknovra} alt="Teknovra" className="h-6 object-contain" />
         </div>
 

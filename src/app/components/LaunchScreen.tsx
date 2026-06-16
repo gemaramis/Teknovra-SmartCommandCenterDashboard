@@ -90,61 +90,76 @@ export function LaunchScreen() {
             <h2 className="relative z-10 text-2xl font-black text-gray-900 leading-tight">Generate<br/>Action</h2>
           </button>
 
-          {/* Active Alerts (Span 1x1 Supplementary) */}
-          <div
-            className="col-span-1 row-span-1 rounded-[2rem] p-6 shadow-lg animate-in fade-in zoom-in-95 flex flex-col justify-between relative overflow-hidden"
-            style={{ ...glassStyle, animationDelay: '400ms' }}
-          >
-            <div className="flex justify-between items-start relative z-10">
-              <div className="w-10 h-10 bg-gray-100/80 rounded-xl flex items-center justify-center border border-gray-200">
-                <ShieldAlert className="w-5 h-5 text-gray-800" />
-              </div>
-              <span className="flex h-3 w-3 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-              </span>
-            </div>
-            <div className="relative z-10">
-              <h3 className="text-4xl font-black text-red-600 tracking-tighter">2</h3>
-              <p className="text-sm font-bold text-gray-500 uppercase tracking-widest mt-1">Active Alerts</p>
-            </div>
-          </div>
-
-          {/* System Health (Span 2x1 Supplementary) */}
-          <div
-            className="col-span-2 row-span-1 rounded-[2rem] p-6 shadow-lg animate-in fade-in zoom-in-95 flex items-center justify-between"
-            style={{ ...glassStyle, animationDelay: '500ms' }}
-          >
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Activity className="w-5 h-5 text-gray-800" />
-                <span className="text-sm font-bold text-gray-500 uppercase tracking-widest">System Health</span>
-              </div>
-              <h3 className="text-4xl font-black text-gray-900">99.9%</h3>
-              <p className="text-xs text-emerald-600 font-bold mt-2 bg-emerald-50 w-fit px-2 py-1 rounded-md">ALL SYSTEMS OPERATIONAL</p>
-            </div>
-            <div className="h-full w-32 flex items-end gap-1 opacity-50">
-               {/* Dummy bars for aesthetic */}
-              {[40, 70, 45, 90, 65, 80, 100].map((h, i) => (
-                <div key={i} className="w-full bg-emerald-400 rounded-t-sm" style={{ height: `${h}%` }} />
-              ))}
-            </div>
-          </div>
-
-          {/* Recent Reports (Span 2x1 Supplementary) */}
+          {/* Recent Reports (Span 1x1 Supplementary) */}
           <button
             onClick={() => navigate("/report")}
-            className="col-span-2 row-span-1 group text-left rounded-[2rem] p-6 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-in fade-in zoom-in-95 flex items-center gap-6"
-            style={{ ...glassStyle, animationDelay: '600ms' }}
+            className="col-span-1 row-span-1 group text-left rounded-[2rem] p-6 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-in fade-in zoom-in-95 flex flex-col justify-between relative overflow-hidden"
+            style={{ ...glassStyle, animationDelay: '400ms' }}
           >
-            <div className="w-16 h-16 bg-gray-100/80 rounded-2xl flex items-center justify-center shrink-0 border border-gray-200 group-hover:bg-gray-200 transition-colors">
-              <FileText className="w-8 h-8 text-gray-800 transition-colors" />
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-gray-400/10 rounded-full blur-2xl transition-transform group-hover:scale-150" />
+            <div className="relative z-10 w-12 h-12 bg-gray-100/80 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-inner border border-gray-200">
+              <FileText className="w-6 h-6 text-gray-800" />
             </div>
-            <div>
-              <h2 className="text-2xl font-black text-gray-900 mb-1">Recent Reports</h2>
-              <p className="text-sm text-gray-500">Access and download generated intelligence briefs.</p>
-            </div>
+            <h2 className="relative z-10 text-2xl font-black text-gray-900 leading-tight">Recent<br/>Reports</h2>
           </button>
+
+          {/* Unified Status Bar (Span 4x1) */}
+          <div
+            className="col-span-4 row-span-1 rounded-[2rem] px-8 py-6 flex items-center justify-between animate-in fade-in zoom-in-95 shadow-inner"
+            style={{ 
+              background: "rgba(255, 255, 255, 0.15)",
+              backdropFilter: "blur(12px)", 
+              WebkitBackdropFilter: "blur(12px)", 
+              border: "1px solid rgba(255, 255, 255, 0.4)",
+              animationDelay: '500ms'
+            }}
+          >
+            {/* Active Alerts */}
+            <div className="flex items-center gap-6">
+              <div className="flex justify-between items-start relative z-10">
+                <div className="w-12 h-12 bg-gray-100/50 rounded-xl flex items-center justify-center border border-gray-200">
+                  <ShieldAlert className="w-6 h-6 text-gray-800" />
+                </div>
+                <span className="flex h-3 w-3 relative -ml-3 -mt-1">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                </span>
+              </div>
+              <div>
+                <h3 className="text-3xl font-black text-red-600 tracking-tighter leading-none">2</h3>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Active Alerts</p>
+              </div>
+            </div>
+
+            <div className="w-px h-12 bg-white/30" />
+
+            {/* Sentiment Status / Heartbeat */}
+            <div className="flex items-center gap-6 flex-1 ml-6">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Activity className="w-4 h-4 text-gray-800" />
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">Sentiment Status</span>
+                </div>
+                <h3 className="text-2xl font-black text-emerald-600">Healthy</h3>
+              </div>
+              
+              {/* Heartbeat SVG Animation */}
+              <div className="flex-1 h-12 relative flex items-center ml-8 opacity-80">
+                <svg width="100%" height="100%" viewBox="0 0 500 50" preserveAspectRatio="none">
+                  <polyline 
+                    points="0,25 50,25 60,10 70,40 80,25 150,25 160,15 170,35 180,25 250,25 260,5 270,45 280,25 350,25 360,10 370,40 380,25 450,25 460,15 470,35 480,25 500,25"
+                    fill="none"
+                    stroke="#10B981"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="heartbeat-line drop-shadow-md"
+                  />
+                </svg>
+              </div>
+            </div>
+
+          </div>
 
         </div>
       </div>
