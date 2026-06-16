@@ -144,16 +144,15 @@ export function LaunchScreen() {
               </div>
               
               {/* Heartbeat SVG Animation */}
-              <div className="flex-1 h-12 relative flex items-center ml-8 opacity-80">
-                <svg width="100%" height="100%" viewBox="0 0 500 50" preserveAspectRatio="none">
+              <div className="flex-1 h-12 relative flex items-center ml-8 opacity-80 overflow-hidden">
+                <svg width="200%" height="100%" viewBox="0 0 1000 50" preserveAspectRatio="none" className="heartbeat-line drop-shadow-md">
                   <polyline 
-                    points="0,25 50,25 60,10 70,40 80,25 150,25 160,15 170,35 180,25 250,25 260,5 270,45 280,25 350,25 360,10 370,40 380,25 450,25 460,15 470,35 480,25 500,25"
+                    points="0,25 50,25 60,10 70,40 80,25 150,25 160,15 170,35 180,25 250,25 260,5 270,45 280,25 350,25 360,10 370,40 380,25 450,25 460,15 470,35 480,25 500,25 550,25 560,10 570,40 580,25 650,25 660,15 670,35 680,25 750,25 760,5 770,45 780,25 850,25 860,10 870,40 880,25 950,25 960,15 970,35 980,25 1000,25"
                     fill="none"
                     stroke="#10B981"
                     strokeWidth="3"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="heartbeat-line drop-shadow-md"
                   />
                 </svg>
               </div>
