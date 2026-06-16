@@ -174,7 +174,7 @@ ISSUES
         </div>
 
         {/* Main Dashboard Area */}
-        <div className="flex-1 overflow-y-auto p-8 bg-[#F4F2F9] flex justify-center">
+        <div className="flex-1 overflow-y-auto bg-[#F8F9FA] flex justify-center relative">
           {!activeProfile && !isSearching && (
             <div className="m-auto text-center text-gray-400">
               <UserCircle size={64} className="mx-auto mb-4 opacity-20" />
@@ -190,76 +190,75 @@ ISSUES
           )}
 
           {activeProfile && !isSearching && (
-            <div className="w-full max-w-4xl space-y-6">
+            <div className="w-full h-full relative overflow-hidden flex justify-center pt-20">
+              {/* Massive Glowing Orb Background */}
+              <div className="absolute -top-64 -left-64 w-[800px] h-[800px] bg-blue-500/30 rounded-full mix-blend-multiply filter blur-[120px] pointer-events-none" />
               
-              <div className="flex justify-between items-start">
-                <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 bg-emerald-100 rounded-3xl p-6 flex items-center justify-center text-emerald-600 shadow-inner">
-                    <UserCircle size={40} />
-                  </div>
-                  <div>
-                    <h1 className="text-3xl font-black text-gray-900">{activeProfile.name}</h1>
-                    <div className="flex gap-2 mt-2">
-                      <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-bold rounded uppercase tracking-wider">Verified Identity</span>
-                      <span className="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-bold rounded uppercase tracking-wider">High Exposure</span>
-                    </div>
-                  </div>
+              <div className="relative z-10 w-full max-w-3xl px-8 flex flex-col">
+                {/* Back / Save Button */}
+                <div className="flex justify-between items-center mb-16">
+                  <button 
+                    onClick={() => setActiveProfile(null)}
+                    className="w-12 h-12 flex items-center justify-center bg-[#1A1230] text-white rounded-2xl hover:bg-gray-800 transition-colors shadow-lg"
+                  >
+                    <ArrowLeft size={20} />
+                  </button>
+                  <button 
+                    onClick={handleSaveProfile}
+                    className="flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-bold text-gray-700 hover:text-emerald-700 hover:scale-105 transition-all shadow-sm" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)" }}
+                  >
+                    <Save size={16} /> Save Profile
+                  </button>
                 </div>
-                <button 
-                  onClick={handleSaveProfile}
-                  className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 shadow-sm text-gray-700 font-bold rounded-lg hover:bg-gray-50 transition-colors"
+
+                {/* Elegant Title & Summary */}
+                <h1 className="text-6xl font-black text-gray-900 tracking-tight leading-none mb-6">
+                  {activeProfile.name}
+                </h1>
+                <div className="text-lg text-gray-600 leading-relaxed whitespace-pre-wrap max-w-2xl mb-12">
+                  {activeProfile.summary}
+                </div>
+
+                {/* Main Stats Card (Stage Progress Style) */}
+                <div 
+                  className="rounded-[2rem] p-8 shadow-xl flex flex-col gap-6 mb-8"
+                  style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)" }}
                 >
-                  <Save size={16} /> Save Profile
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                {/* Left Col: Overview */}
-                <div className="col-span-2 flex flex-col gap-6">
-                  <div className="bg-white p-6 rounded-3xl p-6 border border-gray-200 shadow-sm">
-                    <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                      <Globe size={16} /> Executive Summary
-                    </h2>
-                    <div className="text-sm text-gray-700 leading-relaxed space-y-4 whitespace-pre-wrap">
-                      {activeProfile.summary}
+                  <div className="flex justify-between items-end">
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-1">Exposure Risk</h3>
+                      <p className="text-sm text-gray-500 font-medium">Calculated based on {activeProfile.issues.length} critical issues.</p>
+                    </div>
+                    <div className="text-5xl font-black text-gray-900">
+                      84%
                     </div>
                   </div>
-
-                  <div className="grid grid-cols-3 gap-4">
-                     <div className="bg-white p-4 rounded-3xl p-6 border border-gray-200 shadow-sm text-center">
-                       <div className="text-xs font-bold text-gray-400 uppercase mb-1">Est. Reach</div>
-                       <div className="text-xl font-black text-emerald-600">4.2M</div>
-                     </div>
-                     <div className="bg-white p-4 rounded-3xl p-6 border border-gray-200 shadow-sm text-center">
-                       <div className="text-xs font-bold text-gray-400 uppercase mb-1">Sentiment</div>
-                       <div className="text-xl font-black text-red-500">Negative</div>
-                     </div>
-                     <div className="bg-white p-4 rounded-3xl p-6 border border-gray-200 shadow-sm text-center">
-                       <div className="text-xs font-bold text-gray-400 uppercase mb-1">Risk Score</div>
-                       <div className="text-xl font-black text-orange-500">84/100</div>
-                     </div>
+                  
+                  {/* Progress Bar */}
+                  <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
+                    <div className="h-full bg-blue-600 rounded-full" style={{ width: "84%" }} />
                   </div>
                 </div>
 
-                {/* Right Col: Issues */}
-                <div className="col-span-1">
-                  <div className="bg-white p-6 rounded-3xl p-6 border border-gray-200 shadow-sm h-full">
-                    <h2 className="text-sm font-bold text-red-500 uppercase tracking-widest mb-4 flex items-center gap-2">
-                      <ShieldAlert size={16} /> Critical Issues
-                    </h2>
-                    <div className="flex flex-col gap-4">
-                      {activeProfile.issues.length === 0 && <p className="text-sm text-gray-500">No critical issues detected.</p>}
+                {/* Critical Issues */}
+                {activeProfile.issues.length > 0 && (
+                  <div 
+                    className="rounded-[2rem] p-8 shadow-xl flex flex-col gap-4"
+                    style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)" }}
+                  >
+                    <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                      <ShieldAlert size={16} /> Identified Issues
+                    </h3>
+                    <div className="flex flex-col gap-3">
                       {activeProfile.issues.map((issue, idx) => (
-                        <div key={idx} className="flex gap-3 items-start p-3 bg-red-50/50 rounded-lg border border-red-100">
-                          <AlertTriangle size={16} className="text-red-500 shrink-0 mt-0.5" />
-                          <p className="text-sm font-medium text-red-900 leading-tight">{issue}</p>
+                        <div key={idx} className="flex gap-4 items-start p-4 bg-white/50 rounded-2xl border border-white/50">
+                          <AlertTriangle size={20} className="text-red-500 shrink-0 mt-0.5" />
+                          <p className="text-base font-medium text-gray-800 leading-snug">{issue}</p>
                         </div>
                       ))}
                     </div>
                   </div>
-                </div>
-
+                )}
               </div>
             </div>
           )}
