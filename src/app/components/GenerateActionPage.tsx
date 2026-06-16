@@ -120,9 +120,9 @@ export function GenerateActionPage() {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col bg-[#F4F2F9] text-[#1A1230]">
+    <div className="w-screen h-screen flex flex-col text-[#1A1230]" style={{ background: "linear-gradient(135deg, #FFFFFF 0%, #F8F6FC 50%, #EBE4F6 100%)" }}>
       {/* Header */}
-      <header className="flex items-center gap-4 px-6 py-4 bg-white border-b border-gray-200 shadow-sm z-10">
+      <header className="flex items-center gap-4 px-6 py-4 border-b border-gray-200 shadow-sm z-10" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
         <button onClick={() => navigate("/")} className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-gray-800 transition-colors">
           <ArrowLeft size={16} /> Hub
         </button>
@@ -136,51 +136,51 @@ export function GenerateActionPage() {
         
         {/* Controls Sidebar */}
         <div className="w-[400px] flex flex-col gap-6">
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+          <div className="rounded-xl p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
             <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">1. Target Issue</h2>
             <select 
               value={selectedIssueId} 
               onChange={e => setSelectedIssueId(e.target.value)}
-              className="w-full border border-gray-200 rounded-lg p-2.5 text-sm font-semibold outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+              className="w-full border border-gray-200 rounded-lg p-2.5 text-sm font-semibold outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 bg-white/50"
             >
               {alerts.map(a => <option key={a.id} value={a.id}>{a.title}</option>)}
             </select>
           </div>
 
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+          <div className="rounded-xl p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
             <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">2. Target Platform</h2>
             <div className="grid grid-cols-2 gap-2">
               {["Twitter", "TikTok", "Instagram", "News"].map(p => (
                 <button 
                   key={p} 
                   onClick={() => setPlatform(p)}
-                  className={`py-2 rounded-lg text-sm font-bold border transition-colors ${platform === p ? "border-purple-600 bg-purple-50 text-purple-700" : "border-gray-200 text-gray-600 hover:bg-gray-50"}`}
+                  className={`py-2 rounded-lg text-sm font-bold border transition-colors ${platform === p ? "border-purple-600 bg-purple-50 text-purple-700" : "border-gray-200/50 text-gray-600 hover:bg-white/50"}`}
                 >
                   {p}
                 </button>
               ))}
             </div>
             {platform === "News" && (
-              <div className="mt-3 flex items-start gap-2 p-3 bg-red-50 border border-red-100 rounded-lg text-red-600 text-xs font-semibold">
+              <div className="mt-3 flex items-start gap-2 p-3 bg-red-50/80 border border-red-100 rounded-lg text-red-600 text-xs font-semibold">
                 <AlertCircle size={14} className="mt-0.5 shrink-0" />
                 Cannot execute automated responses directly to News publishers.
               </div>
             )}
           </div>
 
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+          <div className="rounded-xl p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
             <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">3. Response Strategy</h2>
             <textarea 
               value={prompt}
               onChange={e => setPrompt(e.target.value)}
               placeholder="e.g. Write an apology acknowledging the delay and offering a full refund."
-              className="w-full border border-gray-200 rounded-lg p-3 text-sm min-h-[120px] outline-none focus:border-purple-600 focus:ring-1 focus:ring-purple-600 resize-none"
+              className="w-full border border-gray-200 rounded-lg p-3 text-sm min-h-[120px] outline-none focus:border-purple-600 focus:ring-1 focus:ring-purple-600 resize-none bg-white/50"
             />
           </div>
 
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+          <div className="rounded-xl p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
             <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">4. Content Format</h2>
-            <div className="flex bg-gray-100 p-1 rounded-lg">
+            <div className="flex bg-gray-200/50 p-1 rounded-lg">
               {[
                 { id: "Text", icon: Type }, { id: "Image", icon: ImageIcon }, { id: "Both", icon: LayoutTemplate }
               ].map(f => (
@@ -205,53 +205,54 @@ export function GenerateActionPage() {
         </div>
 
         {/* Live Preview Area */}
-        <div className="flex-1 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col">
-          <div className="p-4 border-b border-gray-100 flex items-center gap-2">
-            <CheckCircle2 size={18} className="text-green-500" />
+        <div className="flex-1 rounded-2xl border border-white/50 shadow-sm overflow-hidden flex flex-col" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
+          <div className="p-4 border-b border-white/20 flex items-center gap-2">
+            <CheckCircle2 size={18} className="text-green-600" />
             <h2 className="font-bold text-gray-800">Live Content Review</h2>
           </div>
           
-          <div className="flex-1 p-8 overflow-y-auto bg-gray-50 flex flex-col items-center justify-center">
+          <div className="flex-1 p-8 overflow-y-auto flex flex-col items-center">
             {(!generatedText && !generatedImageUrl && !isGenerating) && (
-              <div className="text-center text-gray-400 flex flex-col items-center">
+              <div className="text-center text-gray-400 flex flex-col items-center mt-20">
                 <LayoutTemplate size={48} className="mb-4 opacity-20" />
                 <p className="font-medium">Configure parameters and generate to preview content.</p>
               </div>
             )}
 
             {isGenerating && (
-              <div className="flex flex-col items-center gap-4 text-purple-600">
+              <div className="flex flex-col items-center gap-4 text-purple-600 mt-20">
                 <RefreshCw className="animate-spin w-10 h-10" />
                 <p className="font-bold animate-pulse">Running Neural Models...</p>
               </div>
             )}
 
             {(generatedText || generatedImageUrl) && !isGenerating && (
-              <div className="w-full max-w-xl bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-                <div className="p-3 bg-gray-50 border-b border-gray-100 flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">PR</div>
-                  <div>
-                    <div className="text-sm font-bold text-gray-900">Official Response</div>
-                    <div className="text-xs text-gray-500">Drafted for {platform}</div>
-                  </div>
-                </div>
-                
-                {generatedText && (
-                  <div className="p-5 text-gray-800 whitespace-pre-wrap text-sm leading-relaxed border-b border-gray-50">
-                    {generatedText}
-                  </div>
-                )}
-                
+              <div className="max-w-2xl w-full flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-500">
                 {generatedImageUrl && (
-                  <div className="p-2">
-                    <img src={generatedImageUrl} alt="Generated visual asset" className="w-full rounded-lg object-cover" />
+                  <div className="w-full mb-6 rounded-xl overflow-hidden border border-white/50 shadow-lg" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
+                    <img src={generatedImageUrl} alt="Generated UI" className="w-full h-auto object-cover" />
                   </div>
                 )}
-
-                <div className="p-3 bg-gray-50 border-t border-gray-100 flex justify-end gap-2">
-                  <button className="px-4 py-1.5 text-sm font-bold text-gray-600 hover:bg-gray-200 rounded transition-colors">Edit</button>
-                  <button className="px-4 py-1.5 text-sm font-bold text-white bg-green-600 hover:bg-green-700 rounded transition-colors shadow-sm">Approve & Publish</button>
-                </div>
+                {generatedText && (
+                  <div className="w-full rounded-xl p-6 border border-white/50 shadow-lg" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
+                    <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">PR</div>
+                        <div>
+                          <div className="text-sm font-bold text-gray-900">Official Response</div>
+                          <div className="text-xs text-gray-500">Drafted for {platform}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-gray-800 whitespace-pre-wrap text-sm leading-relaxed mb-6">
+                      {generatedText}
+                    </div>
+                    <div className="flex justify-end gap-2">
+                      <button className="px-4 py-1.5 text-sm font-bold text-gray-600 hover:bg-gray-200/50 rounded transition-colors">Edit</button>
+                      <button className="px-4 py-1.5 text-sm font-bold text-white bg-green-600 hover:bg-green-700 rounded transition-colors shadow-sm">Approve & Publish</button>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
