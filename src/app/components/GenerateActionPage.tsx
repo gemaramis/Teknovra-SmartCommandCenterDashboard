@@ -123,8 +123,11 @@ export function GenerateActionPage() {
     <div className="w-screen h-screen flex flex-col text-[#1A1230]" style={{ background: "linear-gradient(135deg, #E6E0F8 0%, #F5E3F0 50%, #E2EDF8 100%)" }}>
       {/* Header */}
       <header className="flex items-center gap-4 px-6 py-4 border-b border-gray-200 shadow-sm z-10" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
-        <button onClick={() => navigate("/")} className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-gray-800 transition-colors">
-          <ArrowLeft size={16} /> Hub
+        <button 
+          onClick={() => navigate("/")}
+          className="w-8 h-8 flex items-center justify-center bg-gray-100/50 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors shadow-sm"
+        >
+          <ArrowLeft size={16} />
         </button>
         <div className="w-px h-5 bg-gray-300" />
         <div className="flex items-center gap-2 text-purple-600 font-bold uppercase tracking-widest text-sm">

@@ -13,10 +13,10 @@ export function LiveDistPanel() {
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 relative flex items-center justify-center">
+      <div className="flex-1 min-h-[160px] relative flex items-center justify-center my-2">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Pie data={sentimentData} cx="50%" cy="50%" innerRadius="70%" outerRadius="100%" dataKey="value" strokeWidth={0}>
+            <Pie data={sentimentData} cx="50%" cy="50%" innerRadius="60%" outerRadius="100%" dataKey="value" strokeWidth={0}>
               {sentimentData.map((entry, i) => (
                 <Cell key={i} fill={entry.color} />
               ))}
