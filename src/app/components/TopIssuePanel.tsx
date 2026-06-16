@@ -9,12 +9,12 @@ export function TopIssuePanel() {
   const maxScore = Math.max(...top5.map((i) => i.score), 1);
 
   return (
-    <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "#fff", border: "1px solid rgba(123,47,214,0.12)", boxShadow: "0 2px 12px rgba(123,47,214,0.06)" }}>
+    <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.5)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
       <div className="flex items-center justify-between mb-3 flex-shrink-0">
-        <span style={{ color: "#1A1230", fontSize: "0.8125rem", fontWeight: 700, letterSpacing: "0.05em" }}>TOP 5 ISSUES</span>
+        <span style={{ color: "#1A1230", fontSize: "0.9rem", fontWeight: 700, letterSpacing: "0.05em" }}>TOP 5 ISSUES</span>
         <div className="flex items-center gap-1">
           <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#059669" }} />
-          <span style={{ color: "#059669", fontSize: "0.6875rem", fontWeight: 600 }}>HEALTHY</span>
+          <span style={{ color: "#059669", fontSize: "0.85rem", fontWeight: 600 }}>HEALTHY</span>
         </div>
       </div>
 
@@ -52,16 +52,16 @@ export function TopIssuePanel() {
                 {/* Text and stats */}
                 <div className="flex items-center justify-between gap-2">
                   <span
-                    style={{ color: "#1A1230", fontSize: "0.75rem", fontWeight: 600 }}
+                    style={{ color: "#1A1230", fontSize: "0.85rem", fontWeight: 600 }}
                     className="truncate"
                   >
                     {iss.label}
                   </span>
                   <div className="flex items-center gap-1 flex-shrink-0">
-                    <span style={{ color: "#1A1230", fontSize: "0.75rem", fontWeight: 700 }}>
+                    <span style={{ color: "#1A1230", fontSize: "0.85rem", fontWeight: 700 }}>
                       {iss.score}
                     </span>
-                    <span style={{ color: "#7B6BAA", fontSize: "0.5625rem" }}>mentions</span>
+                    <span style={{ color: "#7B6BAA", fontSize: "0.65rem" }}>mentions</span>
                     <div className="flex items-center gap-0.5 ml-1">
                       {iss.up ? (
                         <TrendingUp size={10} style={{ color: "#059669" }} />

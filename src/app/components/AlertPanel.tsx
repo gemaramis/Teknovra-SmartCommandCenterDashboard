@@ -19,10 +19,10 @@ export function AlertPanel() {
   };
 
   return (
-    <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "#fff", border: "1px solid rgba(239,68,68,0.2)", boxShadow: "0 2px 12px rgba(239,68,68,0.06)" }}>
+    <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(239,68,68,0.2)", boxShadow: "0 2px 12px rgba(239,68,68,0.06)" }}>
       <div className="flex items-center justify-between mb-3">
-        <span style={{ color: "#1A1230", fontSize: "0.8125rem", fontWeight: 600, letterSpacing: "0.05em" }}>ALERT NEGATIVE ISSUE</span>
-        <span className="rounded px-2 py-0.5" style={{ background: "rgba(239,68,68,0.1)", color: "#EF4444", fontSize: "0.6875rem", fontWeight: 700 }}>HIGH</span>
+        <span style={{ color: "#1A1230", fontSize: "0.9rem", fontWeight: 600, letterSpacing: "0.05em" }}>ALERT NEGATIVE ISSUE</span>
+        <span className="rounded px-2 py-0.5" style={{ background: "rgba(239,68,68,0.1)", color: "#EF4444", fontSize: "0.85rem", fontWeight: 700 }}>HIGH</span>
       </div>
 
       <div className="flex flex-col gap-3 flex-1 overflow-auto">
@@ -31,7 +31,7 @@ export function AlertPanel() {
             <div className="flex items-center gap-2 mb-2">
               <div className="w-1.5 h-8 rounded-full" style={{ background: levelColor[alert.level] }} />
               <div>
-                <div style={{ color: "#1A1230", fontSize: "0.75rem", fontWeight: 600 }}>{alert.title}</div>
+                <div style={{ color: "#1A1230", fontSize: "0.85rem", fontWeight: 600 }}>{alert.title}</div>
                 <div style={{ color: "#7B6BAA", fontSize: "0.625rem" }}>{alert.source}</div>
               </div>
             </div>
@@ -41,18 +41,18 @@ export function AlertPanel() {
                 <div className="flex items-center gap-1" style={{ color: "#7B6BAA", fontSize: "0.625rem" }}>
                   <Clock size={9} /> TIME LEFT
                 </div>
-                <div style={{ color: "#1A1230", fontSize: "1.125rem", fontWeight: 700 }}>{alert.timeLeft}</div>
+                <div style={{ color: "#1A1230", fontSize: "1.25rem", fontWeight: 700 }}>{alert.timeLeft}</div>
                 <div style={{ color: "#7B6BAA", fontSize: "0.6rem" }}>{alert.remaining}</div>
               </div>
               <div>
                 <div style={{ color: "#7B6BAA", fontSize: "0.625rem" }}>ISSUE TYPE</div>
                 <div className="flex items-center gap-1 mt-0.5">
                   <AlertTriangle size={10} style={{ color: "#D97706" }} />
-                  <span style={{ color: "#1A1230", fontSize: "0.6875rem" }}>{alert.issueType}</span>
+                  <span style={{ color: "#1A1230", fontSize: "0.85rem" }}>{alert.issueType}</span>
                 </div>
                 <div className="flex items-center gap-1 mt-0.5">
                   <TrendingUp size={10} style={{ color: "#EF4444" }} />
-                  <span style={{ color: "#EF4444", fontSize: "0.6875rem" }}>{alert.impact}</span>
+                  <span style={{ color: "#EF4444", fontSize: "0.85rem" }}>{alert.impact}</span>
                 </div>
               </div>
             </div>
@@ -60,23 +60,23 @@ export function AlertPanel() {
             <div className="flex justify-between mb-2">
               <div>
                 <div style={{ color: "#7B6BAA", fontSize: "0.625rem" }}>Mentions</div>
-                <div style={{ color: "#1A1230", fontSize: "0.875rem", fontWeight: 700 }}>{alert.mentions}</div>
+                <div style={{ color: "#1A1230", fontSize: "1rem", fontWeight: 700 }}>{alert.mentions}</div>
                 <div style={{ color: "#7B6BAA", fontSize: "0.6rem" }}>{alert.mentionLabel}</div>
               </div>
               <div>
                 <div style={{ color: "#7B6BAA", fontSize: "0.625rem" }}>Top Channel</div>
-                <div style={{ color: "#1A1230", fontSize: "0.75rem", fontWeight: 600 }}>{alert.topChannel}</div>
+                <div style={{ color: "#1A1230", fontSize: "0.85rem", fontWeight: 600 }}>{alert.topChannel}</div>
               </div>
               <div>
                 <div style={{ color: "#7B6BAA", fontSize: "0.625rem" }}>System Health</div>
-                <div style={{ color: "#059669", fontSize: "0.75rem" }}>{alert.systemHealth}</div>
+                <div style={{ color: "#059669", fontSize: "0.85rem" }}>{alert.systemHealth}</div>
               </div>
             </div>
 
             <button
               onClick={() => handleActNow(alert.id.toString())}
               className="w-full py-1.5 rounded-lg flex items-center justify-center gap-2 transition-opacity hover:opacity-90"
-              style={{ background: "#EF4444", color: "#fff", fontSize: "0.75rem", fontWeight: 700 }}
+              style={{ background: "#EF4444", color: "#fff", fontSize: "0.85rem", fontWeight: 700 }}
             >
               <Zap size={12} /> ACT NOW
             </button>
@@ -100,7 +100,7 @@ export function AlertPanel() {
               <ShieldAlert className="w-10 h-10 text-red-500 group-hover:scale-110 transition-transform" />
               <div className="text-center">
                 <div className="font-bold text-red-900 mb-1">Escalation</div>
-                <div className="text-xs text-red-600/80">Route to human response teams</div>
+                <div className="text-sm text-red-600/80">Route to human response teams</div>
               </div>
             </button>
 
@@ -111,7 +111,7 @@ export function AlertPanel() {
               <Bot className="w-10 h-10 text-purple-500 group-hover:scale-110 transition-transform" />
               <div className="text-center">
                 <div className="font-bold text-purple-900 mb-1">AI Response</div>
-                <div className="text-xs text-purple-600/80">Generate content countermeasures</div>
+                <div className="text-sm text-purple-600/80">Generate content countermeasures</div>
               </div>
             </button>
           </div>

@@ -9,10 +9,10 @@ const typeColor: Record<string, string> = {
 export function ListMediaPanel() {
   const { mediaChannels: channels, mediaList } = useMockData();
   return (
-    <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "#fff", border: "1px solid rgba(123,47,214,0.12)", boxShadow: "0 2px 12px rgba(123,47,214,0.06)" }}>
+    <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.5)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
       <div className="flex items-center justify-between mb-3">
-        <span style={{ color: "#1A1230", fontSize: "0.8125rem", fontWeight: 600, letterSpacing: "0.05em" }}>LIST MEDIA</span>
-        <span style={{ color: "#059669", fontSize: "0.75rem", fontWeight: 700 }}>48% Online</span>
+        <span style={{ color: "#1A1230", fontSize: "0.9rem", fontWeight: 600, letterSpacing: "0.05em" }}>LIST MEDIA</span>
+        <span style={{ color: "#059669", fontSize: "0.85rem", fontWeight: 700 }}>48% Online</span>
       </div>
 
       <div className="flex gap-2 mb-3">
@@ -32,8 +32,8 @@ export function ListMediaPanel() {
       <div className="flex gap-3 mb-3 rounded-xl p-2" style={{ background: "#F4F2F9" }}>
         {[["Nasional", "78%"], ["Lokal", "15%"], ["Intl", "7%"]].map(([label, val]) => (
           <div key={label} className="flex items-center gap-1">
-            <span style={{ color: "#7B6BAA", fontSize: "0.6875rem" }}>{label}</span>
-            <span style={{ color: "#1A1230", fontSize: "0.6875rem", fontWeight: 700 }}>{val}</span>
+            <span style={{ color: "#7B6BAA", fontSize: "0.85rem" }}>{label}</span>
+            <span style={{ color: "#1A1230", fontSize: "0.85rem", fontWeight: 700 }}>{val}</span>
           </div>
         ))}
       </div>
@@ -50,16 +50,16 @@ export function ListMediaPanel() {
           <tbody>
             {mediaList.map((m) => (
               <tr key={m.name} className="hover:bg-[#F4F2F9] transition-colors cursor-pointer">
-                <td style={{ color: "#1A1230", fontSize: "0.6875rem", paddingBottom: "0.375rem" }}>{m.name}</td>
+                <td style={{ color: "#1A1230", fontSize: "0.85rem", paddingBottom: "0.375rem" }}>{m.name}</td>
                 <td style={{ paddingBottom: "0.375rem" }}>
-                  <span className="rounded px-1.5 py-0.5" style={{ background: `${typeColor[m.type]}18`, color: typeColor[m.type], fontSize: "0.5625rem", fontWeight: 600 }}>
+                  <span className="rounded px-1.5 py-0.5" style={{ background: `${typeColor[m.type]}18`, color: typeColor[m.type], fontSize: "0.65rem", fontWeight: 600 }}>
                     {m.type}
                   </span>
                 </td>
-                <td style={{ color: "#D946EF", fontSize: "0.6875rem", textAlign: "right", fontWeight: 700, paddingBottom: "0.375rem" }}>
+                <td style={{ color: "#D946EF", fontSize: "0.85rem", textAlign: "right", fontWeight: 700, paddingBottom: "0.375rem" }}>
                   {m.mentions.toLocaleString()}
                 </td>
-                <td style={{ color: "#7B6BAA", fontSize: "0.6875rem", textAlign: "right", paddingBottom: "0.375rem" }}>
+                <td style={{ color: "#7B6BAA", fontSize: "0.85rem", textAlign: "right", paddingBottom: "0.375rem" }}>
                   {m.reach}
                 </td>
               </tr>

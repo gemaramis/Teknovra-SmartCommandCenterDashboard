@@ -6,7 +6,7 @@ export function LiveTicker() {
   return (
     <div
       className="h-9 flex items-center overflow-hidden"
-      style={{ background: "#fff", borderTop: "1px solid rgba(123,47,214,0.15)" }}
+      style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderTop: "1px solid rgba(123,47,214,0.15)" }}
     >
       <div
         className="flex-shrink-0 h-full flex items-center px-3"
@@ -24,11 +24,11 @@ export function LiveTicker() {
             <div key={i} className="flex items-center gap-2 flex-shrink-0">
               <span
                 className="rounded px-1.5 py-0.5"
-                style={{ background: `${item.color}18`, color: item.color, fontSize: "0.5625rem", fontWeight: 700 }}
+                style={{ background: `${item.color}18`, color: item.color, fontSize: "0.65rem", fontWeight: 700 }}
               >
                 {item.tag}
               </span>
-              <span style={{ color: "#4B3F80", fontSize: "0.6875rem" }}>{item.text}</span>
+              <span style={{ color: "#4B3F80", fontSize: "0.85rem" }}>{item.text}</span>
               <span style={{ color: "#C9BAF0", marginLeft: "0.5rem" }}>·</span>
             </div>
           ))}

@@ -5,11 +5,11 @@ export function LiveDistPanel() {
   const { sentimentData, alerts } = useMockData();
   const totalNegativeAlerts = alerts.length;
   return (
-    <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "#fff", border: "1px solid rgba(123,47,214,0.12)", boxShadow: "0 2px 12px rgba(123,47,214,0.06)" }}>
+    <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.5)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#D97706" }} />
-          <span style={{ color: "#1A1230", fontSize: "0.8125rem", fontWeight: 600, letterSpacing: "0.05em" }}>LIVE DIST.</span>
+          <span style={{ color: "#1A1230", fontSize: "0.9rem", fontWeight: 600, letterSpacing: "0.05em" }}>LIVE DIST.</span>
         </div>
       </div>
 
@@ -21,7 +21,7 @@ export function LiveDistPanel() {
                 <Cell key={i} fill={entry.color} />
               ))}
             </Pie>
-            <Tooltip contentStyle={{ background: "#fff", border: "1px solid rgba(123,47,214,0.2)", borderRadius: "8px", fontSize: "12px", color: "#1A1230" }} />
+            <Tooltip contentStyle={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(123,47,214,0.2)", borderRadius: "8px", fontSize: "12px", color: "#1A1230" }} />
           </PieChart>
         </ResponsiveContainer>
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -35,8 +35,8 @@ export function LiveDistPanel() {
           const percent = Math.round((s.value / total) * 100);
           return (
             <div key={s.name} className="flex flex-col items-center gap-0.5">
-              <span style={{ color: s.color, fontSize: "1.125rem", fontWeight: 700 }}>
-                {s.value} <span style={{ fontSize: "0.6875rem", fontWeight: 600, opacity: 0.8 }}>({percent}%)</span>
+              <span style={{ color: s.color, fontSize: "1.25rem", fontWeight: 700 }}>
+                {s.value} <span style={{ fontSize: "0.85rem", fontWeight: 600, opacity: 0.8 }}>({percent}%)</span>
               </span>
               <span style={{ color: "#7B6BAA", fontSize: "0.625rem" }}>{s.name.toUpperCase()}</span>
             </div>
@@ -60,7 +60,7 @@ export function LiveDistPanel() {
         <div className="rounded-xl p-2.5 flex flex-col justify-between" style={{ background: "#F4F2F9" }}>
           <div style={{ color: "#7B6BAA", fontSize: "0.625rem", letterSpacing: "0.08em" }}>NEGATIVE ISSUES</div>
           <div>
-            <div style={{ color: "#1A1230", fontSize: "1.5rem", fontWeight: 800, lineHeight: 1 }}>{totalNegativeAlerts}</div>
+            <div style={{ color: "#1A1230", fontSize: "2rem", fontWeight: 800, lineHeight: 1 }}>{totalNegativeAlerts}</div>
             <div style={{ color: "#EF4444", fontSize: "0.6rem", fontWeight: 600, marginTop: "2px" }}>ACTIVE ALERTS</div>
           </div>
         </div>
