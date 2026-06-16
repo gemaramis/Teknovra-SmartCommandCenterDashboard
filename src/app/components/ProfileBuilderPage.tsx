@@ -144,7 +144,7 @@ ISSUES
               <button 
                 onClick={handleBuildProfile}
                 disabled={isSearching}
-                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold rounded-xl transition-all shadow-md shadow-emerald-600/20 flex justify-center items-center gap-2"
+                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold rounded-3xl p-6 transition-all shadow-md shadow-emerald-600/20 flex justify-center items-center gap-2"
               >
                 {isSearching ? <Activity className="animate-spin" size={18} /> : <Search size={18} />}
                 {isSearching ? "Scraping Network..." : "Build Profile"}
@@ -159,7 +159,7 @@ ISSUES
                 <div className="text-sm text-gray-400 text-center italic mt-4">No profiles saved.</div>
               )}
               {savedProfiles.map(p => (
-                <div key={p.id} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm flex justify-between items-center group">
+                <div key={p.id} className="bg-white border border-gray-200 rounded-3xl p-6 p-4 shadow-sm flex justify-between items-center group">
                   <div className="cursor-pointer" onClick={() => setActiveProfile(p)}>
                     <div className="font-bold text-gray-800">{p.name}</div>
                     <div className="text-xs text-gray-500 line-clamp-1">{p.summary}</div>
@@ -194,7 +194,7 @@ ISSUES
               
               <div className="flex justify-between items-start">
                 <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 shadow-inner">
+                  <div className="w-20 h-20 bg-emerald-100 rounded-3xl p-6 flex items-center justify-center text-emerald-600 shadow-inner">
                     <UserCircle size={40} />
                   </div>
                   <div>
@@ -217,7 +217,7 @@ ISSUES
                 
                 {/* Left Col: Overview */}
                 <div className="col-span-2 flex flex-col gap-6">
-                  <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                  <div className="bg-white p-6 rounded-3xl p-6 border border-gray-200 shadow-sm">
                     <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                       <Globe size={16} /> Executive Summary
                     </h2>
@@ -227,15 +227,15 @@ ISSUES
                   </div>
 
                   <div className="grid grid-cols-3 gap-4">
-                     <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm text-center">
+                     <div className="bg-white p-4 rounded-3xl p-6 border border-gray-200 shadow-sm text-center">
                        <div className="text-xs font-bold text-gray-400 uppercase mb-1">Est. Reach</div>
                        <div className="text-xl font-black text-emerald-600">4.2M</div>
                      </div>
-                     <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm text-center">
+                     <div className="bg-white p-4 rounded-3xl p-6 border border-gray-200 shadow-sm text-center">
                        <div className="text-xs font-bold text-gray-400 uppercase mb-1">Sentiment</div>
                        <div className="text-xl font-black text-red-500">Negative</div>
                      </div>
-                     <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm text-center">
+                     <div className="bg-white p-4 rounded-3xl p-6 border border-gray-200 shadow-sm text-center">
                        <div className="text-xs font-bold text-gray-400 uppercase mb-1">Risk Score</div>
                        <div className="text-xl font-black text-orange-500">84/100</div>
                      </div>
@@ -244,7 +244,7 @@ ISSUES
 
                 {/* Right Col: Issues */}
                 <div className="col-span-1">
-                  <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm h-full">
+                  <div className="bg-white p-6 rounded-3xl p-6 border border-gray-200 shadow-sm h-full">
                     <h2 className="text-sm font-bold text-red-500 uppercase tracking-widest mb-4 flex items-center gap-2">
                       <ShieldAlert size={16} /> Critical Issues
                     </h2>

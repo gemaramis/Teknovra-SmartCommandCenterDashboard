@@ -9,7 +9,7 @@ export function TopIssuePanel() {
   const maxScore = Math.max(...top5.map((i) => i.score), 1);
 
   return (
-    <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.5)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
+    <div className="rounded-3xl p-6 p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
       <div className="flex items-center justify-between mb-3 flex-shrink-0">
         <span style={{ color: "#1A1230", fontSize: "0.9rem", fontWeight: 700, letterSpacing: "0.05em" }}>TOP 5 ISSUES</span>
         <div className="flex items-center gap-1">

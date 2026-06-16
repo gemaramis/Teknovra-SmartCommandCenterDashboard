@@ -6,7 +6,7 @@ export function PersonPanel() {
   const { persons } = useMockData();
   const total = persons.reduce((s, p) => s + p.count, 0);
   return (
-    <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.5)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
+    <div className="rounded-3xl p-6 p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
       <div className="flex items-center justify-between mb-3">
         <span style={{ color: "#1A1230", fontSize: "0.9rem", fontWeight: 600, letterSpacing: "0.05em" }}>PERSON</span>
         <span style={{ color: "#7B2FD6", fontSize: "0.85rem", fontWeight: 700 }}>{total} Total</span>
@@ -17,7 +17,7 @@ export function PersonPanel() {
           <div
             key={p.name}
             onClick={() => toast.info(`Viewing profile for ${p.name}`)}
-            className="flex items-center gap-2 py-1.5 px-2 rounded-xl transition-colors hover:bg-[#F4F2F9] cursor-pointer"
+            className="flex items-center gap-2 py-1.5 px-2 rounded-3xl p-6 transition-colors hover:bg-[#F4F2F9] cursor-pointer"
           >
             <div
               className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"

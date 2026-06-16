@@ -9,7 +9,7 @@ const typeColor: Record<string, string> = {
 export function ListMediaPanel() {
   const { mediaChannels: channels, mediaList } = useMockData();
   return (
-    <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.5)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
+    <div className="rounded-3xl p-6 p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
       <div className="flex items-center justify-between mb-3">
         <span style={{ color: "#1A1230", fontSize: "0.9rem", fontWeight: 600, letterSpacing: "0.05em" }}>LIST MEDIA</span>
         <span style={{ color: "#059669", fontSize: "0.85rem", fontWeight: 700 }}>48% Online</span>
@@ -29,7 +29,7 @@ export function ListMediaPanel() {
         ))}
       </div>
 
-      <div className="flex gap-3 mb-3 rounded-xl p-2" style={{ background: "#F4F2F9" }}>
+      <div className="flex gap-3 mb-3 rounded-3xl p-6 p-2" style={{ background: "#F4F2F9" }}>
         {[["Nasional", "78%"], ["Lokal", "15%"], ["Intl", "7%"]].map(([label, val]) => (
           <div key={label} className="flex items-center gap-1">
             <span style={{ color: "#7B6BAA", fontSize: "0.85rem" }}>{label}</span>

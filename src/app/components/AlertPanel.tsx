@@ -19,7 +19,7 @@ export function AlertPanel() {
   };
 
   return (
-    <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(239,68,68,0.2)", boxShadow: "0 2px 12px rgba(239,68,68,0.06)" }}>
+    <div className="rounded-3xl p-6 p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(239,68,68,0.2)", boxShadow: "0 2px 12px rgba(239,68,68,0.06)" }}>
       <div className="flex items-center justify-between mb-3">
         <span style={{ color: "#1A1230", fontSize: "0.9rem", fontWeight: 600, letterSpacing: "0.05em" }}>ALERT NEGATIVE ISSUE</span>
         <span className="rounded px-2 py-0.5" style={{ background: "rgba(239,68,68,0.1)", color: "#EF4444", fontSize: "0.85rem", fontWeight: 700 }}>HIGH</span>
@@ -27,7 +27,7 @@ export function AlertPanel() {
 
       <div className="flex flex-col gap-3 flex-1 overflow-auto">
         {alerts.map((alert) => (
-          <div key={alert.id} className="rounded-xl p-3" style={{ background: levelBg[alert.level], border: `1px solid ${levelColor[alert.level]}33` }}>
+          <div key={alert.id} className="rounded-3xl p-6 p-3" style={{ background: levelBg[alert.level], border: `1px solid ${levelColor[alert.level]}33` }}>
             <div className="flex items-center gap-2 mb-2">
               <div className="w-1.5 h-8 rounded-full" style={{ background: levelColor[alert.level] }} />
               <div>
@@ -95,7 +95,7 @@ export function AlertPanel() {
           <div className="grid grid-cols-2 gap-4 py-4">
             <button
               onClick={() => navigate(`/escalation/${selectedIssueId}`)}
-              className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl border-2 border-red-100 bg-red-50 hover:bg-red-100 hover:border-red-200 transition-all group"
+              className="flex flex-col items-center justify-center gap-3 p-6 rounded-3xl p-6 border-2 border-red-100 bg-red-50 hover:bg-red-100 hover:border-red-200 transition-all group"
             >
               <ShieldAlert className="w-10 h-10 text-red-500 group-hover:scale-110 transition-transform" />
               <div className="text-center">
@@ -106,7 +106,7 @@ export function AlertPanel() {
 
             <button
               onClick={() => navigate(`/ai-response/${selectedIssueId}`)}
-              className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl border-2 border-purple-100 bg-purple-50 hover:bg-purple-100 hover:border-purple-200 transition-all group"
+              className="flex flex-col items-center justify-center gap-3 p-6 rounded-3xl p-6 border-2 border-purple-100 bg-purple-50 hover:bg-purple-100 hover:border-purple-200 transition-all group"
             >
               <Bot className="w-10 h-10 text-purple-500 group-hover:scale-110 transition-transform" />
               <div className="text-center">

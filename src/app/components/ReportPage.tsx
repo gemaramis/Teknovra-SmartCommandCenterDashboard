@@ -153,7 +153,7 @@ export function ReportPage() {
             </button>
 
             {showEmailDropdown && (
-              <div className="absolute top-full right-0 mt-2 w-80 bg-white border border-[#E5E0F1] rounded-xl shadow-[0_8px_30px_rgba(123,47,214,0.12)] p-4 z-50 animate-in fade-in slide-in-from-top-2">
+              <div className="absolute top-full right-0 mt-2 w-80 bg-white border border-[#E5E0F1] rounded-3xl p-6 shadow-[0_8px_30px_rgba(123,47,214,0.12)] p-4 z-50 animate-in fade-in slide-in-from-top-2">
                 <div className="flex justify-between items-center mb-3">
                   <h3 className="text-sm font-bold text-[#1A1230]">Recipients ({emails.length}/5)</h3>
                   <button onClick={() => setShowEmailDropdown(false)} className="text-[#9CA3AF] hover:text-[#1A1230]">
@@ -304,7 +304,7 @@ export function ReportPage() {
         {/* LIVE PREVIEW AREA */}
         <div className="flex-1 p-8 overflow-y-auto flex justify-center items-start">
           
-          <div className="w-full max-w-[850px] bg-white rounded-xl shadow-[0_8px_30px_rgba(123,47,214,0.08)] border border-[#E5E0F1] relative" style={{ minHeight: "1100px", padding: "4rem" }}>
+          <div className="w-full max-w-[850px] bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgba(123,47,214,0.08)] border border-[#E5E0F1] relative" style={{ minHeight: "1100px", padding: "4rem" }}>
             
             {/* Watermark */}
             {watermark && (
@@ -371,7 +371,7 @@ export function ReportPage() {
                       </div>
                     </div>
                     <div className="w-2/3">
-                      <div className="bg-[#F8F5FF] rounded-xl p-4 border border-[#E5E0F1]">
+                      <div className="bg-[#F8F5FF] rounded-3xl p-6 p-4 border border-[#E5E0F1]">
                         <table className="w-full text-base border-collapse">
                           <thead>
                             <tr className="border-b border-[#E5E0F1] text-left text-[#7B6BAA]">
@@ -406,7 +406,7 @@ export function ReportPage() {
                     <span className="w-2 h-6 rounded-full bg-[#0891B2]"></span>
                     Top 5 Issues Tracker
                   </h2>
-                  <div className="bg-[#FAFAFA] rounded-xl p-6 border border-[#E5E0F1] mb-4">
+                  <div className="bg-[#FAFAFA] rounded-3xl p-6 p-6 border border-[#E5E0F1] mb-4">
                     <div className="h-64 w-full">
                       <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={mockTrendData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
@@ -434,7 +434,7 @@ export function ReportPage() {
                     <span className="w-2 h-6 rounded-full bg-gray-300"></span>
                     {mod}
                   </h2>
-                  <div className="border border-dashed border-[#E5E0F1] p-6 bg-[#FAFAFA] rounded-xl text-center">
+                  <div className="border border-dashed border-[#E5E0F1] p-6 bg-[#FAFAFA] rounded-3xl p-6 text-center">
                     <p className="text-base text-[#7B6BAA] font-medium">Data visualization for {mod} will be compiled in the final export.</p>
                   </div>
                 </section>

@@ -6,7 +6,7 @@ export function LiveTicker() {
   return (
     <div
       className="h-9 flex items-center overflow-hidden"
-      style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderTop: "1px solid rgba(123,47,214,0.15)" }}
+      style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderTop: "1px solid rgba(123,47,214,0.15)" }}
     >
       <div
         className="flex-shrink-0 h-full flex items-center px-3"

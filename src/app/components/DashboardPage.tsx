@@ -55,7 +55,7 @@ export function DashboardPage() {
   return (
     <div
       className="flex flex-col h-screen w-screen overflow-hidden select-none"
-      style={{ background: "linear-gradient(135deg, #FFFFFF 0%, #F8F6FC 50%, #EBE4F6 100%)", color: "#1A1230", fontFamily: "'Outfit', system-ui, sans-serif" }}
+      style={{ background: "linear-gradient(135deg, #E6E0F8 0%, #F5E3F0 50%, #E2EDF8 100%)", color: "#1A1230", fontFamily: "'Outfit', system-ui, sans-serif" }}
     >
       {/* Header */}
       <header

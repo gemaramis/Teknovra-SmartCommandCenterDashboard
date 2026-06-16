@@ -120,9 +120,9 @@ export function GenerateActionPage() {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col text-[#1A1230]" style={{ background: "linear-gradient(135deg, #FFFFFF 0%, #F8F6FC 50%, #EBE4F6 100%)" }}>
+    <div className="w-screen h-screen flex flex-col text-[#1A1230]" style={{ background: "linear-gradient(135deg, #E6E0F8 0%, #F5E3F0 50%, #E2EDF8 100%)" }}>
       {/* Header */}
-      <header className="flex items-center gap-4 px-6 py-4 border-b border-gray-200 shadow-sm z-10" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
+      <header className="flex items-center gap-4 px-6 py-4 border-b border-gray-200 shadow-sm z-10" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
         <button onClick={() => navigate("/")} className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-gray-800 transition-colors">
           <ArrowLeft size={16} /> Hub
         </button>
@@ -136,7 +136,7 @@ export function GenerateActionPage() {
         
         {/* Controls Sidebar */}
         <div className="w-[400px] flex flex-col gap-6">
-          <div className="rounded-xl p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
+          <div className="rounded-3xl p-6 p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
             <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">1. Target Issue</h2>
             <select 
               value={selectedIssueId} 
@@ -147,7 +147,7 @@ export function GenerateActionPage() {
             </select>
           </div>
 
-          <div className="rounded-xl p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
+          <div className="rounded-3xl p-6 p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
             <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">2. Target Platform</h2>
             <div className="grid grid-cols-2 gap-2">
               {["Twitter", "TikTok", "Instagram", "News"].map(p => (
@@ -168,7 +168,7 @@ export function GenerateActionPage() {
             )}
           </div>
 
-          <div className="rounded-xl p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
+          <div className="rounded-3xl p-6 p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
             <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">3. Response Strategy</h2>
             <textarea 
               value={prompt}
@@ -178,7 +178,7 @@ export function GenerateActionPage() {
             />
           </div>
 
-          <div className="rounded-xl p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
+          <div className="rounded-3xl p-6 p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
             <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">4. Content Format</h2>
             <div className="flex bg-gray-200/50 p-1 rounded-lg">
               {[
@@ -197,7 +197,7 @@ export function GenerateActionPage() {
           <button 
             onClick={handleGenerate}
             disabled={isGenerating || platform === "News"}
-            className="w-full py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-lg shadow-purple-600/20 transition-all flex justify-center items-center gap-2 uppercase tracking-widest"
+            className="w-full py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-3xl p-6 shadow-lg shadow-purple-600/20 transition-all flex justify-center items-center gap-2 uppercase tracking-widest"
           >
             {isGenerating ? <RefreshCw className="animate-spin" size={18} /> : <Send size={18} />}
             {isGenerating ? "Synthesizing..." : "Generate Action"}
@@ -205,7 +205,7 @@ export function GenerateActionPage() {
         </div>
 
         {/* Live Preview Area */}
-        <div className="flex-1 rounded-2xl border border-white/50 shadow-sm overflow-hidden flex flex-col" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
+        <div className="flex-1 rounded-3xl p-6 border border-white/50 shadow-sm overflow-hidden flex flex-col" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
           <div className="p-4 border-b border-white/20 flex items-center gap-2">
             <CheckCircle2 size={18} className="text-green-600" />
             <h2 className="font-bold text-gray-800">Live Content Review</h2>
@@ -229,12 +229,12 @@ export function GenerateActionPage() {
             {(generatedText || generatedImageUrl) && !isGenerating && (
               <div className="max-w-2xl w-full flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-500">
                 {generatedImageUrl && (
-                  <div className="w-full mb-6 rounded-xl overflow-hidden border border-white/50 shadow-lg" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
+                  <div className="w-full mb-6 rounded-3xl p-6 overflow-hidden border border-white/50 shadow-lg" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
                     <img src={generatedImageUrl} alt="Generated UI" className="w-full h-auto object-cover" />
                   </div>
                 )}
                 {generatedText && (
-                  <div className="w-full rounded-xl p-6 border border-white/50 shadow-lg" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
+                  <div className="w-full rounded-3xl p-6 p-6 border border-white/50 shadow-lg" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
                     <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">PR</div>

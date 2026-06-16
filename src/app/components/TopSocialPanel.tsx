@@ -6,7 +6,7 @@ const sentimentColor: Record<string, string> = { negative: "#EF4444", positive: 
 export function TopSocialPanel() {
   const { posts } = useMockData();
   return (
-    <div className="rounded-xl p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.65)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.5)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
+    <div className="rounded-3xl p-6 p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
       <div className="flex items-center justify-between mb-3">
         <span style={{ color: "#1A1230", fontSize: "0.9rem", fontWeight: 600, letterSpacing: "0.05em" }}>TOP SOCIAL POST</span>
         <div className="flex gap-1">
@@ -21,7 +21,7 @@ export function TopSocialPanel() {
           <div
             key={post.rank}
             onClick={() => toast.info(`Opening post by ${post.user}`)}
-            className="rounded-xl p-3 cursor-pointer transition-all hover:shadow-md"
+            className="rounded-3xl p-6 p-3 cursor-pointer transition-all hover:shadow-md"
             style={{ background: "#F4F2F9", border: "1px solid rgba(123,47,214,0.08)" }}
           >
             <div className="flex items-center gap-2 mb-1.5">
