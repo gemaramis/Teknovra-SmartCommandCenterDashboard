@@ -48,15 +48,15 @@ export function LaunchScreen() {
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-700" />
             <div className="relative z-10">
-              <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-inner border border-blue-200">
-                <LayoutDashboard className="w-8 h-8 text-blue-600" />
+              <div className="w-16 h-16 bg-gray-100/80 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-inner border border-gray-200">
+                <LayoutDashboard className="w-8 h-8 text-gray-800" />
               </div>
               <h2 className="text-4xl font-black text-gray-900 mb-4 leading-tight">Smart<br />Dashboard</h2>
               <p className="text-base text-gray-500 leading-relaxed max-w-sm">
                 Real-time command center for crisis monitoring, issue tracking, and comprehensive system health analysis.
               </p>
             </div>
-            <div className="relative z-10 mt-8 flex items-center text-sm font-bold text-blue-600 group-hover:text-blue-800 transition-colors uppercase tracking-widest bg-blue-50/80 w-fit px-4 py-2 rounded-xl backdrop-blur-md">
+            <div className="relative z-10 mt-8 flex items-center text-sm font-bold text-gray-800 transition-colors uppercase tracking-widest bg-white/50 w-fit px-4 py-2 rounded-xl backdrop-blur-md">
               Launch Module <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
             </div>
           </button>
@@ -72,8 +72,8 @@ export function LaunchScreen() {
               <h2 className="text-3xl font-black text-gray-900 mb-2">Profile Builder</h2>
               <p className="text-sm text-gray-500 max-w-[250px]">Deep AI profiling and exposure scraping to verify targets.</p>
             </div>
-            <div className="relative z-10 w-20 h-20 bg-emerald-100 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 shadow-inner border border-emerald-200 shrink-0">
-              <UserCircle className="w-10 h-10 text-emerald-600" />
+            <div className="relative z-10 w-20 h-20 bg-gray-100/80 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 shadow-inner border border-gray-200 shrink-0">
+              <UserCircle className="w-10 h-10 text-gray-800" />
             </div>
           </button>
 
@@ -84,8 +84,8 @@ export function LaunchScreen() {
             style={{ ...glassStyle, animationDelay: '300ms' }}
           >
             <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-purple-400/20 rounded-full blur-2xl transition-transform group-hover:scale-150" />
-            <div className="relative z-10 w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-inner border border-purple-200">
-              <Sparkles className="w-6 h-6 text-purple-600" />
+            <div className="relative z-10 w-12 h-12 bg-gray-100/80 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-inner border border-gray-200">
+              <Sparkles className="w-6 h-6 text-gray-800" />
             </div>
             <h2 className="relative z-10 text-2xl font-black text-gray-900 leading-tight">Generate<br/>Action</h2>
           </button>
@@ -96,8 +96,8 @@ export function LaunchScreen() {
             style={{ ...glassStyle, animationDelay: '400ms' }}
           >
             <div className="flex justify-between items-start relative z-10">
-              <div className="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center border border-red-200">
-                <ShieldAlert className="w-5 h-5 text-red-600" />
+              <div className="w-10 h-10 bg-gray-100/80 rounded-xl flex items-center justify-center border border-gray-200">
+                <ShieldAlert className="w-5 h-5 text-gray-800" />
               </div>
               <span className="flex h-3 w-3 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -117,7 +117,7 @@ export function LaunchScreen() {
           >
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <Activity className="w-5 h-5 text-emerald-500" />
+                <Activity className="w-5 h-5 text-gray-800" />
                 <span className="text-sm font-bold text-gray-500 uppercase tracking-widest">System Health</span>
               </div>
               <h3 className="text-4xl font-black text-gray-900">99.9%</h3>
@@ -137,8 +137,8 @@ export function LaunchScreen() {
             className="col-span-2 row-span-1 group text-left rounded-[2rem] p-6 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-in fade-in zoom-in-95 flex items-center gap-6"
             style={{ ...glassStyle, animationDelay: '600ms' }}
           >
-            <div className="w-16 h-16 bg-gray-100/80 rounded-2xl flex items-center justify-center shrink-0 border border-gray-200 group-hover:bg-purple-100 group-hover:border-purple-200 transition-colors">
-              <FileText className="w-8 h-8 text-gray-500 group-hover:text-purple-600 transition-colors" />
+            <div className="w-16 h-16 bg-gray-100/80 rounded-2xl flex items-center justify-center shrink-0 border border-gray-200 group-hover:bg-gray-200 transition-colors">
+              <FileText className="w-8 h-8 text-gray-800 transition-colors" />
             </div>
             <div>
               <h2 className="text-2xl font-black text-gray-900 mb-1">Recent Reports</h2>
