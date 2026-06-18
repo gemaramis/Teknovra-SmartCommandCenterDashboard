@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import { ArrowLeft, UserCircle, Search, Save, AlertTriangle, ShieldAlert, Activity, Trash2, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, UserCircle, Search, Save, AlertTriangle, ShieldAlert, Activity, Trash2, CheckCircle2, Download } from "lucide-react";
 import { toast } from "sonner";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
 const genAI = new GoogleGenerativeAI(API_KEY);
+import html2pdf from "html2pdf.js";
 
 interface Profile {
   id: string;
@@ -137,6 +138,34 @@ ISSUES
 
   const handleDeleteProfile = (id: string) => {
     setSavedProfiles(savedProfiles.filter(p => p.id !== id));
+  };
+
+  const handleExportPDF = () => {
+    const element = document.getElementById("pdf-content");
+    if (!element) return;
+    
+    // Temporarily hide the action buttons for the PDF
+    const actionButtons = document.getElementById("pdf-action-buttons");
+    if (actionButtons) actionButtons.style.display = "none";
+
+    const opt = {
+      margin:       [0.5, 0.5, 0.5, 0.5],
+      filename:     `Profile_${activeProfile?.name || 'Extraction'}.pdf`,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, useCORS: true, logging: false },
+      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    toast.promise(
+      html2pdf().set(opt).from(element).save().then(() => {
+        if (actionButtons) actionButtons.style.display = "flex";
+      }),
+      {
+        loading: 'Generating PDF...',
+        success: 'PDF exported successfully!',
+        error: 'Failed to export PDF'
+      }
+    );
   };
 
   const handleLoadProfile = (p: Profile) => {
@@ -273,13 +302,13 @@ ISSUES
 
           {/* Final Output State */}
           {step === "result" && activeProfile && !isSearching && (
-            <div className="w-full h-full relative overflow-hidden flex justify-center pt-20 animate-in fade-in">
+            <div id="pdf-content" className="w-full min-h-full relative overflow-x-hidden flex justify-center pt-20 animate-in fade-in pb-20">
               {/* Massive Glowing Orb Background */}
               <div className="absolute -top-64 -left-64 w-[800px] h-[800px] bg-emerald-500/20 rounded-full mix-blend-multiply filter blur-[120px] pointer-events-none" />
               
               <div className="relative z-10 w-full max-w-3xl px-8 flex flex-col pb-20">
                 {/* Back / Save Button */}
-                <div className="flex justify-between items-center mb-16">
+                <div id="pdf-action-buttons" className="flex justify-between items-center mb-16">
                   <button 
                     onClick={() => {
                       setStep("input");
@@ -289,12 +318,20 @@ ISSUES
                   >
                     <ArrowLeft size={20} />
                   </button>
-                  <button 
-                    onClick={handleSaveProfile}
-                    className="flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-bold text-gray-800 hover:text-emerald-700 hover:scale-105 transition-all shadow-sm" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)" }}
-                  >
-                    <Save size={16} /> Save Profile
-                  </button>
+                  <div className="flex items-center gap-4">
+                    <button 
+                      onClick={handleExportPDF}
+                      className="flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-bold text-gray-800 hover:text-emerald-700 hover:scale-105 transition-all shadow-sm" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)" }}
+                    >
+                      <Download size={16} /> Export PDF
+                    </button>
+                    <button 
+                      onClick={handleSaveProfile}
+                      className="flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-bold text-gray-800 hover:text-emerald-700 hover:scale-105 transition-all shadow-sm" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)" }}
+                    >
+                      <Save size={16} /> Save Profile
+                    </button>
+                  </div>
                 </div>
 
                 {/* Elegant Title & Summary */}
