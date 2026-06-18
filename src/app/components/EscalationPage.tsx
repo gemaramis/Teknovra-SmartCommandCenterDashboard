@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router";
-import { ArrowLeft, Send, Users, Shield, Briefcase, ChevronRight } from "lucide-react";
+import { ArrowLeft, Send, Users, Shield, Briefcase, ChevronRight, Check } from "lucide-react";
 import { toast } from "sonner";
 import { useMockData } from "../contexts/MockDataContext";
 
@@ -10,7 +10,7 @@ export function EscalationPage() {
   const { alerts } = useMockData();
   
   const issue = alerts.find(a => a.id.toString() === id);
-  const [selectedDept, setSelectedDept] = useState<string | null>(null);
+  const [selectedDepts, setSelectedDepts] = useState<string[]>([]);
   const [notes, setNotes] = useState("");
 
   const departments = [
@@ -20,12 +20,17 @@ export function EscalationPage() {
   ];
 
   const handleEscalate = () => {
-    if (!selectedDept) {
-      toast.error("Please select a department to escalate to.");
+    if (selectedDepts.length === 0) {
+      toast.error("Please select at least one department to escalate to.");
       return;
     }
-    toast.success(`Issue escalated to ${departments.find(d => d.id === selectedDept)?.name}!`);
+    const names = selectedDepts.map(id => departments.find(d => d.id === id)?.name).join(", ");
+    toast.success(`Issue escalated to: ${names}!`);
     setTimeout(() => navigate("/"), 1500);
+  };
+
+  const toggleDept = (id: string) => {
+    setSelectedDepts(prev => prev.includes(id) ? prev.filter(d => d !== id) : [...prev, id]);
   };
 
   if (!issue) {
@@ -69,24 +74,26 @@ export function EscalationPage() {
             <h2 className="text-sm font-bold text-gray-800 mb-4">How do you want this to be escalated?</h2>
             
             <div className="flex flex-col gap-3 mb-6">
-              {departments.map(dept => (
+              {departments.map(dept => {
+                const isSelected = selectedDepts.includes(dept.id);
+                return (
                 <button
                   key={dept.id}
-                  onClick={() => setSelectedDept(dept.id)}
-                  className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${selectedDept === dept.id ? "border-purple-600 bg-purple-50" : "border-gray-100 hover:border-purple-200 hover:bg-gray-50"}`}
+                  onClick={() => toggleDept(dept.id)}
+                  className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${isSelected ? "border-purple-600 bg-purple-50" : "border-gray-100 hover:border-purple-200 hover:bg-gray-50"}`}
                 >
-                  <div className={`p-2 rounded-lg ${selectedDept === dept.id ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-600"}`}>
+                  <div className={`p-2 rounded-lg ${isSelected ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-600"}`}>
                     <dept.icon size={20} />
                   </div>
                   <div className="flex-1">
                     <div className="font-bold text-gray-900">{dept.name}</div>
                     <div className="text-xs text-gray-500">{dept.desc}</div>
                   </div>
-                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selectedDept === dept.id ? "border-purple-600" : "border-gray-300"}`}>
-                    {selectedDept === dept.id && <div className="w-2.5 h-2.5 bg-purple-600 rounded-full" />}
+                  <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${isSelected ? "border-purple-600 bg-purple-600" : "border-gray-300 bg-white"}`}>
+                    {isSelected && <Check size={14} className="text-white" />}
                   </div>
                 </button>
-              ))}
+              )})}
             </div>
 
             <div className="mb-6">
@@ -101,7 +108,7 @@ export function EscalationPage() {
 
             <button 
               onClick={handleEscalate}
-              className={`w-full py-3 rounded-lg flex justify-center items-center gap-2 font-bold uppercase tracking-widest transition-all ${selectedDept ? "bg-red-600 hover:bg-red-700 text-white shadow-md" : "bg-gray-200 text-gray-400 cursor-not-allowed"}`}
+              className={`w-full py-3 rounded-lg flex justify-center items-center gap-2 font-bold uppercase tracking-widest transition-all ${selectedDepts.length > 0 ? "bg-red-600 hover:bg-red-700 text-white shadow-md" : "bg-gray-200 text-gray-400 cursor-not-allowed"}`}
             >
               <Send size={16} />
               Confirm Escalation
