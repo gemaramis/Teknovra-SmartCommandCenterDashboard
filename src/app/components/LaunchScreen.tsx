@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import { LayoutDashboard, Sparkles, UserCircle, ArrowRight, ShieldAlert, Activity, FileText, ChevronRight } from "lucide-react";
+import { LayoutDashboard, Sparkles, UserCircle, ArrowRight, ShieldAlert, Activity, FileText, ChevronRight, BarChart2 } from "lucide-react";
 import logoTeknovra from "../../imports/logo_teknovra.png";
 
 export function LaunchScreen() {
@@ -40,24 +40,35 @@ export function LaunchScreen() {
         {/* Bento Box Grid */}
         <div className="grid grid-cols-4 grid-rows-3 gap-6 w-full flex-1 min-h-0">
           
-          {/* Smart Dashboard (Anchor - Span 2x2) */}
+          {/* Executive Dashboard (Span 2x1) */}
           <button
             onClick={() => navigate("/dashboard")}
-            className="col-span-2 row-span-2 group text-left rounded-[2rem] p-8 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 animate-in fade-in zoom-in-95 relative overflow-hidden flex flex-col justify-between"
+            className="col-span-2 row-span-1 group text-left rounded-[2rem] p-6 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 animate-in fade-in zoom-in-95 relative overflow-hidden flex items-center justify-between"
             style={{ ...glassStyle, animationDelay: '100ms' }}
           >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-700" />
-            <div className="relative z-10">
-              <div className="w-16 h-16 bg-gray-100/80 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-inner border border-gray-200">
-                <LayoutDashboard className="w-8 h-8 text-gray-800" />
-              </div>
-              <h2 className="text-4xl font-black text-gray-900 mb-4 leading-tight">Smart<br />Dashboard</h2>
-              <p className="text-base text-gray-500 leading-relaxed max-w-sm">
-                Real-time command center for crisis monitoring, issue tracking, and comprehensive system health analysis.
-              </p>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative z-10 flex flex-col h-full justify-center">
+              <h2 className="text-3xl font-black text-gray-900 mb-2">Executive<br />Dashboard</h2>
+              <p className="text-sm text-gray-500 max-w-[250px]">High-level command center for crisis and system health.</p>
             </div>
-            <div className="relative z-10 mt-8 flex items-center text-sm font-bold text-gray-800 transition-colors uppercase tracking-widest bg-white/50 w-fit px-4 py-2 rounded-xl backdrop-blur-md">
-              Launch Module <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
+            <div className="relative z-10 w-20 h-20 bg-gray-100/80 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 shadow-inner border border-gray-200 shrink-0">
+              <LayoutDashboard className="w-10 h-10 text-gray-800" />
+            </div>
+          </button>
+
+          {/* Operational Dashboard (Span 2x1) */}
+          <button
+            onClick={() => navigate("/operational")}
+            className="col-span-2 row-span-1 group text-left rounded-[2rem] p-6 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 animate-in fade-in zoom-in-95 relative overflow-hidden flex items-center justify-between"
+            style={{ ...glassStyle, animationDelay: '150ms' }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative z-10 flex flex-col h-full justify-center">
+              <h2 className="text-3xl font-black text-gray-900 mb-2">Operational<br />Dashboard</h2>
+              <p className="text-sm text-gray-500 max-w-[250px]">Granular data analytics, keyword tracking, and live streams.</p>
+            </div>
+            <div className="relative z-10 w-20 h-20 bg-gray-100/80 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300 shadow-inner border border-gray-200 shrink-0">
+              <BarChart2 className="w-10 h-10 text-gray-800" />
             </div>
           </button>
 
