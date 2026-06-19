@@ -305,7 +305,7 @@ export function OperationalDashboardPage() {
               </button>
               
               {isTrackerDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white/90 backdrop-blur-xl border border-white rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-100 rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
                   <div className="p-3 border-b border-gray-100">
                     <div className="flex items-center bg-gray-100/50 rounded-lg px-3 py-2">
                       <SearchIcon size={14} className="text-gray-400 mr-2" />
@@ -348,7 +348,7 @@ export function OperationalDashboardPage() {
               </button>
               
               {isDateDropdownOpen && (
-                <div className="absolute top-full right-0 mt-2 w-56 bg-white/90 backdrop-blur-xl border border-white rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                <div className="absolute top-full right-0 mt-2 w-56 bg-white border border-gray-100 rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
                   <div className="py-2">
                     <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
                       <Calendar size={14} className="text-gray-400" /> Today
@@ -380,7 +380,7 @@ export function OperationalDashboardPage() {
               </button>
               
               {isProfileDropdownOpen && (
-                <div className="absolute top-full right-0 mt-2 w-64 bg-white/90 backdrop-blur-xl border border-white rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                <div className="absolute top-full right-0 mt-2 w-64 bg-white border border-gray-100 rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
                   <div className="p-4 border-b border-gray-100 flex items-center gap-3">
                     <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 font-black text-xl border-2 border-white shadow-sm">
                       IA
