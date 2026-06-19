@@ -335,7 +335,7 @@ export function OperationalDashboardPage() {
                       Budiman Sudjatmiko <Check size={14} className="text-purple-600" />
                     </button>
                     <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
-                      Indosat General
+                      Prabowo Subianto Tracker
                     </button>
                     <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
                       Pemilu 2029 Tracker
@@ -433,7 +433,7 @@ export function OperationalDashboardPage() {
                       IA
                     </div>
                     <div>
-                      <div className="font-bold text-gray-900">IndosatTrial</div>
+                      <div className="font-bold text-gray-900">Teknovra Analyst</div>
                       <div className="text-xs text-gray-500">Administrator</div>
                     </div>
                   </div>
