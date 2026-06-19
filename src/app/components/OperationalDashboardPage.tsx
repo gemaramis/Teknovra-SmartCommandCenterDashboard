@@ -38,17 +38,19 @@ export function OperationalDashboardPage() {
       {/* Top KPIs */}
       <div className="grid grid-cols-6 gap-4">
         {[
-          { label: "Total Mentions", value: "14,291", color: "bg-emerald-500" },
-          { label: "Total Engagement", value: "482.1k", color: "bg-emerald-600" },
-          { label: "Unique Authors", value: "8,401", color: "bg-emerald-700" },
-          { label: "Positive Mentions", value: "4,120", color: "bg-green-500" },
-          { label: "Negative Mentions", value: "2,094", color: "bg-red-500" },
-          { label: "Neutral Mentions", value: "8,077", color: "bg-blue-500" },
+          { label: "Total Mentions", value: "14,291", trend: "+12.5%", color: "text-purple-600" },
+          { label: "Total Engagement", value: "482.1k", trend: "+8.2%", color: "text-purple-600" },
+          { label: "Unique Authors", value: "8,401", trend: "-2.1%", color: "text-purple-600" },
+          { label: "Positive Mentions", value: "4,120", trend: "+15.0%", color: "text-emerald-600" },
+          { label: "Negative Mentions", value: "2,094", trend: "-5.4%", color: "text-red-500" },
+          { label: "Neutral Mentions", value: "8,077", trend: "+1.2%", color: "text-blue-500" },
         ].map((kpi, idx) => (
-          <div key={idx} className={`${kpi.color} text-white rounded-2xl p-4 shadow-lg relative overflow-hidden group`}>
-            <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/20 rounded-full blur-xl group-hover:scale-150 transition-transform" />
-            <h3 className="text-xs font-bold uppercase tracking-widest opacity-80 mb-2">{kpi.label}</h3>
-            <div className="text-2xl font-black">{kpi.value}</div>
+          <div key={idx} className="bg-white/60 backdrop-blur-md border border-white/80 rounded-2xl p-4 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">{kpi.label}</h3>
+            <div className={`text-2xl font-black ${kpi.color}`}>{kpi.value}</div>
+            <div className={`text-xs font-bold mt-2 flex items-center gap-1 ${kpi.trend.startsWith('+') ? 'text-emerald-500' : 'text-red-500'}`}>
+              {kpi.trend.startsWith('+') ? <TrendingUp size={12}/> : <TrendingUp size={12} className="rotate-180"/>} {kpi.trend} vs last week
+            </div>
           </div>
         ))}
       </div>
@@ -153,7 +155,7 @@ export function OperationalDashboardPage() {
                 <span className="px-2 py-1 rounded bg-red-100 text-red-600 text-xs font-bold uppercase">Negative</span>
               </div>
               <p className="text-gray-700 text-sm">
-                The recent changes to the #Indosat network have caused massive latency spikes in the eastern region. Completely unacceptable for enterprise users. We are migrating our servers.
+                The recent statements by #BudimanSudjatmiko have sparked massive debate in the eastern region. This is completely unacceptable to some demographics. We are monitoring the situation closely.
               </p>
               <div className="flex gap-4 text-xs font-bold text-gray-400 mt-2">
                 <span>🔄 142 Reposts</span>
@@ -186,9 +188,9 @@ export function OperationalDashboardPage() {
       <h2 className="text-xl font-bold text-gray-800">X (Twitter) Indonesia Trendings</h2>
       <div className="grid grid-cols-3 gap-6 flex-1 min-h-0">
         {[
-          { title: "Latest", items: ["#NetworkDown", "Indosat", "Latency", "Enterprise", "#FixItNow"] },
-          { title: "10-25 Minutes Ago", items: ["#NetworkDown", "Indosat", "Jumat", "Korsel", "Enterprise"] },
-          { title: "An Hour Ago", items: ["#SelamatPagi", "Indosat", "Jumat", "Sarapan", "Weekend"] }
+          { title: "Latest", items: ["#BudimanSudjatmiko", "Politik", "Debat", "Aktivis", "#Pemilu2029"] },
+          { title: "10-25 Minutes Ago", items: ["#BudimanSudjatmiko", "Politik", "Jumat", "Korsel", "Statement"] },
+          { title: "An Hour Ago", items: ["#BudimanSudjatmiko", "Pagi", "Jumat", "Sarapan", "Weekend"] }
         ].map((col, idx) => (
           <div key={idx} className="rounded-2xl p-6 flex flex-col gap-4" style={glassStyle}>
             <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest border-b border-gray-200/50 pb-2">{col.title}</h3>
@@ -290,7 +292,7 @@ export function OperationalDashboardPage() {
           
           <div className="flex items-center gap-4">
             <button className="flex items-center gap-2 bg-white/70 hover:bg-white px-4 py-2 rounded-lg font-bold text-sm text-purple-700 shadow-sm transition-colors border border-white/80">
-              <Plus size={16} /> Indosat General
+              <Plus size={16} /> Budiman Sudjatmiko
             </button>
             <div className="text-gray-400">/</div>
             <span className="font-bold text-gray-600 uppercase tracking-widest text-sm">
