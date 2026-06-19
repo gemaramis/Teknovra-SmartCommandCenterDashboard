@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { 
   ArrowLeft, BarChart2, TrendingUp, MessageSquare, Users, 
-  Map, PieChart, Info, Filter, Download, Plus, Search, ChevronDown, Check
+  Map, PieChart, Info, Filter, Download, Plus, Search, ChevronDown, Check,
+  Calendar, Settings, LogOut, Search as SearchIcon
 } from "lucide-react";
 import { PieChart as RechartsPie, Pie, Cell, ResponsiveContainer, AreaChart, Area, XAxis, Tooltip } from "recharts";
 
@@ -17,6 +18,10 @@ const SIDEBAR_TABS = [
 export function OperationalDashboardPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("summary");
+  
+  const [isTrackerDropdownOpen, setTrackerDropdownOpen] = useState(false);
+  const [isDateDropdownOpen, setDateDropdownOpen] = useState(false);
+  const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   const glassStyle = {
     background: "rgba(255, 255, 255, 0.4)",
@@ -291,9 +296,42 @@ export function OperationalDashboardPage() {
         <header className="h-20 border-b border-white/40 flex items-center justify-between px-8" style={{ background: "rgba(255, 255, 255, 0.2)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
           
           <div className="flex items-center gap-4">
-            <button className="flex items-center gap-2 bg-white/70 hover:bg-white px-4 py-2 rounded-lg font-bold text-sm text-purple-700 shadow-sm transition-colors border border-white/80">
-              <Plus size={16} /> Budiman Sudjatmiko
-            </button>
+            <div className="relative">
+              <button 
+                onClick={() => { setTrackerDropdownOpen(!isTrackerDropdownOpen); setDateDropdownOpen(false); setProfileDropdownOpen(false); }}
+                className="flex items-center gap-2 bg-white/70 hover:bg-white px-4 py-2 rounded-lg font-bold text-sm text-purple-700 shadow-sm transition-colors border border-white/80"
+              >
+                <Plus size={16} /> Budiman Sudjatmiko
+              </button>
+              
+              {isTrackerDropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white/90 backdrop-blur-xl border border-white rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                  <div className="p-3 border-b border-gray-100">
+                    <div className="flex items-center bg-gray-100/50 rounded-lg px-3 py-2">
+                      <SearchIcon size={14} className="text-gray-400 mr-2" />
+                      <input type="text" placeholder="Search projects..." className="bg-transparent text-sm w-full outline-none" />
+                    </div>
+                  </div>
+                  <div className="py-2 max-h-48 overflow-y-auto">
+                    <button className="w-full text-left px-4 py-2 text-sm font-bold text-gray-800 bg-purple-50 flex items-center justify-between">
+                      Budiman Sudjatmiko <Check size={14} className="text-purple-600" />
+                    </button>
+                    <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                      Indosat General
+                    </button>
+                    <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                      Pemilu 2029 Tracker
+                    </button>
+                  </div>
+                  <div className="p-3 border-t border-gray-100">
+                    <button className="w-full py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-bold text-purple-700 transition-colors flex justify-center items-center gap-2">
+                      <Plus size={14} /> Create New Project
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+            
             <div className="text-gray-400">/</div>
             <span className="font-bold text-gray-600 uppercase tracking-widest text-sm">
               {SIDEBAR_TABS.find(t => t.id === activeTab)?.label}
@@ -301,13 +339,71 @@ export function OperationalDashboardPage() {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-white/40 px-4 py-2 rounded-lg text-sm font-bold text-gray-600 border border-white/50">
-              June 16, 2026 - June 19, 2026 <ChevronDown size={14} />
+            <div className="relative">
+              <button 
+                onClick={() => { setDateDropdownOpen(!isDateDropdownOpen); setTrackerDropdownOpen(false); setProfileDropdownOpen(false); }}
+                className="flex items-center gap-2 bg-white/40 hover:bg-white/60 px-4 py-2 rounded-lg text-sm font-bold text-gray-600 border border-white/50 transition-colors cursor-pointer"
+              >
+                June 16, 2026 - June 19, 2026 <ChevronDown size={14} />
+              </button>
+              
+              {isDateDropdownOpen && (
+                <div className="absolute top-full right-0 mt-2 w-56 bg-white/90 backdrop-blur-xl border border-white rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                  <div className="py-2">
+                    <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
+                      <Calendar size={14} className="text-gray-400" /> Today
+                    </button>
+                    <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
+                      <Calendar size={14} className="text-gray-400" /> Last 7 Days
+                    </button>
+                    <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
+                      <Calendar size={14} className="text-gray-400" /> Last 30 Days
+                    </button>
+                  </div>
+                  <div className="p-3 border-t border-gray-100">
+                    <button className="w-full py-2 bg-purple-50 hover:bg-purple-100 rounded-lg text-sm font-bold text-purple-700 transition-colors">
+                      Custom Range...
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
+
             <div className="w-px h-8 bg-white/40" />
-            <button className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 font-bold border-2 border-white shadow-sm">
-              IA
-            </button>
+            
+            <div className="relative">
+              <button 
+                onClick={() => { setProfileDropdownOpen(!isProfileDropdownOpen); setTrackerDropdownOpen(false); setDateDropdownOpen(false); }}
+                className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 font-bold border-2 border-white shadow-sm hover:scale-105 transition-transform cursor-pointer"
+              >
+                IA
+              </button>
+              
+              {isProfileDropdownOpen && (
+                <div className="absolute top-full right-0 mt-2 w-64 bg-white/90 backdrop-blur-xl border border-white rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                  <div className="p-4 border-b border-gray-100 flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 font-black text-xl border-2 border-white shadow-sm">
+                      IA
+                    </div>
+                    <div>
+                      <div className="font-bold text-gray-900">IndosatTrial</div>
+                      <div className="text-xs text-gray-500">Administrator</div>
+                    </div>
+                  </div>
+                  <div className="py-2">
+                    <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
+                      <Settings size={16} className="text-gray-400" /> Settings & Billing
+                    </button>
+                    <button 
+                      onClick={() => navigate("/")}
+                      className="w-full text-left px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors flex items-center gap-3"
+                    >
+                      <LogOut size={16} className="text-red-400" /> Switch to Exec Hub
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </header>
 
