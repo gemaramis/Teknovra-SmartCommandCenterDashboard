@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import { 
   ArrowLeft, BarChart2, TrendingUp, MessageSquare, Users, 
   Map, PieChart, Info, Filter, Download, Plus, Search, ChevronDown, Check,
