@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
 import { 
   ArrowLeft, BarChart2, TrendingUp, MessageSquare, Users, 
   Map, PieChart, Info, Filter, Download, Plus, Search, ChevronDown, Check,
-  Calendar, Settings, LogOut, Search as SearchIcon
+  Calendar as CalendarIcon, Settings, LogOut, Search as SearchIcon
 } from "lucide-react";
 import { PieChart as RechartsPie, Pie, Cell, ResponsiveContainer, AreaChart, Area, XAxis, Tooltip } from "recharts";
+import { Calendar } from "./ui/calendar";
+import { DateRange } from "react-day-picker";
+import { format, subDays } from "date-fns";
 
 const SIDEBAR_TABS = [
   { id: "summary", label: "Summary", icon: BarChart2 },
@@ -22,6 +24,21 @@ export function OperationalDashboardPage() {
   const [isTrackerDropdownOpen, setTrackerDropdownOpen] = useState(false);
   const [isDateDropdownOpen, setDateDropdownOpen] = useState(false);
   const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [showCustomCalendar, setShowCustomCalendar] = useState(false);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: new Date(2026, 5, 16),
+    to: new Date(2026, 5, 19)
+  });
+
+  const getDisplayDate = () => {
+    if (dateRange?.from) {
+      if (dateRange.to) {
+        return `${format(dateRange.from, "MMM d, yyyy")} - ${format(dateRange.to, "MMM d, yyyy")}`;
+      }
+      return format(dateRange.from, "MMM d, yyyy");
+    }
+    return "Select Range";
+  };
 
   const glassStyle = {
     background: "rgba(255, 255, 255, 0.4)",
@@ -341,30 +358,59 @@ export function OperationalDashboardPage() {
           <div className="flex items-center gap-4">
             <div className="relative">
               <button 
-                onClick={() => { setDateDropdownOpen(!isDateDropdownOpen); setTrackerDropdownOpen(false); setProfileDropdownOpen(false); }}
+                onClick={() => { setDateDropdownOpen(!isDateDropdownOpen); setShowCustomCalendar(false); setTrackerDropdownOpen(false); setProfileDropdownOpen(false); }}
                 className="flex items-center gap-2 bg-white/40 hover:bg-white/60 px-4 py-2 rounded-lg text-sm font-bold text-gray-600 border border-white/50 transition-colors cursor-pointer"
               >
-                June 16, 2026 - June 19, 2026 <ChevronDown size={14} />
+                {getDisplayDate()} <ChevronDown size={14} />
               </button>
               
               {isDateDropdownOpen && (
-                <div className="absolute top-full right-0 mt-2 w-56 bg-white border border-gray-100 rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
-                  <div className="py-2">
-                    <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
-                      <Calendar size={14} className="text-gray-400" /> Today
-                    </button>
-                    <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
-                      <Calendar size={14} className="text-gray-400" /> Last 7 Days
-                    </button>
-                    <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
-                      <Calendar size={14} className="text-gray-400" /> Last 30 Days
-                    </button>
-                  </div>
-                  <div className="p-3 border-t border-gray-100">
-                    <button className="w-full py-2 bg-purple-50 hover:bg-purple-100 rounded-lg text-sm font-bold text-purple-700 transition-colors">
-                      Custom Range...
-                    </button>
-                  </div>
+                <div className="absolute top-full right-0 mt-2 w-auto min-w-[224px] bg-white border border-gray-100 rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                  {!showCustomCalendar ? (
+                    <>
+                      <div className="py-2">
+                        <button onClick={() => { setDateRange({ from: new Date(), to: new Date() }); setDateDropdownOpen(false); }} className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
+                          <CalendarIcon size={14} className="text-gray-400" /> Today
+                        </button>
+                        <button onClick={() => { setDateRange({ from: subDays(new Date(), 7), to: new Date() }); setDateDropdownOpen(false); }} className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
+                          <CalendarIcon size={14} className="text-gray-400" /> Last 7 Days
+                        </button>
+                        <button onClick={() => { setDateRange({ from: subDays(new Date(), 30), to: new Date() }); setDateDropdownOpen(false); }} className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
+                          <CalendarIcon size={14} className="text-gray-400" /> Last 30 Days
+                        </button>
+                      </div>
+                      <div className="p-3 border-t border-gray-100">
+                        <button onClick={() => setShowCustomCalendar(true)} className="w-full py-2 bg-purple-50 hover:bg-purple-100 rounded-lg text-sm font-bold text-purple-700 transition-colors">
+                          Custom Range...
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="p-3">
+                      <div className="flex justify-between items-center mb-2 px-2">
+                         <span className="text-xs font-bold text-gray-500 uppercase">Select Range</span>
+                         <button onClick={() => setShowCustomCalendar(false)} className="text-xs text-purple-600 font-bold">Back</button>
+                      </div>
+                      <Calendar
+                        initialFocus
+                        mode="range"
+                        defaultMonth={dateRange?.from}
+                        selected={dateRange}
+                        onSelect={(range, selectedDay) => {
+                          if (dateRange?.from && dateRange?.to) {
+                            setDateRange({ from: selectedDay });
+                          } else {
+                            setDateRange(range);
+                            if (range?.from && range?.to) {
+                              setTimeout(() => setDateDropdownOpen(false), 300);
+                            }
+                          }
+                        }}
+                        numberOfMonths={2}
+                        className="rounded-md"
+                      />
+                    </div>
+                  )}
                 </div>
               )}
             </div>
