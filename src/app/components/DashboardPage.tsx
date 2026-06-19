@@ -208,10 +208,10 @@ export function DashboardPage() {
           </div>
           
           {/* Right Column - 25% */}
-          <div className="w-1/4 flex flex-col gap-3">
-            <div className="flex-[0.35] min-h-0"><LiveDistPanel /></div>
-            <div className="flex-[0.3] min-h-0"><TopIssuePanel /></div>
-            <div className="flex-[0.35] min-h-0"><TopSocialPanel /></div>
+          <div className="w-1/4 flex flex-col gap-3 overflow-hidden">
+            <div className="flex-[0.45] min-h-0 flex flex-col"><LiveDistPanel /></div>
+            <div className="flex-[0.25] min-h-0 flex flex-col"><TopIssuePanel /></div>
+            <div className="flex-[0.30] min-h-0 flex flex-col"><TopSocialPanel /></div>
           </div>
         </div>
       ) : (

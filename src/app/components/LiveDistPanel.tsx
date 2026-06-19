@@ -5,7 +5,7 @@ export function LiveDistPanel() {
   const { sentimentData, alerts } = useMockData();
   const totalNegativeAlerts = alerts.length;
   return (
-    <div className="rounded-3xl p-6 p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
+    <div className="rounded-3xl p-4 flex flex-col h-full overflow-hidden" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#D97706" }} />
@@ -13,7 +13,7 @@ export function LiveDistPanel() {
         </div>
       </div>
 
-      <div className="flex-1 min-h-[160px] relative flex items-center justify-center my-2">
+      <div className="flex-1 min-h-[100px] relative flex items-center justify-center my-1">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie data={sentimentData} cx="50%" cy="50%" innerRadius="60%" outerRadius="100%" dataKey="value" strokeWidth={0}>
@@ -45,7 +45,7 @@ export function LiveDistPanel() {
       </div>
 
       <div className="grid grid-cols-2 gap-2">
-        <div className="rounded-3xl p-6 p-2.5 flex flex-col justify-between" style={{ background: "#F4F2F9" }}>
+        <div className="rounded-2xl p-2.5 flex flex-col justify-between" style={{ background: "#F4F2F9" }}>
           <div style={{ color: "#7B6BAA", fontSize: "0.625rem", letterSpacing: "0.08em", marginBottom: "0.25rem" }}>CRISIS MONITORING</div>
           <div className="flex gap-2 items-center flex-1">
             <div className="w-1.5 h-[32px] bg-gray-200 rounded-full flex flex-col justify-end overflow-hidden">
@@ -57,7 +57,7 @@ export function LiveDistPanel() {
             </div>
           </div>
         </div>
-        <div className="rounded-3xl p-6 p-2.5 flex flex-col justify-between" style={{ background: "#F4F2F9" }}>
+        <div className="rounded-2xl p-2.5 flex flex-col justify-between" style={{ background: "#F4F2F9" }}>
           <div style={{ color: "#7B6BAA", fontSize: "0.625rem", letterSpacing: "0.08em" }}>NEGATIVE ISSUES</div>
           <div>
             <div style={{ color: "#1A1230", fontSize: "2rem", fontWeight: 800, lineHeight: 1 }}>{totalNegativeAlerts}</div>
