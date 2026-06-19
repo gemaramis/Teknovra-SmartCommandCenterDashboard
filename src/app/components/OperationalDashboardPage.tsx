@@ -293,7 +293,7 @@ export function OperationalDashboardPage() {
       <div className="flex-1 flex flex-col h-full overflow-hidden">
         
         {/* Top Navbar */}
-        <header className="h-20 border-b border-white/40 flex items-center justify-between px-8" style={{ background: "rgba(255, 255, 255, 0.2)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
+        <header className="relative z-50 h-20 border-b border-white/40 flex items-center justify-between px-8" style={{ background: "rgba(255, 255, 255, 0.2)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
           
           <div className="flex items-center gap-4">
             <div className="relative">
