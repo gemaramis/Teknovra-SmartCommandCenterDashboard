@@ -26,6 +26,8 @@ export function OperationalDashboardPage() {
   const [isDateDropdownOpen, setDateDropdownOpen] = useState(false);
   const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [showCustomCalendar, setShowCustomCalendar] = useState(false);
+  const [engineStatus, setEngineStatus] = useState({ isScraping: false, lastRun: null, recordsProcessed: 0 });
+  const [mentionsData, setMentionsData] = useState<any[]>([]);
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: new Date(2026, 5, 16),
     to: new Date(2026, 5, 19)
@@ -40,6 +42,30 @@ export function OperationalDashboardPage() {
     }
     return "Select Range";
   };
+
+  React.useEffect(() => {
+    // Poll the engine status every 5 seconds
+    const fetchStatus = async () => {
+      try {
+        const res = await fetch("http://localhost:3001/api/status");
+        if (res.ok) {
+          const data = await res.json();
+          setEngineStatus(data);
+        }
+        
+        const mentionsRes = await fetch("http://localhost:3001/api/mentions");
+        if (mentionsRes.ok) {
+          const mData = await mentionsRes.json();
+          setMentionsData(mData.data);
+        }
+      } catch (err) {
+        // Silently fail if engine is not running yet
+      }
+    };
+    fetchStatus();
+    const interval = setInterval(fetchStatus, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const glassStyle = {
     background: "rgba(255, 255, 255, 0.4)",
@@ -165,25 +191,32 @@ export function OperationalDashboardPage() {
       <div className="flex flex-1 min-h-0 gap-6 mt-4">
         {/* Main Stream */}
         <div className="flex-1 flex flex-col gap-4 overflow-y-auto pr-2">
-          {[1,2,3,4,5].map((item) => (
-            <div key={item} className="p-5 rounded-2xl flex flex-col gap-3" style={glassStyle}>
+          {mentionsData.length === 0 && (
+            <div className="p-8 text-center text-gray-500 font-bold" style={glassStyle}>
+              No data collected yet. Wait for the engine to finish its crawl...
+            </div>
+          )}
+          {mentionsData.map((item, idx) => (
+            <div key={item.id || idx} className="p-5 rounded-2xl flex flex-col gap-3 transition-all hover:bg-white/60" style={glassStyle}>
               <div className="flex justify-between items-start">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gray-200" />
+                  <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500">N</div>
                   <div>
-                    <div className="font-bold text-gray-900">@tech_analyst_{item}</div>
-                    <div className="text-xs text-gray-500">2 mins ago • X (Twitter)</div>
+                    <a href={item.link} target="_blank" rel="noreferrer" className="font-bold text-gray-900 hover:text-purple-600 transition-colors line-clamp-1">{item.title}</a>
+                    <div className="text-xs text-gray-500">{new Date(item.pubDate).toLocaleString()} • {item.source}</div>
                   </div>
                 </div>
-                <span className="px-2 py-1 rounded bg-red-100 text-red-600 text-xs font-bold uppercase">Negative</span>
+                <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${
+                  item.sentiment === 'POSITIVE' ? 'bg-emerald-100 text-emerald-700' :
+                  item.sentiment === 'NEGATIVE' ? 'bg-red-100 text-red-700' :
+                  'bg-gray-200 text-gray-600'
+                }`}>
+                  {item.sentiment}
+                </span>
               </div>
               <p className="text-gray-700 text-sm">
-                The recent statements by #BudimanSudjatmiko have sparked massive debate in the eastern region. This is completely unacceptable to some demographics. We are monitoring the situation closely.
+                Entities detected: {item.entities && item.entities.length > 0 ? item.entities.join(", ") : "None"}
               </p>
-              <div className="flex gap-4 text-xs font-bold text-gray-400 mt-2">
-                <span>🔄 142 Reposts</span>
-                <span>❤️ 890 Likes</span>
-              </div>
             </div>
           ))}
         </div>
@@ -357,6 +390,20 @@ export function OperationalDashboardPage() {
           </div>
 
           <div className="flex items-center gap-4">
+            
+            {/* Engine Status Indicator */}
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/30 border border-white/40 shadow-inner mr-2" title={engineStatus.isScraping ? "Engine is currently scraping data..." : `Idle. Last run: ${engineStatus.lastRun ? new Date(engineStatus.lastRun).toLocaleTimeString() : 'Never'}`}>
+              <div className="relative flex h-3 w-3">
+                {engineStatus.isScraping && (
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                )}
+                <span className={`relative inline-flex rounded-full h-3 w-3 ${engineStatus.isScraping ? 'bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]' : 'bg-gray-400'}`}></span>
+              </div>
+              <span className="text-xs font-bold text-gray-700 uppercase tracking-widest">
+                {engineStatus.isScraping ? 'Scraping...' : 'Idle'}
+              </span>
+            </div>
+
             <div className="relative">
               <button 
                 onClick={() => { setDateDropdownOpen(!isDateDropdownOpen); setShowCustomCalendar(false); setTrackerDropdownOpen(false); setProfileDropdownOpen(false); }}
