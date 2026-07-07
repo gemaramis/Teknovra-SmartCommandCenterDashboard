@@ -33,55 +33,67 @@ export default async function handler(req: any, res: any) {
       const encodedQuery = encodeURIComponent(target);
       const feed = await parser.parseURL(`https://news.google.com/rss/search?q=${encodedQuery}&hl=id&gl=ID&ceid=ID:id`);
       
-      // Process top 3 per entity to avoid timeout/rate limits in a single serverless function
-      const newItems = feed.items.slice(0, 3); 
+      // Process up to 30 items per entity
+      const newItems = feed.items.slice(0, 30); 
 
-      const processedItems = [];
-
+      // Filter out items already in the database
+      const itemsToProcess = [];
       for (const item of newItems) {
         const { data: existing } = await supabase
           .from('mentions')
           .select('guid')
           .eq('guid', item.guid)
           .single();
-          
-        if (existing) continue;
+        if (!existing) itemsToProcess.push(item);
+      }
 
-        let sentiment = "NEUTRAL";
-        let entities: string[] = [];
-        try {
-          const prompt = `Analyze the following news snippet about ${target}.
-          Title: ${item.title}
-          Snippet: ${item.contentSnippet || item.title}
-          
-          Return a strictly formatted JSON object with no markdown formatting:
-          {
-            "sentiment": "POSITIVE" | "NEGATIVE" | "NEUTRAL",
-            "entities": ["Location1", "Person1", "Organization1"]
-          }`;
-          
-          const result = await model.generateContent(prompt);
-          const responseText = await result.response.text();
-          const cleanText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
-          const aiData = JSON.parse(cleanText);
-          
-          sentiment = aiData.sentiment || "NEUTRAL";
-          entities = aiData.entities || [];
-        } catch (err) {
-          console.error(`AI Analysis failed for ${item.title}`, err);
-        }
+      if (itemsToProcess.length === 0) continue;
 
-        processedItems.push({
-          guid: item.guid,
-          title: item.title,
-          link: item.link,
-          pubDate: new Date(item.pubDate || Date.now()).toISOString(),
-          source: item.source || 'Google News',
-          sentiment: sentiment,
-          entities: entities
-        });
+      const processedItems = [];
+
+      try {
+        // Batch analyze up to 30 items in ONE prompt to avoid Vercel timeouts and Gemini rate limits
+        const prompt = `Analyze the following news snippets about ${target}.
+        Return a strictly formatted JSON array where each object corresponds to the snippet's index, containing:
+        "sentiment": "POSITIVE" | "NEGATIVE" | "NEUTRAL",
+        "entities": ["Location1", "Person1"]
+
+        Snippets:
+        ${itemsToProcess.map((item, idx) => `[${idx}] Title: ${item.title}\nSnippet: ${item.contentSnippet || item.title}`).join('\n\n')}
         
-        await new Promise(r => setTimeout(r, 1000));
+        ONLY output valid JSON.`;
+        
+        const result = await model.generateContent(prompt);
+        const responseText = await result.response.text();
+        const cleanText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
+        const aiDataArray = JSON.parse(cleanText);
+        
+        itemsToProcess.forEach((item, idx) => {
+          const aiData = aiDataArray[idx] || {};
+          processedItems.push({
+            guid: item.guid,
+            title: item.title,
+            link: item.link,
+            pubDate: new Date(item.pubDate || Date.now()).toISOString(),
+            source: item.source || 'Google News',
+            sentiment: aiData.sentiment || "NEUTRAL",
+            entities: aiData.entities || []
+          });
+        });
+      } catch (err) {
+        console.error(`AI Batch Analysis failed for ${target}`, err);
+        // Fallback: save them as neutral if AI fails
+        itemsToProcess.forEach((item) => {
+          processedItems.push({
+            guid: item.guid,
+            title: item.title,
+            link: item.link,
+            pubDate: new Date(item.pubDate || Date.now()).toISOString(),
+            source: item.source || 'Google News',
+            sentiment: "NEUTRAL",
+            entities: []
+          });
+        });
       }
 
       if (processedItems.length > 0) {
