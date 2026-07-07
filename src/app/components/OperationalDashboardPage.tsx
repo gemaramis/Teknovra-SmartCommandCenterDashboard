@@ -12,7 +12,6 @@ import { format, subDays } from "date-fns";
 
 const SIDEBAR_TABS = [
   { id: "summary", label: "Summary", icon: BarChart2 },
-  { id: "trendings", label: "Trendings", icon: TrendingUp },
   { id: "mentions", label: "Mentions", icon: MessageSquare },
   { id: "authors", label: "Authors", icon: Users },
   { id: "analysis", label: "Geo Analysis", icon: Map },
@@ -194,12 +193,26 @@ export function OperationalDashboardPage() {
           { name: "Youtube", color: "bg-red-600" },
           { name: "Instagram", color: "bg-fuchsia-600" },
           { name: "Tiktok", color: "bg-black" },
-        ].map((c, i) => (
-          <button key={i} className={`${c.color} text-white px-6 py-3 rounded-xl font-bold text-sm shadow-md flex flex-col items-center min-w-[100px] hover:scale-105 transition-transform`}>
-            <span>{c.name}</span>
-            <span className="text-xs font-normal opacity-80 mt-1">{i===0 ? "14.2k" : Math.floor(Math.random()*3000)}</span>
-          </button>
-        ))}
+        ].map((c, i) => {
+          let count = 0;
+          if (c.name === "All") count = dashboardStats.kpis.totalMentions;
+          else {
+            const found = (dashboardStats.sources as any[]).find((s: any) => s.name.toLowerCase().includes(c.name.toLowerCase()));
+            count = found ? found.count : 0;
+          }
+          const isZero = count === 0;
+
+          return (
+            <button 
+              key={i} 
+              disabled={isZero}
+              className={`${isZero ? 'bg-gray-300 text-gray-500' : c.color + ' text-white'} px-6 py-3 rounded-xl font-bold text-sm shadow-md flex flex-col items-center min-w-[100px] ${!isZero && 'hover:scale-105 transition-transform cursor-pointer'}`}
+            >
+              <span>{c.name}</span>
+              <span className="text-xs font-normal opacity-80 mt-1">{count.toLocaleString()}</span>
+            </button>
+          );
+        })}
       </div>
       
       <div className="flex flex-1 min-h-0 gap-6 mt-4">
@@ -253,30 +266,7 @@ export function OperationalDashboardPage() {
     </div>
   );
 
-  const renderTrendingsTab = () => (
-    <div className="animate-in fade-in h-full flex flex-col gap-6">
-      <h2 className="text-xl font-bold text-gray-800">X (Twitter) Indonesia Trendings</h2>
-      <div className="grid grid-cols-3 gap-6 flex-1 min-h-0">
-        {[
-          { title: "Latest", items: ["#BudimanSudjatmiko", "Politik", "Debat", "Aktivis", "#Pemilu2029"] },
-          { title: "10-25 Minutes Ago", items: ["#BudimanSudjatmiko", "Politik", "Jumat", "Korsel", "Statement"] },
-          { title: "An Hour Ago", items: ["#BudimanSudjatmiko", "Pagi", "Jumat", "Sarapan", "Weekend"] }
-        ].map((col, idx) => (
-          <div key={idx} className="rounded-2xl p-6 flex flex-col gap-4" style={glassStyle}>
-            <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest border-b border-gray-200/50 pb-2">{col.title}</h3>
-            <div className="flex flex-col gap-3 flex-1 overflow-y-auto">
-              {col.items.map((item, i) => (
-                <div key={i} className="flex justify-between items-center group">
-                  <span className="font-bold text-gray-700 group-hover:text-purple-600 transition-colors cursor-pointer">{item}</span>
-                  <span className="text-xs font-medium text-gray-400 bg-white/50 px-2 py-0.5 rounded">{Math.floor(Math.random() * 5000)}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  // Trendings tab removed
 
   const renderGeoTab = () => (
     <div className="animate-in fade-in h-full flex flex-col gap-6">
@@ -288,23 +278,9 @@ export function OperationalDashboardPage() {
       </div>
       <div className="h-1/3 rounded-2xl p-6" style={glassStyle}>
         <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Top Provinces by Mention</h3>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="flex justify-between items-center border-b border-white pb-2">
-            <span className="font-bold text-gray-700">DKI Jakarta</span>
-            <span className="text-sm font-bold text-emerald-600">4,201 Mentions</span>
-          </div>
-          <div className="flex justify-between items-center border-b border-white pb-2">
-            <span className="font-bold text-gray-700">Jawa Barat</span>
-            <span className="text-sm font-bold text-emerald-600">3,190 Mentions</span>
-          </div>
-          <div className="flex justify-between items-center border-b border-white pb-2">
-            <span className="font-bold text-gray-700">Jawa Timur</span>
-            <span className="text-sm font-bold text-emerald-600">2,845 Mentions</span>
-          </div>
-          <div className="flex justify-between items-center border-b border-white pb-2">
-            <span className="font-bold text-gray-700">Banten</span>
-            <span className="text-sm font-bold text-emerald-600">1,420 Mentions</span>
-          </div>
+        <div className="flex flex-col items-center justify-center h-32 text-gray-400">
+          <p className="font-bold">Awaiting geospatial extraction module</p>
+          <p className="text-sm">Location data will appear here once identified in news articles.</p>
         </div>
       </div>
     </div>
@@ -524,7 +500,6 @@ export function OperationalDashboardPage() {
         <main className="flex-1 overflow-auto p-8 relative">
           {activeTab === "summary" && renderSummaryTab()}
           {activeTab === "mentions" && renderMentionsTab()}
-          {activeTab === "trendings" && renderTrendingsTab()}
           {activeTab === "analysis" && renderGeoTab()}
           {activeTab === "authors" && (
             <div className="flex flex-col items-center justify-center h-full text-gray-400 animate-in fade-in">
