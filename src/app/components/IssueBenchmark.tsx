@@ -11,13 +11,13 @@ import {
 } from "recharts";
 
 import { useLiveData } from "../contexts/LiveDataContext";
-const COLORS: Record<string, string> = {
-  Prabowo: "#7B2FD6",
-  MBG: "#D946EF",
-  Danantara: "#0891B2",
-  Gemoy: "#D97706",
-  Gerindra: "#059669",
-};
+const COLORS: string[] = [
+  "#7B2FD6",
+  "#D946EF",
+  "#0891B2",
+  "#D97706",
+  "#059669",
+];
 
 const issueDetails: Record<string, { summary: string; sentiment: string; topMedia: string; volume: number; trend: string }> = {
   Prabowo: {
@@ -57,7 +57,7 @@ const issueDetails: Record<string, { summary: string; sentiment: string; topMedi
   },
 };
 
-function DetailModal({ issue, onClose }: { issue: string; onClose: () => void }) {
+function DetailModal({ issue, color, onClose }: { issue: string; color: string; onClose: () => void }) {
   const d = issueDetails[issue];
   if (!d) return null;
   return (
@@ -73,7 +73,7 @@ function DetailModal({ issue, onClose }: { issue: string; onClose: () => void })
       >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full" style={{ background: COLORS[issue] }} />
+            <span className="w-3 h-3 rounded-full" style={{ background: color }} />
             <span style={{ color: "#1A1230", fontWeight: 700, fontSize: "1rem" }}>{issue}</span>
           </div>
           <button onClick={onClose} style={{ color: "#7B6BAA", fontSize: "2rem", lineHeight: 1 }} className="hover:text-[#1A1230] transition-colors">×</button>
@@ -121,18 +121,15 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export function IssueBenchmark() {
-  const { issueData } = useLiveData();
+  const { issues } = useLiveData();
   const [selectedIssue, setSelectedIssue] = useState<string | null>(null);
-  const latestValues: any = issueData[issueData.length - 1] || {};
 
-  // Transform latest values to sorted array from highest to lowest
-  const chartData = Object.entries(COLORS)
-    .map(([key, color]) => ({
-      name: key,
-      value: latestValues[key] || 0,
-      color,
-    }))
-    .sort((a, b) => b.value - a.value);
+  // Transform top 5 issues to chart data
+  const chartData = issues.slice(0, 5).map((iss, idx) => ({
+    name: iss.topic,
+    value: iss.score || 0,
+    color: COLORS[idx % COLORS.length],
+  })).sort((a, b) => b.value - a.value);
 
   return (
     <div className="rounded-3xl p-6 p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
@@ -185,11 +182,11 @@ export function IssueBenchmark() {
       </div>
 
       <div style={{ color: "#7B6BAA", fontSize: "0.85rem", marginTop: "0.5rem" }}>
-        Prabowo memimpin volume isu (+14.2%) sementara MBG mencatat kenaikan tertinggi bulan ini.{" "}
+        {chartData[0]?.name || 'Issue'} memimpin volume isu sementara mencatat kenaikan tertinggi.{" "}
         <span style={{ color: "#7B2FD6", cursor: "pointer" }}>Klik isu untuk detail →</span>
       </div>
 
-      {selectedIssue && <DetailModal issue={selectedIssue} onClose={() => setSelectedIssue(null)} />}
+      {selectedIssue && <DetailModal issue={selectedIssue} color={chartData.find(c => c.name === selectedIssue)?.color || "#7B2FD6"} onClose={() => setSelectedIssue(null)} />}
     </div>
   );
 }

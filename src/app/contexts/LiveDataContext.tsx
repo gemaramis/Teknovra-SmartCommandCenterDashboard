@@ -178,12 +178,19 @@ export const LiveDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           text: m.title
         }));
 
+        const persons: PersonItem[] = (stats.topIssues || []).slice(2, 7).map((iss: any) => ({
+          name: iss.name,
+          role: "Public Figure / Entity",
+          count: iss.count,
+          sentiment: "neutral"
+        }));
+
         setData({
           issueData: [], // Timeline mapping would go here
           sentimentData,
           posts,
           issues,
-          persons: [], // Person specific mapping would go here
+          persons,
           alerts,
           mediaList,
           mediaChannels: mediaList,
