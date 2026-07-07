@@ -47,13 +47,13 @@ export function OperationalDashboardPage() {
     // Poll the engine status every 5 seconds
     const fetchStatus = async () => {
       try {
-        const res = await fetch("http://localhost:3001/api/status");
+        const res = await fetch("/api/status");
         if (res.ok) {
           const data = await res.json();
           setEngineStatus(data);
         }
         
-        const mentionsRes = await fetch("http://localhost:3001/api/mentions");
+        const mentionsRes = await fetch("/api/mentions");
         if (mentionsRes.ok) {
           const mData = await mentionsRes.json();
           setMentionsData(mData.data);
