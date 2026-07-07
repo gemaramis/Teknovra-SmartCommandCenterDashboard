@@ -29,6 +29,7 @@ export interface SocialPost {
 export interface IssueItem {
   id: string;
   topic: string;
+  label: string; // alias for topic used by some panels
   score: number;
   change: string;
   up: boolean;
@@ -42,10 +43,18 @@ export interface PersonItem {
 }
 
 export interface AlertItem {
+  id: string;
   level: "HIGH" | "MED" | "LOW";
   issueType: string;
   title: string;
   source: string;
+  timeLeft: string;
+  remaining: string;
+  impact: string;
+  mentions: number;
+  mentionLabel: string;
+  topChannel: string;
+  systemHealth: string;
 }
 
 export interface MediaItem {
@@ -53,6 +62,9 @@ export interface MediaItem {
   type: string;
   mentions: number;
   reach: string;
+  label: string; // alias for name
+  pct: number; // alias for reach percentage
+  color: string; // UI color
 }
 
 export interface TickerItem {
@@ -69,6 +81,7 @@ export interface LiveDataState {
   persons: PersonItem[];
   alerts: AlertItem[];
   mediaList: MediaItem[];
+  mediaChannels: MediaItem[]; // alias used by ListMediaPanel
   tickerItems: TickerItem[];
 }
 
@@ -80,6 +93,7 @@ const initialLiveState: LiveDataState = {
   persons: [],
   alerts: [],
   mediaList: [],
+  mediaChannels: [],
   tickerItems: []
 };
 
@@ -124,6 +138,7 @@ export const LiveDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         const issues: IssueItem[] = (stats.topIssues || []).slice(0, 5).map((iss: any, i: number) => ({
           id: `iss-${i}`,
           topic: iss.name,
+          label: iss.name,
           score: iss.count,
           change: "+0%",
           up: true
@@ -133,17 +148,28 @@ export const LiveDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           name: s.name,
           type: "News",
           mentions: s.count,
-          reach: s.val
+          reach: s.val,
+          label: s.name,
+          pct: parseInt(s.val) || 0,
+          color: "#7B2FD6"
         }));
 
         const alerts: AlertItem[] = mentions
           .filter((m: any) => m.sentiment === "NEGATIVE")
           .slice(0, 5)
-          .map((m: any) => ({
+          .map((m: any, i: number) => ({
+            id: `alert-${i}`,
             level: "HIGH",
             issueType: "Negative Sentiment",
             title: m.title,
-            source: m.source
+            source: m.source,
+            timeLeft: "00:45:00",
+            remaining: "45m",
+            impact: "High",
+            mentions: 0,
+            mentionLabel: "0 mentions",
+            topChannel: "News",
+            systemHealth: "Stable"
           }));
 
         const tickerItems: TickerItem[] = mentions.slice(0, 10).map((m: any) => ({
@@ -160,6 +186,7 @@ export const LiveDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           persons: [], // Person specific mapping would go here
           alerts,
           mediaList,
+          mediaChannels: mediaList,
           tickerItems
         });
       } catch (err) {

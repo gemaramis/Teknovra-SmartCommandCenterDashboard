@@ -32,7 +32,7 @@ export function LiveDistPanel() {
       <div className="flex justify-between mb-3 mt-2">
         {sentimentData.map((s) => {
           const total = sentimentData.reduce((acc, curr) => acc + curr.value, 0);
-          const percent = Math.round((s.value / total) * 100);
+          const percent = total > 0 ? Math.round((s.value / total) * 100) : 0;
           return (
             <div key={s.name} className="flex flex-col items-center gap-0.5">
               <span style={{ color: s.color, fontSize: "1.25rem", fontWeight: 700 }}>
