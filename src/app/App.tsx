@@ -9,6 +9,7 @@ import { SearchScrapingPage } from "./components/SearchScrapingPage";
 import { GenerateActionPage } from "./components/GenerateActionPage";
 import { ProfileBuilderPage } from "./components/ProfileBuilderPage";
 import { OperationalDashboardPage } from "./components/OperationalDashboardPage";
+import { EngineSettingsPage } from "./components/EngineSettingsPage";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/generate-action" element={<GenerateActionPage />} />
         <Route path="/profile-builder" element={<ProfileBuilderPage />} />
         <Route path="/operational" element={<OperationalDashboardPage />} />
+        <Route path="/settings" element={<EngineSettingsPage />} />
       </Routes>
     </BrowserRouter>
   );

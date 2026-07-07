@@ -438,8 +438,11 @@ export function OperationalDashboardPage() {
                     </div>
                   </div>
                   <div className="py-2">
-                    <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
-                      <Settings size={16} className="text-gray-400" /> Settings & Billing
+                    <button 
+                      onClick={() => navigate("/settings")}
+                      className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3"
+                    >
+                      <Settings size={16} className="text-gray-400" /> Engine Settings
                     </button>
                     <button 
                       onClick={() => navigate("/")}
