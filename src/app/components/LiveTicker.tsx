@@ -1,6 +1,6 @@
-import { useMockData } from "../contexts/MockDataContext";
+import { useLiveData } from "../contexts/LiveDataContext";
 export function LiveTicker() {
-  const { tickerItems } = useMockData();
+  const { tickerItems } = useLiveData();
   const loopedItems = [...tickerItems, ...tickerItems];
 
   return (

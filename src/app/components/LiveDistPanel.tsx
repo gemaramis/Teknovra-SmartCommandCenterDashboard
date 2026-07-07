@@ -1,8 +1,8 @@
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { toast } from "sonner";
-import { useMockData } from "../contexts/MockDataContext";
+import { useLiveData } from "../contexts/LiveDataContext";
 export function LiveDistPanel() {
-  const { sentimentData, alerts } = useMockData();
+  const { sentimentData, alerts } = useLiveData();
   const totalNegativeAlerts = alerts.length;
   return (
     <div className="rounded-3xl p-4 flex flex-col h-full overflow-hidden" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>

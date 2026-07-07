@@ -1,10 +1,10 @@
 import { Heart, MessageCircle, Twitter } from "lucide-react";
 import { toast } from "sonner";
-import { useMockData } from "../contexts/MockDataContext";
+import { useLiveData } from "../contexts/LiveDataContext";
 const sentimentColor: Record<string, string> = { negative: "#EF4444", positive: "#059669", neutral: "#7B6BAA" };
 
 export function TopSocialPanel() {
-  const { posts } = useMockData();
+  const { posts } = useLiveData();
   return (
     <div className="rounded-3xl p-6 p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
       <div className="flex items-center justify-between mb-3">

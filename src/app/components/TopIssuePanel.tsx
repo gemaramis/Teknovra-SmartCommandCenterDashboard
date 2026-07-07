@@ -1,8 +1,8 @@
 import { TrendingUp, TrendingDown } from "lucide-react";
-import { useMockData } from "../contexts/MockDataContext";
+import { useLiveData } from "../contexts/LiveDataContext";
 
 export function TopIssuePanel() {
-  const { issues } = useMockData();
+  const { issues } = useLiveData();
 
   // Get Top 5 sorted by score descending
   const top5 = [...issues].sort((a, b) => b.score - a.score).slice(0, 5);

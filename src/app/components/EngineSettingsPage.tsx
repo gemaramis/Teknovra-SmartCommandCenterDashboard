@@ -14,13 +14,43 @@ export function EngineSettingsPage() {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("entities");
 
-  const [keywords, setKeywords] = useState(["Budiman Sudjatmiko", "Pemilu 2029"]);
+  const [keywords, setKeywords] = useState(["Budiman Sudjatmiko"]);
+  const [crawlFrequency, setCrawlFrequency] = useState("Every 15 Minutes (Balanced)");
   const [newKeyword, setNewKeyword] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleSave = () => {
-    toast.success("Engine Configuration Saved Successfully", {
-      description: "Background crawler parameters have been updated."
-    });
+  React.useEffect(() => {
+    fetch("/api/settings")
+      .then(res => res.json())
+      .then(data => {
+        if (data.target_entities) setKeywords(data.target_entities);
+        if (data.crawl_frequency) setCrawlFrequency(data.crawl_frequency);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setIsLoading(false);
+      });
+  }, []);
+
+  const handleSave = async () => {
+    try {
+      const res = await fetch("/api/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          target_entities: keywords,
+          crawl_frequency: crawlFrequency
+        })
+      });
+      if (!res.ok) throw new Error("Failed to save");
+      
+      toast.success("Engine Configuration Saved Successfully", {
+        description: "Background crawler parameters have been updated."
+      });
+    } catch (err) {
+      toast.error("Failed to save configuration");
+    }
   };
 
   const addKeyword = (e: React.FormEvent) => {
@@ -189,7 +219,11 @@ export function EngineSettingsPage() {
                 <div className="rounded-2xl p-6" style={glassStyle}>
                   <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Crawl Frequency</label>
                   <div className="relative">
-                    <select className={`${inputStyle} appearance-none cursor-pointer pr-10`}>
+                    <select 
+                      value={crawlFrequency}
+                      onChange={(e) => setCrawlFrequency(e.target.value)}
+                      className={`${inputStyle} appearance-none cursor-pointer pr-10`}
+                    >
                       <option>Every 5 Minutes (Aggressive)</option>
                       <option>Every 15 Minutes (Balanced)</option>
                       <option>Hourly (Economy)</option>

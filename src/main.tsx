@@ -3,14 +3,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./app/App.tsx";
 import "./styles/index.css";
 
-import { MockDataProvider } from "./app/contexts/MockDataContext";
+import { LiveDataProvider } from "./app/contexts/LiveDataContext";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={queryClient}>
-    <MockDataProvider>
+    <LiveDataProvider>
       <App />
-    </MockDataProvider>
+    </LiveDataProvider>
   </QueryClientProvider>
 );

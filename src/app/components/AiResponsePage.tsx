@@ -1,12 +1,12 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router";
 import { ArrowLeft, Bot, Sparkles } from "lucide-react";
-import { useMockData } from "../contexts/MockDataContext";
+import { useLiveData } from "../contexts/LiveDataContext";
 
 export function AiResponsePage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { alerts } = useMockData();
+  const { alerts } = useLiveData();
   
   const issue = alerts.find(a => a.id.toString() === id);
 

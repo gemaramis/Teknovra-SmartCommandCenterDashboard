@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { ArrowLeft, Sparkles, Send, CheckCircle2, AlertCircle, RefreshCw, Image as ImageIcon, Type, LayoutTemplate } from "lucide-react";
 import { toast } from "sonner";
-import { useMockData } from "../contexts/MockDataContext";
+import { useLiveData } from "../contexts/LiveDataContext";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
@@ -10,7 +10,7 @@ const genAI = new GoogleGenerativeAI(API_KEY);
 
 export function GenerateActionPage() {
   const navigate = useNavigate();
-  const { alerts } = useMockData();
+  const { alerts } = useLiveData();
   
   const [selectedIssueId, setSelectedIssueId] = useState(alerts[0]?.id.toString() || "");
   const [platform, setPlatform] = useState("Twitter");

@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { ArrowLeft, Send, Users, Shield, Briefcase, ChevronRight, Check } from "lucide-react";
 import { toast } from "sonner";
-import { useMockData } from "../contexts/MockDataContext";
+import { useLiveData } from "../contexts/LiveDataContext";
 
 export function EscalationPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { alerts } = useMockData();
+  const { alerts } = useLiveData();
   
   const issue = alerts.find(a => a.id.toString() === id);
   const [selectedDepts, setSelectedDepts] = useState<string[]>([]);

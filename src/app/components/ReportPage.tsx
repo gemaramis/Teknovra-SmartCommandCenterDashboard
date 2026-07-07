@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { FileText, Download, Mail, Presentation, FileSpreadsheet, X, ArrowLeft, CheckSquare, Square, Printer, Calendar as CalendarIcon, Settings, Target, Check, Database, Twitter, Newspaper, Video, Instagram as InstagramIcon, Youtube } from "lucide-react";
 import { toast } from "sonner";
-import { useMockData } from "../contexts/MockDataContext";
+import { useLiveData } from "../contexts/LiveDataContext";
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
 
 export function ReportPage() {
@@ -53,7 +53,7 @@ export function ReportPage() {
     "Key Figures & Persons": false,
   });
 
-  const { issues, sentimentData } = useMockData();
+  const { issues, sentimentData } = useLiveData();
 
   const handleToggle = (setter: React.Dispatch<React.SetStateAction<Record<string, boolean>>>, key: string) => {
     setter(prev => ({ ...prev, [key]: !prev[key] }));

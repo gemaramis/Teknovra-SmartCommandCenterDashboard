@@ -42,6 +42,13 @@ export function OperationalDashboardPage() {
     }
     return "Select Range";
   };
+  const [availableProjects, setAvailableProjects] = useState(["All Projects"]);
+  const [activeProject, setActiveProject] = useState("All Projects");
+  const [dashboardStats, setDashboardStats] = useState({
+    kpis: { totalMentions: 0, positive: 0, negative: 0, neutral: 0 },
+    topIssues: [],
+    sources: []
+  });
 
   React.useEffect(() => {
     // Poll the engine status every 5 seconds
@@ -53,19 +60,33 @@ export function OperationalDashboardPage() {
           setEngineStatus(data);
         }
         
-        const mentionsRes = await fetch("/api/mentions");
+        const mentionsRes = await fetch(`/api/mentions?entity=${encodeURIComponent(activeProject)}`);
         if (mentionsRes.ok) {
           const mData = await mentionsRes.json();
-          setMentionsData(mData.data);
+          setMentionsData(mData.data || []);
+        }
+
+        const statsRes = await fetch(`/api/dashboard/stats?entity=${encodeURIComponent(activeProject)}`);
+        if (statsRes.ok) {
+          const sData = await statsRes.json();
+          setDashboardStats(sData);
         }
       } catch (err) {
         // Silently fail if engine is not running yet
       }
     };
+    
+    // Fetch available projects from settings on load
+    fetch("/api/settings").then(r => r.json()).then(d => {
+      if (d.target_entities) {
+        setAvailableProjects(["All Projects", ...d.target_entities]);
+      }
+    }).catch(() => {});
+
     fetchStatus();
     const interval = setInterval(fetchStatus, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [activeProject]);
 
   const glassStyle = {
     background: "rgba(255, 255, 255, 0.4)",
@@ -85,14 +106,12 @@ export function OperationalDashboardPage() {
   const renderSummaryTab = () => (
     <div className="flex flex-col gap-6 animate-in fade-in">
       {/* Top KPIs */}
-      <div className="grid grid-cols-6 gap-4">
+      <div className="grid grid-cols-4 gap-6">
         {[
-          { label: "Total Mentions", value: "14,291", trend: "+12.5%", color: "text-purple-600" },
-          { label: "Total Engagement", value: "482.1k", trend: "+8.2%", color: "text-purple-600" },
-          { label: "Unique Authors", value: "8,401", trend: "-2.1%", color: "text-purple-600" },
-          { label: "Positive Mentions", value: "4,120", trend: "+15.0%", color: "text-emerald-600" },
-          { label: "Negative Mentions", value: "2,094", trend: "-5.4%", color: "text-red-500" },
-          { label: "Neutral Mentions", value: "8,077", trend: "+1.2%", color: "text-blue-500" },
+          { label: "Total Mentions", value: dashboardStats.kpis.totalMentions, trend: "+12.5%", color: "text-purple-600" },
+          { label: "Positive Sentiment", value: dashboardStats.kpis.positive, trend: "+4.2%", color: "text-emerald-500" },
+          { label: "Negative Sentiment", value: dashboardStats.kpis.negative, trend: "-2.1%", color: "text-red-500" },
+          { label: "Neutral Sentiment", value: dashboardStats.kpis.neutral, trend: "+8.4%", color: "text-sky-500" }
         ].map((kpi, idx) => (
           <div key={idx} className="bg-white/60 backdrop-blur-md border border-white/80 rounded-2xl p-4 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
             <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">{kpi.label}</h3>
@@ -120,7 +139,7 @@ export function OperationalDashboardPage() {
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={[
                 { time: '10:00', value: 120 }, { time: '11:00', value: 300 }, { time: '12:00', value: 250 },
-                { time: '13:00', value: 800 }, { time: '14:00', value: 650 }, { time: '15:00', value: 920 },
+                { time: '13:00', value: 800 }, { time: '14:00', value: 650 }, { time: '15:00', value: dashboardStats.kpis.totalMentions },
               ]}>
                 <defs>
                   <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -140,22 +159,17 @@ export function OperationalDashboardPage() {
           <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2 mb-6">
             <PieChart size={16} /> Source Breakdown
           </h3>
-          <div className="flex-1 flex flex-col gap-4">
-            {[
-              { name: "X (Twitter)", val: "45%", count: "6,430" },
-              { name: "News Portals", val: "25%", count: "3,572" },
-              { name: "Instagram", val: "15%", count: "2,143" },
-              { name: "TikTok", val: "10%", count: "1,429" },
-              { name: "Facebook", val: "5%", count: "717" },
-            ].map((src, i) => (
-              <div key={i} className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-purple-500" />
-                  <span className="text-sm font-bold text-gray-700">{src.name}</span>
+          <div className="flex-1 flex flex-col gap-4 overflow-y-auto">
+            {dashboardStats.sources.length === 0 && <div className="text-gray-400 font-bold text-sm">No data available</div>}
+            {dashboardStats.sources.map((src: any, idx: number) => (
+              <div key={idx} className="flex flex-col gap-1">
+                <div className="flex justify-between items-center text-sm font-bold">
+                  <span className="text-gray-700">{src.name}</span>
+                  <span className="text-purple-600">{src.val}</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-gray-500">{src.count}</span>
-                  <div className="w-20 h-1.5 bg-white rounded-full overflow-hidden">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-gray-500">{src.count} mentions</span>
+                  <div className="flex-1 h-1.5 bg-white rounded-full overflow-hidden">
                     <div className="h-full bg-purple-500" style={{ width: src.val }} />
                   </div>
                 </div>
@@ -352,7 +366,7 @@ export function OperationalDashboardPage() {
                 onClick={() => { setTrackerDropdownOpen(!isTrackerDropdownOpen); setDateDropdownOpen(false); setProfileDropdownOpen(false); }}
                 className="flex items-center gap-2 bg-white/70 hover:bg-white px-4 py-2 rounded-lg font-bold text-sm text-purple-700 shadow-sm transition-colors border border-white/80"
               >
-                <Plus size={16} /> Budiman Sudjatmiko
+                <Plus size={16} /> {activeProject}
               </button>
               
               {isTrackerDropdownOpen && (
@@ -364,19 +378,21 @@ export function OperationalDashboardPage() {
                     </div>
                   </div>
                   <div className="py-2 max-h-48 overflow-y-auto">
-                    <button className="w-full text-left px-4 py-2 text-sm font-bold text-gray-800 bg-purple-50 flex items-center justify-between">
-                      Budiman Sudjatmiko <Check size={14} className="text-purple-600" />
-                    </button>
-                    <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
-                      Prabowo Subianto Tracker
-                    </button>
-                    <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
-                      Pemilu 2029 Tracker
-                    </button>
+                    {availableProjects.map((p, idx) => (
+                      <button 
+                        key={idx}
+                        onClick={() => { setActiveProject(p); setTrackerDropdownOpen(false); }}
+                        className={`w-full text-left px-4 py-2 text-sm font-medium transition-colors flex items-center justify-between ${
+                          activeProject === p ? 'text-gray-800 bg-purple-50 font-bold' : 'text-gray-600 hover:bg-gray-50'
+                        }`}
+                      >
+                        {p} {activeProject === p && <Check size={14} className="text-purple-600" />}
+                      </button>
+                    ))}
                   </div>
                   <div className="p-3 border-t border-gray-100">
-                    <button className="w-full py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-bold text-purple-700 transition-colors flex justify-center items-center gap-2">
-                      <Plus size={14} /> Create New Project
+                    <button onClick={() => navigate("/engine")} className="w-full py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-bold text-purple-700 transition-colors flex justify-center items-center gap-2">
+                      <Plus size={14} /> Configure Entities
                     </button>
                   </div>
                 </div>

@@ -3,12 +3,12 @@ import { AlertTriangle, Clock, TrendingUp, Zap, ShieldAlert, Bot } from "lucide-
 import { useNavigate } from "react-router";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "./ui/dialog";
 import { toast } from "sonner";
-import { useMockData } from "../contexts/MockDataContext";
+import { useLiveData } from "../contexts/LiveDataContext";
 const levelColor: Record<string, string> = { HIGH: "#EF4444", MED: "#D97706", LOW: "#059669" };
 const levelBg: Record<string, string> = { HIGH: "rgba(239,68,68,0.08)", MED: "rgba(217,119,6,0.08)", LOW: "rgba(5,150,105,0.08)" };
 
 export function AlertPanel() {
-  const { alerts } = useMockData();
+  const { alerts } = useLiveData();
   const navigate = useNavigate();
   const [selectedIssueId, setSelectedIssueId] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);

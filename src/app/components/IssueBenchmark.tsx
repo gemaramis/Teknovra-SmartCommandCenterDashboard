@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import { useMockData } from "../contexts/MockDataContext";
+import { useLiveData } from "../contexts/LiveDataContext";
 const COLORS: Record<string, string> = {
   Prabowo: "#7B2FD6",
   MBG: "#D946EF",
@@ -121,7 +121,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export function IssueBenchmark() {
-  const { issueData } = useMockData();
+  const { issueData } = useLiveData();
   const [selectedIssue, setSelectedIssue] = useState<string | null>(null);
   const latestValues: any = issueData[issueData.length - 1] || {};
 
