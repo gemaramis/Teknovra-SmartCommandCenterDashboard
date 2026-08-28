@@ -179,12 +179,14 @@
     line-height: 1.5;
   }
 
-  .heartbeat-line {
-    animation: slide-left 3s linear infinite;
+  /* Bright ECG pulse traveling along the waveform, like a hospital monitor sweep */
+  .ecg-sweep {
+    stroke-dasharray: 70 530;
+    animation: ecg-sweep 3.2s linear infinite;
   }
-  @keyframes slide-left {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+  @keyframes ecg-sweep {
+    from { stroke-dashoffset: 600; }
+    to { stroke-dashoffset: 0; }
   }
 }
 

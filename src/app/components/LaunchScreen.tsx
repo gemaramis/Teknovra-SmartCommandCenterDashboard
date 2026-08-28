@@ -1,21 +1,24 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import { LayoutDashboard, Sparkles, UserCircle, ShieldAlert, Activity, FileText, ChevronRight, BarChart2 } from "lucide-react";
-import logoTeknovra from "../../imports/logo_teknovra.png";
 
 const cardBase =
   "group text-left bg-white border border-[#E7E4EF] rounded-2xl transition-all duration-200 hover:border-[#C9B2EE] hover:shadow-[0_8px_24px_-12px_rgba(123,47,214,0.25)]";
+
+// One realistic ECG beat (P wave, QRS complex, T wave) per 150px, repeated 4x
+const ecgBeat = (x: number) =>
+  `M${x},30 H${x + 25} q6,-8 12,0 H${x + 60} l4,6 l6,-34 l6,42 l4,-14 H${x + 105} q10,-12 20,0 H${x + 150}`;
+const ECG_PATH = [0, 150, 300, 450].map(ecgBeat).join(" ");
 
 export function LaunchScreen() {
   const navigate = useNavigate();
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center overflow-hidden bg-[#F7F6FA]">
-      <div className="w-full max-w-6xl px-8 flex flex-col h-full max-h-[860px] py-12">
+    <div className="w-screen h-screen flex flex-col items-center overflow-hidden bg-[#F7F6FA]">
+      <div className="w-full max-w-[1480px] px-12 flex flex-col h-full py-10">
         {/* Header Section */}
-        <div className="w-full flex justify-between items-end mb-10">
+        <div className="w-full flex justify-between items-end mb-8">
           <div>
-            <img src={logoTeknovra} alt="Teknovra Logo" className="h-8 object-contain mb-6" />
             <h1 className="text-4xl font-semibold text-[#191233] tracking-tight leading-none mb-2">Workspace</h1>
             <p className="text-base text-[#6E6791]">Intelligence Suite &amp; Command Center</p>
           </div>
@@ -25,7 +28,7 @@ export function LaunchScreen() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-4 grid-rows-3 gap-4 w-full flex-1 min-h-0">
+        <div className="grid grid-cols-4 grid-rows-3 gap-5 w-full flex-1 min-h-0">
           {/* Executive Dashboard */}
           <button
             onClick={() => navigate("/dashboard")}
@@ -116,16 +119,25 @@ export function LaunchScreen() {
                 <h3 className="text-xl font-semibold text-[#059669] tracking-tight">Healthy</h3>
               </div>
 
-              {/* Heartbeat line */}
-              <div className="flex-1 h-10 relative flex items-center ml-8 opacity-60 overflow-hidden">
-                <svg width="200%" height="100%" viewBox="0 0 1000 50" preserveAspectRatio="none" className="heartbeat-line">
-                  <polyline
-                    points="0,25 50,25 60,10 70,40 80,25 150,25 160,15 170,35 180,25 250,25 260,5 270,45 280,25 350,25 360,10 370,40 380,25 450,25 460,15 470,35 480,25 500,25 550,25 560,10 570,40 580,25 650,25 660,15 670,35 680,25 750,25 760,5 770,45 780,25 850,25 860,10 870,40 880,25 950,25 960,15 970,35 980,25 1000,25"
+              {/* ECG monitor trace: dim baseline + bright pulse sweeping along the waveform */}
+              <div className="flex-1 h-10 relative flex items-center ml-8 overflow-hidden">
+                <svg width="100%" height="100%" viewBox="0 0 600 60" preserveAspectRatio="none">
+                  <path
+                    d={ECG_PATH}
                     fill="none"
                     stroke="#059669"
-                    strokeWidth="2"
+                    strokeWidth="1.5"
+                    opacity="0.15"
+                  />
+                  <path
+                    d={ECG_PATH}
+                    pathLength={600}
+                    fill="none"
+                    stroke="#059669"
+                    strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    className="ecg-sweep"
                   />
                 </svg>
               </div>
