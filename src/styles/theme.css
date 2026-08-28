@@ -188,5 +188,19 @@
     from { stroke-dashoffset: 600; }
     to { stroke-dashoffset: 0; }
   }
+
+  /* Render final state immediately for users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .ecg-sweep {
+      animation: none;
+      stroke-dasharray: none;
+    }
+    .animate-in {
+      animation: none !important;
+    }
+    .ticker-track {
+      animation: none !important;
+    }
+  }
 }
 

@@ -11,8 +11,8 @@ export function LiveTicker() {
 
       <div className="flex-1 overflow-hidden relative">
         <div
-          className="flex items-center gap-8 whitespace-nowrap"
-          style={{ animation: "ticker-scroll 45s linear infinite", width: "max-content" }}
+          className="ticker-track flex items-center gap-8 whitespace-nowrap"
+          style={{ width: "max-content" }}
         >
           {loopedItems.map((item, i) => (
             <div key={i} className="flex items-center gap-2 flex-shrink-0">
@@ -30,6 +30,7 @@ export function LiveTicker() {
       </div>
 
       <style>{`
+        .ticker-track { animation: ticker-scroll 45s linear infinite; }
         @keyframes ticker-scroll {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }

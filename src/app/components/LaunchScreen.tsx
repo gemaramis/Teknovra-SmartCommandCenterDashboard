@@ -63,8 +63,8 @@ export function LaunchScreen() {
             <button
               key={card.route}
               onClick={() => navigate(card.route)}
-              className="group text-left bg-white border border-[#E7E4EF] rounded-2xl p-6 h-[210px] flex flex-col transition-all duration-200 hover:border-[#C9B2EE] hover:shadow-[0_8px_24px_-12px_rgba(123,47,214,0.25)] hover:-translate-y-0.5 animate-in fade-in slide-in-from-bottom-3 duration-500 fill-mode-backwards"
-              style={{ animationDelay: `${80 + i * 60}ms` }}
+              className="group text-left bg-white border border-[#E7E4EF] rounded-2xl p-6 h-[210px] flex flex-col transition-all duration-200 hover:border-[#C9B2EE] hover:shadow-[0_8px_24px_-12px_rgba(123,47,214,0.25)] hover:-translate-y-0.5 animate-in fade-in slide-in-from-bottom-2 duration-300 fill-mode-backwards"
+              style={{ animationDelay: `${50 + i * 45}ms` }}
             >
               <div className="flex items-start justify-between">
                 <div className="w-11 h-11 bg-[#F3EEFB] rounded-xl flex items-center justify-center transition-colors duration-200 group-hover:bg-[#7B2FD6]">
@@ -81,8 +81,8 @@ export function LaunchScreen() {
 
           {/* System Status */}
           <div
-            className="bg-white border border-[#E7E4EF] rounded-2xl p-6 h-[210px] flex flex-col animate-in fade-in slide-in-from-bottom-3 duration-500 fill-mode-backwards"
-            style={{ animationDelay: `${80 + NAV_CARDS.length * 60}ms` }}
+            className="bg-white border border-[#E7E4EF] rounded-2xl p-6 h-[210px] flex flex-col animate-in fade-in slide-in-from-bottom-2 duration-300 fill-mode-backwards"
+            style={{ animationDelay: `${50 + NAV_CARDS.length * 45}ms` }}
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-[#6E6791] uppercase tracking-wider">System Status</span>
