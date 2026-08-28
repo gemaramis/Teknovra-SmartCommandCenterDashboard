@@ -13,10 +13,10 @@ import {
 import { useLiveData } from "../contexts/LiveDataContext";
 const COLORS: string[] = [
   "#7B2FD6",
-  "#D946EF",
-  "#0891B2",
+  "#2563EB",
+  "#0D9488",
   "#D97706",
-  "#059669",
+  "#64748B",
 ];
 
 const issueDetails: Record<string, { summary: string; sentiment: string; topMedia: string; volume: number; trend: string }> = {
@@ -63,41 +63,39 @@ function DetailModal({ issue, color, onClose }: { issue: string; color: string; 
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center"
-      style={{ background: "rgba(26,18,48,0.45)", backdropFilter: "blur(4px)" }}
+      style={{ background: "rgba(25,18,51,0.4)" }}
       onClick={onClose}
     >
       <div
-        className="rounded-3xl p-6 p-6 w-[480px] max-w-full shadow-2xl"
-        style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(123,47,214,0.2)" }}
+        className="bg-white border border-[#E7E4EF] rounded-xl p-6 w-[480px] max-w-full shadow-[0_16px_48px_rgba(23,15,46,0.16)]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full" style={{ background: color }} />
-            <span style={{ color: "#1A1230", fontWeight: 700, fontSize: "1rem" }}>{issue}</span>
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: color }} />
+            <span className="text-base font-semibold text-[#191233]">{issue}</span>
           </div>
-          <button onClick={onClose} style={{ color: "#7B6BAA", fontSize: "2rem", lineHeight: 1 }} className="hover:text-[#1A1230] transition-colors">×</button>
+          <button onClick={onClose} className="text-[#9C96B5] text-2xl leading-none hover:text-[#191233] transition-colors">×</button>
         </div>
-        <p style={{ color: "#4B3F80", fontSize: "0.9rem", lineHeight: 1.6, marginBottom: "1rem" }}>{d.summary}</p>
+        <p className="text-[0.9rem] leading-relaxed text-[#443C66] mb-4">{d.summary}</p>
         <div className="grid grid-cols-2 gap-3">
-          <div className="rounded-3xl p-6 p-3" style={{ background: "#F4F2F9" }}>
-            <div style={{ color: "#7B6BAA", fontSize: "0.85rem" }}>VOLUME MENTION</div>
-            <div style={{ color: "#1A1230", fontSize: "1.375rem", fontWeight: 700 }}>{d.volume.toLocaleString()}</div>
-            <div style={{ color: "#059669", fontSize: "0.85rem" }}>{d.trend} vs bulan lalu</div>
+          <div className="rounded-lg p-3 bg-[#F7F6FA]">
+            <div className="text-[0.7rem] text-[#9C96B5]">VOLUME MENTION</div>
+            <div className="text-[1.375rem] font-semibold text-[#191233]">{d.volume.toLocaleString()}</div>
+            <div className="text-[0.75rem] text-[#059669]">{d.trend} vs bulan lalu</div>
           </div>
-          <div className="rounded-3xl p-6 p-3" style={{ background: "#F4F2F9" }}>
-            <div style={{ color: "#7B6BAA", fontSize: "0.85rem" }}>SENTIMEN</div>
-            <div style={{ color: "#1A1230", fontSize: "0.85rem", marginTop: "0.25rem", lineHeight: 1.6 }}>{d.sentiment}</div>
+          <div className="rounded-lg p-3 bg-[#F7F6FA]">
+            <div className="text-[0.7rem] text-[#9C96B5]">SENTIMEN</div>
+            <div className="text-[0.8rem] leading-relaxed text-[#191233] mt-1">{d.sentiment}</div>
           </div>
-          <div className="rounded-3xl p-6 p-3 col-span-2" style={{ background: "#F4F2F9" }}>
-            <div style={{ color: "#7B6BAA", fontSize: "0.85rem" }}>TOP MEDIA</div>
-            <div style={{ color: "#1A1230", fontSize: "0.9rem", marginTop: "0.25rem" }}>{d.topMedia}</div>
+          <div className="rounded-lg p-3 col-span-2 bg-[#F7F6FA]">
+            <div className="text-[0.7rem] text-[#9C96B5]">TOP MEDIA</div>
+            <div className="text-[0.85rem] text-[#191233] mt-1">{d.topMedia}</div>
           </div>
         </div>
         <button
           onClick={onClose}
-          className="mt-4 w-full py-2 rounded-3xl p-6 transition-opacity hover:opacity-90"
-          style={{ background: "linear-gradient(135deg, #7B2FD6, #D946EF)", color: "#fff", fontSize: "0.9rem", fontWeight: 600 }}
+          className="mt-4 w-full py-2 rounded-lg bg-[#7B2FD6] hover:bg-[#6A28BC] text-white text-[0.85rem] font-semibold transition-colors"
         >
           Tutup
         </button>
@@ -110,11 +108,11 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   const data = payload[0];
   return (
-    <div className="rounded-3xl p-6 p-3 shadow-xl" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(123,47,214,0.2)", fontSize: "0.85rem" }}>
+    <div className="bg-white border border-[#E7E4EF] rounded-lg p-3 shadow-[0_4px_12px_rgba(23,15,46,0.08)] text-[0.8rem]">
       <div className="flex items-center gap-2">
         <span className="w-2.5 h-2.5 rounded-full" style={{ background: data.payload.color || data.color }} />
-        <span style={{ color: "#1A1230", fontWeight: 700 }}>{label}</span>
-        <span style={{ color: "#7B2FD6", fontWeight: 700, marginLeft: "auto" }}>{data.value} Vol Index</span>
+        <span className="font-semibold text-[#191233]">{label}</span>
+        <span className="font-semibold text-[#7B2FD6] ml-auto">{data.value} Vol Index</span>
       </div>
     </div>
   );
@@ -132,13 +130,13 @@ export function IssueBenchmark() {
   })).sort((a, b) => b.value - a.value);
 
   return (
-    <div className="rounded-3xl p-6 p-4 flex flex-col h-full" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)", boxShadow: "0 4px 24px -4px rgba(123, 47, 214, 0.08)" }}>
+    <div className="bg-white border border-[#E7E4EF] rounded-xl p-4 flex flex-col h-full">
       <div className="flex items-start justify-between mb-2 flex-shrink-0">
         <div>
-          <div style={{ color: "#7B6BAA", fontSize: "0.85rem", letterSpacing: "0.08em" }}>ISSUE BENCHMARK</div>
+          <div className="text-xs font-semibold tracking-wider text-[#6E6791]">ISSUE BENCHMARK</div>
           <div className="flex items-baseline gap-2 mt-0.5">
-            <span style={{ color: "#1A1230", fontSize: "2rem", fontWeight: 700 }}>{chartData[0]?.value || 0}</span>
-            <span style={{ color: "#7B6BAA", fontSize: "0.85rem" }}>Max Vol Index</span>
+            <span className="text-[1.75rem] font-semibold tracking-tight text-[#191233]">{chartData[0]?.value || 0}</span>
+            <span className="text-[0.8rem] text-[#9C96B5]">Max Vol Index</span>
           </div>
         </div>
         <div className="flex flex-wrap justify-end gap-x-3 gap-y-1">
@@ -149,8 +147,8 @@ export function IssueBenchmark() {
               className="flex items-center gap-1.5 hover:opacity-70 transition-opacity cursor-pointer"
             >
               <span className="w-2 h-2 rounded-full" style={{ background: color }} />
-              <span style={{ color: "#4B3F80", fontSize: "0.85rem" }}>{name}</span>
-              <span style={{ color: "#1A1230", fontSize: "0.85rem", fontWeight: 700 }}>{value}</span>
+              <span className="text-[0.8rem] text-[#443C66]">{name}</span>
+              <span className="text-[0.8rem] font-semibold text-[#191233]">{value}</span>
             </button>
           ))}
         </div>
@@ -163,10 +161,10 @@ export function IssueBenchmark() {
             data={chartData}
             margin={{ top: 5, right: 15, left: 10, bottom: 5 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(123,47,214,0.08)" horizontal={false} />
-            <XAxis type="number" tick={{ fill: "#7B6BAA", fontSize: 10 }} axisLine={false} tickLine={false} />
-            <YAxis dataKey="name" type="category" tick={{ fill: "#7B6BAA", fontSize: 10 }} axisLine={false} tickLine={false} width={65} />
-            <Tooltip content={<CustomTooltip />} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#EFEDF5" horizontal={false} />
+            <XAxis type="number" tick={{ fill: "#9C96B5", fontSize: 10 }} axisLine={false} tickLine={false} />
+            <YAxis dataKey="name" type="category" tick={{ fill: "#6E6791", fontSize: 10 }} axisLine={false} tickLine={false} width={65} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "#F7F6FA" }} />
             <Bar
               dataKey="value"
               radius={[0, 4, 4, 0]}
@@ -181,9 +179,9 @@ export function IssueBenchmark() {
         </ResponsiveContainer>
       </div>
 
-      <div style={{ color: "#7B6BAA", fontSize: "0.85rem", marginTop: "0.5rem" }}>
+      <div className="text-[0.8rem] text-[#6E6791] mt-2">
         {chartData[0]?.name || 'Issue'} memimpin volume isu sementara mencatat kenaikan tertinggi.{" "}
-        <span style={{ color: "#7B2FD6", cursor: "pointer" }}>Klik isu untuk detail →</span>
+        <span className="text-[#7B2FD6] cursor-pointer font-medium">Klik isu untuk detail →</span>
       </div>
 
       {selectedIssue && <DetailModal issue={selectedIssue} color={chartData.find(c => c.name === selectedIssue)?.color || "#7B2FD6"} onClose={() => setSelectedIssue(null)} />}

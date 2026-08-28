@@ -4,15 +4,9 @@ export function LiveTicker() {
   const loopedItems = [...tickerItems, ...tickerItems];
 
   return (
-    <div
-      className="h-9 flex items-center overflow-hidden"
-      style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderTop: "1px solid rgba(123,47,214,0.15)" }}
-    >
-      <div
-        className="flex-shrink-0 h-full flex items-center px-3"
-        style={{ background: "linear-gradient(135deg, #7B2FD6, #D946EF)", minWidth: "80px" }}
-      >
-        <span style={{ color: "#fff", fontSize: "0.625rem", fontWeight: 700, letterSpacing: "0.1em" }}>● LIVE</span>
+    <div className="h-9 flex items-center overflow-hidden bg-white border-t border-[#E7E4EF]">
+      <div className="flex-shrink-0 h-full flex items-center px-3 bg-[#7B2FD6]" style={{ minWidth: "80px" }}>
+        <span className="text-white text-[0.625rem] font-semibold tracking-[0.1em]">● LIVE</span>
       </div>
 
       <div className="flex-1 overflow-hidden relative">
@@ -24,12 +18,12 @@ export function LiveTicker() {
             <div key={i} className="flex items-center gap-2 flex-shrink-0">
               <span
                 className="rounded px-1.5 py-0.5"
-                style={{ background: `${item.color}18`, color: item.color, fontSize: "0.65rem", fontWeight: 700 }}
+                style={{ background: `${item.color}14`, color: item.color, fontSize: "0.65rem", fontWeight: 600 }}
               >
                 {item.tag}
               </span>
-              <span style={{ color: "#4B3F80", fontSize: "0.85rem" }}>{item.text}</span>
-              <span style={{ color: "#C9BAF0", marginLeft: "0.5rem" }}>·</span>
+              <span className="text-[0.8rem] text-[#443C66]">{item.text}</span>
+              <span className="text-[#D8D3E6] ml-2">·</span>
             </div>
           ))}
         </div>

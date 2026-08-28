@@ -1,3 +1,5 @@
 body {
-  font-family: "Roboto Flex", sans-serif !important;
+  font-family: "Inter", -apple-system, "Segoe UI", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv02", "cv03", "cv04";
 }

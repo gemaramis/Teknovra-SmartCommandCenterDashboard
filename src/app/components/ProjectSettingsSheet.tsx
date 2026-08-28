@@ -27,21 +27,21 @@ export function ProjectSettingsSheet({ isOpen, onClose }: Props) {
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <SheetContent className="w-[400px] sm:w-[540px] flex flex-col p-0">
-        <SheetHeader className="p-6 border-b" style={{ borderColor: "rgba(123,47,214,0.12)" }}>
-          <SheetTitle style={{ color: "#1A1230", fontSize: "1.25rem" }}>Project Settings</SheetTitle>
+        <SheetHeader className="p-6 border-b" style={{ borderColor: "#E7E4EF" }}>
+          <SheetTitle style={{ color: "#191233", fontSize: "1.25rem" }}>Project Settings</SheetTitle>
         </SheetHeader>
 
         <div className="flex flex-1 overflow-hidden">
           {/* Sidebar Tabs */}
-          <div className="w-[180px] border-r p-4 flex flex-col gap-1 bg-[#F4F2F9]" style={{ borderColor: "rgba(123,47,214,0.12)" }}>
+          <div className="w-[180px] border-r p-4 flex flex-col gap-1 bg-[#F7F6FA]" style={{ borderColor: "#E7E4EF" }}>
             {tabs.map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors text-left"
+                className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-left"
                 style={{
                   background: activeTab === tab.id ? "#7B2FD6" : "transparent",
-                  color: activeTab === tab.id ? "#fff" : "#7B6BAA",
+                  color: activeTab === tab.id ? "#fff" : "#6E6791",
                 }}
               >
                 <tab.icon size={14} />
@@ -54,10 +54,10 @@ export function ProjectSettingsSheet({ isOpen, onClose }: Props) {
           <div className="flex-1 p-6 overflow-y-auto">
             {activeTab === "general" && (
               <div className="flex flex-col gap-4">
-                <h3 className="font-bold" style={{ color: "#1A1230" }}>General Settings</h3>
+                <h3 className="font-bold" style={{ color: "#191233" }}>General Settings</h3>
                 <div>
                   <label className="text-xs font-bold text-gray-500 mb-1 block">Project Name</label>
-                  <input type="text" defaultValue="Teknovra Smart Dashboard" className="w-full border p-2 rounded-md text-sm outline-none focus:border-[#7B2FD6]" />
+                  <input type="text" defaultValue="Teknovra Smart Dashboard" className="w-full border p-2 rounded-md text-sm outline-none focus:border-[#7B2FD6] border-[#E7E4EF]"/>
                 </div>
                 <div>
                   <label className="text-xs font-bold text-gray-500 mb-1 block">Timezone</label>
@@ -72,7 +72,7 @@ export function ProjectSettingsSheet({ isOpen, onClose }: Props) {
 
             {activeTab === "data" && (
               <div className="flex flex-col gap-4">
-                <h3 className="font-bold" style={{ color: "#1A1230" }}>Data Integrations</h3>
+                <h3 className="font-bold" style={{ color: "#191233" }}>Data Integrations</h3>
                 <p className="text-sm text-gray-500 mb-2">Connect APIs to stream live data.</p>
                 <div className="p-3 border rounded-lg flex justify-between items-center">
                   <div>
@@ -93,10 +93,10 @@ export function ProjectSettingsSheet({ isOpen, onClose }: Props) {
 
             {activeTab === "alerts" && (
               <div className="flex flex-col gap-4">
-                <h3 className="font-bold" style={{ color: "#1A1230" }}>Crisis Alert Rules</h3>
+                <h3 className="font-bold" style={{ color: "#191233" }}>Crisis Alert Rules</h3>
                 <div>
                   <label className="text-xs font-bold text-gray-500 mb-1 block">Mention Spike Threshold</label>
-                  <input type="number" defaultValue="500" className="w-full border p-2 rounded-md text-sm outline-none focus:border-[#7B2FD6]" />
+                  <input type="number" defaultValue="500" className="w-full border p-2 rounded-md text-sm outline-none focus:border-[#7B2FD6] border-[#E7E4EF]"/>
                   <p className="text-xs text-gray-400 mt-1">Triggers alert if mentions exceed this within 1 hour.</p>
                 </div>
               </div>
@@ -104,7 +104,7 @@ export function ProjectSettingsSheet({ isOpen, onClose }: Props) {
 
             {activeTab === "team" && (
               <div className="flex flex-col gap-4">
-                <h3 className="font-bold" style={{ color: "#1A1230" }}>Team Management</h3>
+                <h3 className="font-bold" style={{ color: "#191233" }}>Team Management</h3>
                 <div className="p-3 border rounded-lg">
                   <span className="text-sm font-bold block">Admin User</span>
                   <span className="text-xs text-gray-500">admin@teknovra.com</span>
@@ -117,7 +117,7 @@ export function ProjectSettingsSheet({ isOpen, onClose }: Props) {
 
             {activeTab === "appearance" && (
               <div className="flex flex-col gap-4">
-                <h3 className="font-bold" style={{ color: "#1A1230" }}>Appearance</h3>
+                <h3 className="font-bold" style={{ color: "#191233" }}>Appearance</h3>
                 <div>
                   <label className="text-xs font-bold text-gray-500 mb-1 block">Theme</label>
                   <div className="flex gap-2">
@@ -131,9 +131,9 @@ export function ProjectSettingsSheet({ isOpen, onClose }: Props) {
         </div>
 
         {/* Footer Actions */}
-        <div className="p-4 border-t flex justify-end gap-2" style={{ borderColor: "rgba(123,47,214,0.12)" }}>
-          <button onClick={onClose} className="px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">Cancel</button>
-          <button onClick={handleSave} className="flex items-center gap-2 px-6 py-2 text-sm text-white rounded-md transition-opacity hover:opacity-90" style={{ background: "linear-gradient(135deg, #7B2FD6, #D946EF)" }}>
+        <div className="p-4 border-t flex justify-end gap-2" style={{ borderColor: "#E7E4EF" }}>
+          <button onClick={onClose} className="px-4 py-2 text-sm text-[#6E6791] hover:bg-[#F1EFF6] rounded-lg transition-colors">Cancel</button>
+          <button onClick={handleSave} className="flex items-center gap-2 px-6 py-2 text-sm font-semibold text-white rounded-lg transition-colors bg-[#7B2FD6] hover:bg-[#6A28BC]">
             <Save size={14} />
             Save Changes
           </button>

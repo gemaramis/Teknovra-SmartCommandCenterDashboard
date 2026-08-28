@@ -174,50 +174,50 @@ ISSUES
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col text-[#1A1230]" style={{ background: "linear-gradient(135deg, #E6E0F8 0%, #F5E3F0 50%, #E2EDF8 100%)" }}>
+    <div className="w-screen h-screen flex flex-col text-[#191233] bg-[#F7F6FA]">
       {/* Header */}
-      <header className="flex items-center gap-4 px-6 py-4 border-b border-gray-200 shadow-sm z-10" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
-        <button 
+      <header className="flex items-center gap-4 px-6 py-4 border-b border-[#E7E4EF] bg-white z-10">
+        <button
           onClick={() => navigate("/")}
-          className="w-8 h-8 flex items-center justify-center bg-gray-100/50 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors shadow-sm"
+          className="w-8 h-8 flex items-center justify-center text-[#6E6791] rounded-lg border border-[#E7E4EF] hover:bg-[#F7F6FA] hover:text-[#191233] transition-colors"
         >
           <ArrowLeft size={16} />
         </button>
-        <div className="w-px h-5 bg-gray-300" />
-        <div className="flex items-center gap-2 text-emerald-600 font-bold uppercase tracking-widest text-sm">
-          <UserCircle size={18} /> Deep Profiling Engine
+        <div className="w-px h-5 bg-[#E7E4EF]" />
+        <div className="flex items-center gap-2 text-[#7B2FD6] font-semibold uppercase tracking-wider text-xs">
+          <UserCircle size={16} /> Deep Profiling Engine
         </div>
       </header>
 
       <div className="flex-1 overflow-hidden flex relative z-0">
-        
+
         {/* Left Sidebar */}
-        <div className="w-[380px] border-r border-white/50 flex flex-col h-full z-10" style={{ background: "rgba(255, 255, 255, 0.3)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
-          
-          <div className="p-6 border-b border-white/30">
-            <h2 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Target Parameters</h2>
-            
+        <div className="w-[380px] border-r border-[#E7E4EF] bg-white flex flex-col h-full z-10">
+
+          <div className="p-6 border-b border-[#E7E4EF]">
+            <h2 className="text-xs font-medium text-[#9C96B5] uppercase tracking-wider mb-4">Target Parameters</h2>
+
             <div className="flex flex-col gap-4">
               <div>
-                <label className="text-xs font-bold text-gray-700 mb-1 block">Target Name / Entity</label>
-                <input 
+                <label className="text-xs font-medium text-[#443C66] mb-1.5 block">Target Name / Entity</label>
+                <input
                   type="text" value={name} onChange={e => setName(e.target.value)}
                   placeholder="e.g. Elon Musk"
-                  className="w-full bg-white/50 border border-white/60 rounded-xl p-3 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-emerald-500 transition-all shadow-inner"
+                  className="w-full bg-white border border-[#E7E4EF] rounded-lg p-3 text-sm outline-none focus:border-[#7B2FD6] transition-colors placeholder-[#9C96B5]"
                 />
               </div>
               <div>
-                <label className="text-xs font-bold text-gray-700 mb-1 block">Context / Position (Optional)</label>
-                <input 
+                <label className="text-xs font-medium text-[#443C66] mb-1.5 block">Context / Position (Optional)</label>
+                <input
                   type="text" value={details} onChange={e => setDetails(e.target.value)}
                   placeholder="e.g. CEO of Tesla"
-                  className="w-full bg-white/50 border border-white/60 rounded-xl p-3 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-emerald-500 transition-all shadow-inner"
+                  className="w-full bg-white border border-[#E7E4EF] rounded-lg p-3 text-sm outline-none focus:border-[#7B2FD6] transition-colors placeholder-[#9C96B5]"
                 />
               </div>
-              <button 
+              <button
                 onClick={handleVerifyTarget}
                 disabled={isSearching && step === "input"}
-                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold rounded-2xl transition-all shadow-lg shadow-emerald-600/20 flex justify-center items-center gap-2 mt-2"
+                className="w-full py-3 bg-[#7B2FD6] hover:bg-[#6A28BC] disabled:opacity-50 text-white font-semibold rounded-lg transition-colors flex justify-center items-center gap-2 mt-2"
               >
                 {(isSearching && step === "input") ? <Activity className="animate-spin" size={18} /> : <Search size={18} />}
                 {(isSearching && step === "input") ? "Scanning Network..." : "Initialize Profile"}
@@ -226,18 +226,18 @@ ISSUES
           </div>
 
           <div className="p-6 flex-1">
-            <h2 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Saved Profiles ({savedProfiles.length}/2)</h2>
+            <h2 className="text-xs font-medium text-[#9C96B5] uppercase tracking-wider mb-4">Saved Profiles ({savedProfiles.length}/2)</h2>
             <div className="flex flex-col gap-3">
               {savedProfiles.length === 0 && (
-                <div className="text-sm text-gray-400 text-center italic mt-4">No profiles saved.</div>
+                <div className="text-sm text-[#9C96B5] text-center mt-4">No profiles saved.</div>
               )}
               {savedProfiles.map(p => (
-                <div key={p.id} className="bg-white/60 border border-white/50 rounded-2xl p-4 shadow-sm flex justify-between items-center group backdrop-blur-md">
+                <div key={p.id} className="bg-[#F7F6FA] border border-[#E7E4EF] rounded-xl p-4 flex justify-between items-center group">
                   <div className="cursor-pointer" onClick={() => handleLoadProfile(p)}>
-                    <div className="font-bold text-gray-800">{p.name}</div>
-                    <div className="text-xs text-gray-500 line-clamp-1 mt-1">{p.summary}</div>
+                    <div className="font-semibold text-[#191233]">{p.name}</div>
+                    <div className="text-xs text-[#6E6791] line-clamp-1 mt-1">{p.summary}</div>
                   </div>
-                  <button onClick={() => handleDeleteProfile(p.id)} className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-2 bg-white rounded-lg shadow-sm">
+                  <button onClick={() => handleDeleteProfile(p.id)} className="text-[#9C96B5] hover:text-[#DC2626] opacity-0 group-hover:opacity-100 transition-opacity p-2 bg-white border border-[#E7E4EF] rounded-lg">
                     <Trash2 size={16} />
                   </button>
                 </div>
@@ -250,42 +250,42 @@ ISSUES
         <div className="flex-1 overflow-y-auto flex justify-center relative">
           
           {step === "input" && !isSearching && (
-            <div className="m-auto text-center text-gray-400">
-              <UserCircle size={64} className="mx-auto mb-4 opacity-30 text-emerald-600" />
-              <p className="font-medium text-lg text-gray-500">Input a target name to initiate profiling scan.</p>
+            <div className="m-auto text-center text-[#9C96B5]">
+              <UserCircle size={64} className="mx-auto mb-4 opacity-30 text-[#7B2FD6]" />
+              <p className="font-medium text-lg text-[#6E6791]">Input a target name to initiate profiling scan.</p>
             </div>
           )}
 
           {isSearching && step === "input" && (
-            <div className="m-auto flex flex-col items-center gap-4 text-emerald-600">
-              <Activity className="animate-spin w-12 h-12" />
-              <p className="font-bold animate-pulse text-lg tracking-widest uppercase">Scanning Global Entities...</p>
+            <div className="m-auto flex flex-col items-center gap-4 text-[#7B2FD6]">
+              <Activity className="animate-spin w-10 h-10" />
+              <p className="font-medium text-base tracking-wide">Scanning global entities…</p>
             </div>
           )}
 
           {/* Intermediate Confirmation State */}
           {step === "confirm" && verificationData && (
-            <div className="m-auto w-full max-w-lg p-8 rounded-[2rem] shadow-xl animate-in fade-in zoom-in-95 border border-white/80" style={{ background: "rgba(255, 255, 255, 0.6)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
-              <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 shadow-inner mx-auto">
-                <CheckCircle2 size={32} />
+            <div className="m-auto w-full max-w-lg p-8 rounded-2xl animate-in fade-in zoom-in-95 bg-white border border-[#E7E4EF] shadow-[0_12px_40px_rgba(23,15,46,0.08)]">
+              <div className="w-14 h-14 bg-[#F3EEFB] text-[#7B2FD6] rounded-xl flex items-center justify-center mb-6 mx-auto">
+                <CheckCircle2 size={28} />
               </div>
-              <h2 className="text-2xl font-black text-center text-gray-900 mb-2">Target Identified</h2>
-              <div className="bg-white/50 rounded-xl p-4 mb-6 border border-white/50 text-center">
-                <p className="font-bold text-lg text-gray-800">{verificationData.name}</p>
-                <p className="text-sm font-bold text-emerald-600 uppercase tracking-widest mt-1 mb-3">{verificationData.position}</p>
-                <p className="text-sm text-gray-600 leading-relaxed">"{verificationData.briefSummary}"</p>
+              <h2 className="text-2xl font-semibold tracking-tight text-center text-[#191233] mb-4">Target Identified</h2>
+              <div className="bg-[#F7F6FA] rounded-xl p-4 mb-6 border border-[#E7E4EF] text-center">
+                <p className="font-semibold text-lg text-[#191233]">{verificationData.name}</p>
+                <p className="text-xs font-semibold text-[#7B2FD6] uppercase tracking-wider mt-1 mb-3">{verificationData.position}</p>
+                <p className="text-sm text-[#6E6791] leading-relaxed">"{verificationData.briefSummary}"</p>
               </div>
-              <p className="text-center text-sm font-bold text-gray-500 mb-6">Is this the entity you are looking for?</p>
-              <div className="flex gap-4">
-                <button 
+              <p className="text-center text-sm text-[#6E6791] mb-6">Is this the entity you are looking for?</p>
+              <div className="flex gap-3">
+                <button
                   onClick={() => setStep("input")}
-                  className="flex-1 py-3 bg-white hover:bg-gray-50 text-gray-700 font-bold rounded-xl border border-gray-200 transition-colors shadow-sm"
+                  className="flex-1 py-3 bg-white hover:bg-[#F7F6FA] text-[#443C66] font-semibold rounded-lg border border-[#E7E4EF] transition-colors"
                 >
                   No, Cancel
                 </button>
-                <button 
+                <button
                   onClick={handleBuildProfile}
-                  className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-all shadow-md shadow-emerald-600/20"
+                  className="flex-1 py-3 bg-[#7B2FD6] hover:bg-[#6A28BC] text-white font-semibold rounded-lg transition-colors"
                 >
                   Yes, Extract Profile
                 </button>
@@ -294,89 +294,80 @@ ISSUES
           )}
 
           {isSearching && step === "result" && (
-            <div className="m-auto flex flex-col items-center gap-4 text-emerald-600">
-              <Activity className="animate-spin w-12 h-12" />
-              <p className="font-bold animate-pulse text-lg tracking-widest uppercase">Extracting Deep Profile...</p>
+            <div className="m-auto flex flex-col items-center gap-4 text-[#7B2FD6]">
+              <Activity className="animate-spin w-10 h-10" />
+              <p className="font-medium text-base tracking-wide">Extracting deep profile…</p>
             </div>
           )}
 
           {/* Final Output State */}
           {step === "result" && activeProfile && !isSearching && (
-            <div id="pdf-content" className="w-full min-h-full relative overflow-x-hidden flex justify-center pt-20 animate-in fade-in pb-20">
-              {/* Massive Glowing Orb Background */}
-              <div className="absolute -top-64 -left-64 w-[800px] h-[800px] bg-emerald-500/20 rounded-full mix-blend-multiply filter blur-[120px] pointer-events-none" />
-              
+            <div id="pdf-content" className="w-full min-h-full relative overflow-x-hidden flex justify-center pt-16 animate-in fade-in pb-20">
               <div className="relative z-10 w-full max-w-3xl px-8 flex flex-col pb-20">
                 {/* Back / Save Button */}
-                <div id="pdf-action-buttons" className="flex justify-between items-center mb-16">
-                  <button 
+                <div id="pdf-action-buttons" className="flex justify-between items-center mb-12">
+                  <button
                     onClick={() => {
                       setStep("input");
                       setActiveProfile(null);
                     }}
-                    className="w-12 h-12 flex items-center justify-center bg-white/50 text-gray-800 rounded-2xl hover:bg-white transition-colors shadow-sm border border-white/60 backdrop-blur-md"
+                    className="w-10 h-10 flex items-center justify-center bg-white text-[#443C66] rounded-lg hover:bg-[#F7F6FA] transition-colors border border-[#E7E4EF]"
                   >
-                    <ArrowLeft size={20} />
+                    <ArrowLeft size={18} />
                   </button>
-                  <div className="flex items-center gap-4">
-                    <button 
+                  <div className="flex items-center gap-3">
+                    <button
                       onClick={handleExportPDF}
-                      className="flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-bold text-gray-800 hover:text-emerald-700 hover:scale-105 transition-all shadow-sm" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)" }}
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium text-[#443C66] bg-white border border-[#E7E4EF] hover:border-[#C9B2EE] hover:text-[#7B2FD6] transition-colors"
                     >
-                      <Download size={16} /> Export PDF
+                      <Download size={15} /> Export PDF
                     </button>
-                    <button 
+                    <button
                       onClick={handleSaveProfile}
-                      className="flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-bold text-gray-800 hover:text-emerald-700 hover:scale-105 transition-all shadow-sm" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255, 255, 255, 0.8)" }}
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium text-[#443C66] bg-white border border-[#E7E4EF] hover:border-[#C9B2EE] hover:text-[#7B2FD6] transition-colors"
                     >
-                      <Save size={16} /> Save Profile
+                      <Save size={15} /> Save Profile
                     </button>
                   </div>
                 </div>
 
-                {/* Elegant Title & Summary */}
-                <h1 className="text-6xl font-black text-gray-900 tracking-tight leading-none mb-6">
+                {/* Title & Summary */}
+                <h1 className="text-4xl font-semibold text-[#191233] tracking-tight leading-tight mb-6">
                   {activeProfile.name}
                 </h1>
-                <div className="text-lg text-gray-600 leading-relaxed whitespace-pre-wrap max-w-2xl mb-12">
+                <div className="text-base text-[#443C66] leading-relaxed whitespace-pre-wrap max-w-2xl mb-10">
                   {activeProfile.summary}
                 </div>
 
-                {/* Main Stats Card (Stage Progress Style) */}
-                <div 
-                  className="rounded-[2rem] p-8 shadow-xl flex flex-col gap-6 mb-8"
-                  style={{ background: "rgba(255, 255, 255, 0.6)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)", border: "1px solid rgba(255, 255, 255, 0.8)" }}
-                >
+                {/* Main Stats Card */}
+                <div className="rounded-2xl p-8 bg-white border border-[#E7E4EF] flex flex-col gap-6 mb-6">
                   <div className="flex justify-between items-end">
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-1">Exposure Risk</h3>
-                      <p className="text-sm text-gray-500 font-medium">Calculated based on {activeProfile.issues.length} critical issues.</p>
+                      <h3 className="text-lg font-semibold text-[#191233] mb-1">Exposure Risk</h3>
+                      <p className="text-sm text-[#6E6791]">Calculated based on {activeProfile.issues.length} critical issues.</p>
                     </div>
-                    <div className="text-5xl font-black text-gray-900">
+                    <div className="text-4xl font-semibold tracking-tight text-[#7B2FD6]">
                       84%
                     </div>
                   </div>
-                  
+
                   {/* Progress Bar */}
-                  <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-emerald-500 rounded-full" style={{ width: "84%" }} />
+                  <div className="w-full h-1 bg-[#F1EFF6] rounded-full overflow-hidden">
+                    <div className="h-full bg-[#7B2FD6] rounded-full" style={{ width: "84%" }} />
                   </div>
                 </div>
 
                 {/* Critical Issues */}
                 {activeProfile.issues.length > 0 && (
-                  <div 
-                    className="rounded-[2rem] p-8 shadow-xl flex flex-col gap-4"
-                    style={{ background: "rgba(255, 255, 255, 0.6)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)", border: "1px solid rgba(255, 255, 255, 0.8)" }}
-                  >
-                    <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2 flex items-center gap-2">
-                      <ShieldAlert size={16} /> Identified Issues
+                  <div className="rounded-2xl p-8 bg-white border border-[#E7E4EF] flex flex-col gap-4">
+                    <h3 className="text-xs font-medium text-[#6E6791] uppercase tracking-wider mb-2 flex items-center gap-2">
+                      <ShieldAlert size={15} /> Identified Issues
                     </h3>
                     <div className="flex flex-col gap-3">
                       {activeProfile.issues.map((issue, idx) => (
-                        <div key={idx} className="flex gap-4 items-start p-4 bg-white/60 rounded-2xl border border-white/50 backdrop-blur-md">
-                          <AlertTriangle size={20} className="text-red-500 shrink-0 mt-0.5" />
-                          <p className="text-base font-medium text-gray-800 leading-snug">{issue}</p>
+                        <div key={idx} className="flex gap-4 items-start p-4 bg-[#F7F6FA] rounded-xl border border-[#E7E4EF]">
+                          <AlertTriangle size={18} className="text-[#DC2626] shrink-0 mt-0.5" />
+                          <p className="text-sm text-[#191233] leading-relaxed">{issue}</p>
                         </div>
                       ))}
                     </div>

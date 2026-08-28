@@ -99,18 +99,18 @@ export function ReportPage() {
   }));
 
   return (
-    <div className="w-screen h-screen flex flex-col overflow-hidden bg-[#F4F2F9] text-[#1A1230] font-sans">
+    <div className="w-screen h-screen flex flex-col overflow-hidden bg-[#F7F6FA] text-[#191233] font-sans">
       {/* Header */}
-      <header className="flex items-center gap-4 px-6 py-3 flex-shrink-0 bg-white border-b border-[#E5E0F1] shadow-sm z-20 relative">
+      <header className="flex items-center gap-4 px-6 py-3 flex-shrink-0 bg-white border-b border-[#E7E4EF] shadow-sm z-20 relative">
         <button 
           onClick={() => navigate("/")} 
-          className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#F4F2F9] transition-colors text-sm font-semibold text-[#4B3F80]"
+          className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#F7F6FA] transition-colors text-sm font-semibold text-[#443C66]"
         >
           <ArrowLeft size={16} />
           Back to Dashboard
         </button>
-        <div className="w-px h-6 bg-[#E5E0F1]" />
-        <h1 className="text-base font-bold text-[#1A1230] flex items-center gap-2">
+        <div className="w-px h-6 bg-[#E7E4EF]" />
+        <h1 className="text-base font-bold text-[#191233] flex items-center gap-2">
           <Printer size={18} className="text-[#7B2FD6]" />
           Report Generator
         </h1>
@@ -118,26 +118,26 @@ export function ReportPage() {
         <div className="flex-1" />
         
         <div className="flex items-center gap-3">
-          <div className="flex items-center bg-[#F4F2F9] p-1 rounded-lg border border-[#E5E0F1]">
+          <div className="flex items-center bg-[#F7F6FA] p-1 rounded-lg border border-[#E7E4EF]">
             {[
               { id: "PDF", icon: FileText }, { id: "CSV", icon: FileSpreadsheet }, { id: "PPT", icon: Presentation }
             ].map(f => (
               <button
                 key={f.id} onClick={() => setFormat(f.id)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-bold transition-all
-                  ${format === f.id ? "bg-white text-[#7B2FD6] shadow-sm" : "text-[#7B6BAA] hover:text-[#4B3F80]"}`}
+                  ${format === f.id ? "bg-white text-[#7B2FD6] shadow-sm" : "text-[#6E6791] hover:text-[#443C66]"}`}
               >
                 <f.icon size={14} /> {f.id}
               </button>
             ))}
           </div>
 
-          <div className="w-px h-6 bg-[#E5E0F1] mx-1" />
+          <div className="w-px h-6 bg-[#E7E4EF] mx-1" />
 
           <button 
             onClick={handleGenerate}
-            className="px-5 py-2 rounded-lg text-white text-sm font-bold shadow-md transition-all hover:shadow-lg hover:opacity-90 flex justify-center items-center gap-2"
-            style={{ background: "linear-gradient(135deg, #7B2FD6, #D946EF)" }}
+            className="px-5 py-2 rounded-lg text-white text-sm font-semibold transition-colors hover:opacity-90 flex justify-center items-center gap-2"
+            style={{ background: "#7B2FD6" }}
           >
             <Download size={16} />
             Download Report
@@ -146,34 +146,34 @@ export function ReportPage() {
           <div className="relative">
             <button 
               onClick={() => setShowEmailDropdown(!showEmailDropdown)}
-              className="px-4 py-2 rounded-lg text-[#7B2FD6] text-sm font-bold border border-[#7B2FD6] transition-all hover:bg-[#F8F5FF] flex justify-center items-center gap-2 bg-white"
+              className="px-4 py-2 rounded-lg text-[#7B2FD6] text-sm font-bold border border-[#7B2FD6] transition-all hover:bg-[#F3EEFB] flex justify-center items-center gap-2 bg-white"
             >
               <Mail size={16} />
               Send to Email
             </button>
 
             {showEmailDropdown && (
-              <div className="absolute top-full right-0 mt-2 w-80 bg-white border border-[#E5E0F1] rounded-3xl p-6 shadow-[0_8px_30px_rgba(123,47,214,0.12)] p-4 z-50 animate-in fade-in slide-in-from-top-2">
+              <div className="absolute top-full right-0 mt-2 w-80 bg-white border border-[#E7E4EF] rounded-xl shadow-[0_12px_32px_rgba(23,15,46,0.1)] p-4 z-50 animate-in fade-in slide-in-from-top-2">
                 <div className="flex justify-between items-center mb-3">
-                  <h3 className="text-sm font-bold text-[#1A1230]">Recipients ({emails.length}/5)</h3>
-                  <button onClick={() => setShowEmailDropdown(false)} className="text-[#9CA3AF] hover:text-[#1A1230]">
+                  <h3 className="text-sm font-bold text-[#191233]">Recipients ({emails.length}/5)</h3>
+                  <button onClick={() => setShowEmailDropdown(false)} className="text-[#9CA3AF] hover:text-[#191233]">
                     <X size={16} />
                   </button>
                 </div>
                 
-                <div className="flex items-center px-3 py-2 rounded-lg border border-[#E5E0F1] bg-white mb-3 shadow-sm focus-within:border-[#7B2FD6] focus-within:ring-1 focus-within:ring-[#7B2FD6] transition-all">
-                  <Mail size={16} className="text-[#7B6BAA] mr-2" />
+                <div className="flex items-center px-3 py-2 rounded-lg border border-[#E7E4EF] bg-white mb-3 shadow-sm focus-within:border-[#7B2FD6] focus-within:ring-1 focus-within:ring-[#7B2FD6] transition-all">
+                  <Mail size={16} className="text-[#6E6791] mr-2" />
                   <input 
                     type="email" value={emailInput} onChange={e => setEmailInput(e.target.value)} onKeyDown={handleAddEmail}
                     disabled={emails.length >= 5}
-                    placeholder={emails.length >= 5 ? "Maximum 5 emails reached" : "Add recipient emails (Enter)"} className="bg-transparent border-none outline-none text-sm w-full text-[#1A1230] placeholder-[#9CA3AF] disabled:opacity-50"
+                    placeholder={emails.length >= 5 ? "Maximum 5 emails reached" : "Add recipient emails (Enter)"} className="bg-transparent border-none outline-none text-sm w-full text-[#191233] placeholder-[#9CA3AF] disabled:opacity-50"
                   />
                 </div>
                 
                 {emails.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-4 max-h-32 overflow-y-auto">
                     {emails.map(email => (
-                      <span key={email} className="flex items-center gap-1.5 bg-[#EDE8F9] text-[#4B3F80] px-2.5 py-1 rounded-md text-xs font-semibold break-all">
+                      <span key={email} className="flex items-center gap-1.5 bg-[#EDE8F9] text-[#443C66] px-2.5 py-1 rounded-md text-xs font-semibold break-all">
                         {email} <X size={12} className="cursor-pointer hover:text-[#EF4444] flex-shrink-0" onClick={() => removeEmail(email)}/>
                       </span>
                     ))}
@@ -201,23 +201,23 @@ export function ReportPage() {
       <div className="flex flex-1 overflow-hidden">
         
         {/* CONFIGURATION SIDEBAR */}
-        <div className="w-[380px] bg-white border-r border-[#E5E0F1] flex flex-col shadow-[4px_0_24px_rgba(123,47,214,0.04)] z-10">
+        <div className="w-[380px] bg-white border-r border-[#E7E4EF] flex flex-col shadow-[4px_0_24px_rgba(123,47,214,0.04)] z-10">
           
-          <div className="p-6 border-b border-[#E5E0F1] bg-white z-20 flex-shrink-0">
+          <div className="p-6 border-b border-[#E7E4EF] bg-white z-20 flex-shrink-0">
             <div className="flex flex-col gap-4">
               <div>
-                <label className="text-xs font-semibold text-[#7B6BAA] mb-1.5 block">Document Title</label>
-                <input type="text" value={reportTitle} onChange={e => setReportTitle(e.target.value)} className="w-full text-sm border border-[#E5E0F1] rounded-lg px-3 py-2 focus:border-[#7B2FD6] outline-none transition-all text-[#1A1230]" />
+                <label className="text-xs font-semibold text-[#6E6791] mb-1.5 block">Document Title</label>
+                <input type="text" value={reportTitle} onChange={e => setReportTitle(e.target.value)} className="w-full text-sm border border-[#E7E4EF] rounded-lg px-3 py-2 focus:border-[#7B2FD6] outline-none transition-all text-[#191233]" />
               </div>
 
               <div className="flex gap-3">
                 <div className="flex-1">
-                  <label className="text-xs font-semibold text-[#7B6BAA] mb-1.5 block">Prepared By</label>
-                  <input type="text" value={author} onChange={e => setAuthor(e.target.value)} className="w-full text-sm border border-[#E5E0F1] rounded-lg px-3 py-2 focus:border-[#7B2FD6] outline-none transition-all text-[#1A1230]" />
+                  <label className="text-xs font-semibold text-[#6E6791] mb-1.5 block">Prepared By</label>
+                  <input type="text" value={author} onChange={e => setAuthor(e.target.value)} className="w-full text-sm border border-[#E7E4EF] rounded-lg px-3 py-2 focus:border-[#7B2FD6] outline-none transition-all text-[#191233]" />
                 </div>
                 <div className="flex-1">
-                  <label className="text-xs font-semibold text-[#7B6BAA] mb-1.5 block">Classification</label>
-                  <select value={confidentiality} onChange={e => setConfidentiality(e.target.value)} className="w-full text-sm border border-[#E5E0F1] rounded-lg px-3 py-2 focus:border-[#7B2FD6] outline-none bg-white transition-all text-[#1A1230]">
+                  <label className="text-xs font-semibold text-[#6E6791] mb-1.5 block">Classification</label>
+                  <select value={confidentiality} onChange={e => setConfidentiality(e.target.value)} className="w-full text-sm border border-[#E7E4EF] rounded-lg px-3 py-2 focus:border-[#7B2FD6] outline-none bg-white transition-all text-[#191233]">
                     <option>Public</option>
                     <option>Internal</option>
                     <option>Confidential</option>
@@ -227,15 +227,15 @@ export function ReportPage() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-[#7B6BAA] mb-1.5 block">Time Period</label>
+                <label className="text-xs font-semibold text-[#6E6791] mb-1.5 block">Time Period</label>
                 <div className="flex items-center gap-4">
                   {["Daily", "Weekly", "Monthly", "Custom"].map(type => (
                     <button
                       key={type}
                       onClick={() => setReportType(type)}
-                      className="flex items-center gap-1.5 text-xs font-semibold text-[#1A1230] transition-colors"
+                      className="flex items-center gap-1.5 text-xs font-semibold text-[#191233] transition-colors"
                     >
-                      <div className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${reportType === type ? "border-[#7B2FD6]" : "border-[#E5E0F1]"}`}>
+                      <div className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${reportType === type ? "border-[#7B2FD6]" : "border-[#E7E4EF]"}`}>
                         {reportType === type && <div className="w-2 h-2 rounded-full bg-[#7B2FD6]" />}
                       </div>
                       {type}
@@ -244,8 +244,8 @@ export function ReportPage() {
                 </div>
                 {reportType === "Custom" && (
                   <div className="flex gap-3 mt-3 animate-in slide-in-from-top-2">
-                    <input type="date" value={customStart} onChange={e => setCustomStart(e.target.value)} className="flex-1 text-sm border border-[#E5E0F1] rounded-lg px-3 py-2 focus:border-[#7B2FD6] outline-none text-[#1A1230]" />
-                    <input type="date" value={customEnd} onChange={e => setCustomEnd(e.target.value)} className="flex-1 text-sm border border-[#E5E0F1] rounded-lg px-3 py-2 focus:border-[#7B2FD6] outline-none text-[#1A1230]" />
+                    <input type="date" value={customStart} onChange={e => setCustomStart(e.target.value)} className="flex-1 text-sm border border-[#E7E4EF] rounded-lg px-3 py-2 focus:border-[#7B2FD6] outline-none text-[#191233]" />
+                    <input type="date" value={customEnd} onChange={e => setCustomEnd(e.target.value)} className="flex-1 text-sm border border-[#E7E4EF] rounded-lg px-3 py-2 focus:border-[#7B2FD6] outline-none text-[#191233]" />
                   </div>
                 )}
               </div>
@@ -254,7 +254,7 @@ export function ReportPage() {
 
           <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-6">
             <div>
-              <h2 className="text-sm font-bold text-[#1A1230] mb-4 flex items-center gap-2">
+              <h2 className="text-sm font-bold text-[#191233] mb-4 flex items-center gap-2">
                 <Database size={16} className="text-[#7B2FD6]" />
                 Data Sources
               </h2>
@@ -265,9 +265,9 @@ export function ReportPage() {
                     <button 
                       key={source} 
                       onClick={() => handleToggle(setSources, source)}
-                      className={`flex flex-col items-center justify-center gap-1.5 text-[11px] p-2 rounded-lg border text-center transition-all relative ${active ? "border-[#7B2FD6] bg-[#F8F5FF] text-[#4B3F80] shadow-sm" : "border-[#E5E0F1] bg-[#FAFAFA] text-[#7B6BAA] hover:bg-white"}`}
+                      className={`flex flex-col items-center justify-center gap-1.5 text-[11px] p-2 rounded-lg border text-center transition-all relative ${active ? "border-[#7B2FD6] bg-[#F3EEFB] text-[#443C66] shadow-sm" : "border-[#E7E4EF] bg-[#FAFAFA] text-[#6E6791] hover:bg-white"}`}
                     >
-                      <Icon size={18} className={active ? "text-[#D946EF]" : "text-[#9CA3AF]"} />
+                      <Icon size={18} className={active ? "text-[#7B2FD6]" : "text-[#9CA3AF]"} />
                       <span className="font-medium line-clamp-1">{source}</span>
                       {active && <Check size={12} className="text-[#7B2FD6] absolute top-1.5 right-1.5" />}
                     </button>
@@ -277,7 +277,7 @@ export function ReportPage() {
             </div>
 
             <div>
-              <h2 className="text-sm font-bold text-[#1A1230] mb-4 flex items-center gap-2">
+              <h2 className="text-sm font-bold text-[#191233] mb-4 flex items-center gap-2">
                 <Target size={16} className="text-[#7B2FD6]" />
                 Report Modules
               </h2>
@@ -286,9 +286,9 @@ export function ReportPage() {
                   <button 
                     key={mod} 
                     onClick={() => handleToggle(setModules, mod)}
-                    className={`flex items-center gap-3 text-sm p-2.5 rounded-lg transition-colors border ${active ? "bg-[#F8F5FF] border-[#E5E0F1] text-[#1A1230] font-semibold" : "border-transparent text-[#7B6BAA] hover:bg-[#F4F2F9]"}`}
+                    className={`flex items-center gap-3 text-sm p-2.5 rounded-lg transition-colors border ${active ? "bg-[#F3EEFB] border-[#E7E4EF] text-[#191233] font-semibold" : "border-transparent text-[#6E6791] hover:bg-[#F7F6FA]"}`}
                   >
-                    <div className={`w-5 h-5 rounded flex items-center justify-center transition-colors ${active ? "bg-gradient-to-br from-[#7B2FD6] to-[#D946EF]" : "bg-[#E5E0F1]"}`}>
+                    <div className={`w-5 h-5 rounded flex items-center justify-center transition-colors ${active ? "bg-[#7B2FD6]" : "bg-[#E7E4EF]"}`}>
                       {active && <Check size={12} className="text-white" />}
                     </div>
                     {mod}
@@ -304,19 +304,19 @@ export function ReportPage() {
         {/* LIVE PREVIEW AREA */}
         <div className="flex-1 p-8 overflow-y-auto flex justify-center items-start">
           
-          <div className="w-full max-w-[850px] bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgba(123,47,214,0.08)] border border-[#E5E0F1] relative" style={{ minHeight: "1100px", padding: "4rem" }}>
+          <div className="w-full max-w-[850px] bg-white rounded-2xl shadow-[0_4px_24px_rgba(23,15,46,0.06)] border border-[#E7E4EF] relative" style={{ minHeight: "1100px", padding: "4rem" }}>
             
             {/* Watermark */}
             {watermark && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.02] overflow-hidden">
-                <span className="text-[150px] font-bold uppercase rotate-[-45deg] tracking-widest text-[#1A1230]">CONFIDENTIAL</span>
+                <span className="text-[150px] font-bold uppercase rotate-[-45deg] tracking-widest text-[#191233]">CONFIDENTIAL</span>
               </div>
             )}
 
             {/* Document Header */}
-            <div className="border-b-2 border-[#1A1230] pb-6 mb-8 flex justify-between items-end">
+            <div className="border-b-2 border-[#191233] pb-6 mb-8 flex justify-between items-end">
               <div>
-                <h1 className="text-3xl font-extrabold text-[#1A1230] tracking-tight mb-2">{reportTitle}</h1>
+                <h1 className="text-3xl font-extrabold text-[#191233] tracking-tight mb-2">{reportTitle}</h1>
                 <p className="text-sm font-semibold text-[#7B2FD6] uppercase tracking-wider">
                   {reportType === "Custom" && customStart && customEnd ? `${customStart} to ${customEnd}` : `${reportType} Analysis`}
                 </p>
@@ -325,24 +325,24 @@ export function ReportPage() {
                 <p className={`text-sm font-bold uppercase tracking-wider mb-2 ${confidentiality === "Public" ? "text-[#10B981]" : "text-[#EF4444]"}`}>
                   {confidentiality}
                 </p>
-                <p className="text-sm text-[#4B3F80] font-medium">{new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-                <p className="text-xs text-[#7B6BAA] mt-1">Prepared by: {author}</p>
+                <p className="text-sm text-[#443C66] font-medium">{new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                <p className="text-xs text-[#6E6791] mt-1">Prepared by: {author}</p>
               </div>
             </div>
 
-            <div className="text-[#1A1230] leading-relaxed space-y-10 relative z-10">
+            <div className="text-[#191233] leading-relaxed space-y-10 relative z-10">
               
               {/* Module: Executive Summary */}
               {modules["Executive Summary"] && (
                 <section>
-                  <h2 className="text-lg font-bold border-b border-[#E5E0F1] pb-2 mb-4 text-[#1A1230] flex items-center gap-2">
+                  <h2 className="text-lg font-bold border-b border-[#E7E4EF] pb-2 mb-4 text-[#191233] flex items-center gap-2">
                     <span className="w-2 h-6 rounded-full bg-[#7B2FD6]"></span>
                     Executive Summary
                   </h2>
-                  <p className="text-base text-[#4B3F80] mb-4">
+                  <p className="text-base text-[#443C66] mb-4">
                     This document summarizes the intelligence gathered during the specified time period. Analysis indicates dynamic shifts across monitored topics. The prominent issue identified is <strong>"{issues[0]?.label}"</strong>, currently recording a severity index of {issues[0]?.score}. Public sentiment remains segmented, with positive engagement largely driven by digital media channels.
                   </p>
-                  <p className="text-base text-[#4B3F80]">
+                  <p className="text-base text-[#443C66]">
                     Data aggregation for this brief included telemetry from {Object.entries(sources).filter(([_, v]) => v).map(([k]) => k).join(", ")}. Systems report stable data ingestion with zero critical SLA breaches during the recording period.
                   </p>
                 </section>
@@ -351,8 +351,8 @@ export function ReportPage() {
               {/* Module: Sentiment Analysis */}
               {modules["Sentiment Analysis"] && (
                 <section>
-                  <h2 className="text-lg font-bold border-b border-[#E5E0F1] pb-2 mb-6 text-[#1A1230] flex items-center gap-2">
-                    <span className="w-2 h-6 rounded-full bg-[#D946EF]"></span>
+                  <h2 className="text-lg font-bold border-b border-[#E7E4EF] pb-2 mb-6 text-[#191233] flex items-center gap-2">
+                    <span className="w-2 h-6 rounded-full bg-[#B191E3]"></span>
                     Sentiment Analysis
                   </h2>
                   <div className="flex items-center gap-10">
@@ -371,10 +371,10 @@ export function ReportPage() {
                       </div>
                     </div>
                     <div className="w-2/3">
-                      <div className="bg-[#F8F5FF] rounded-3xl p-6 p-4 border border-[#E5E0F1]">
+                      <div className="bg-[#F7F6FA] rounded-xl p-4 border border-[#E7E4EF]">
                         <table className="w-full text-base border-collapse">
                           <thead>
-                            <tr className="border-b border-[#E5E0F1] text-left text-[#7B6BAA]">
+                            <tr className="border-b border-[#E7E4EF] text-left text-[#6E6791]">
                               <th className="py-2 font-semibold">Classification</th>
                               <th className="py-2 font-semibold text-right">Volume</th>
                               <th className="py-2 font-semibold text-right">Trend</th>
@@ -382,13 +382,13 @@ export function ReportPage() {
                           </thead>
                           <tbody>
                             {sentimentData.map(s => (
-                              <tr key={s.name} className="border-b border-[#E5E0F1] last:border-0">
-                                <td className="py-3 font-semibold text-[#1A1230] flex items-center gap-3">
+                              <tr key={s.name} className="border-b border-[#E7E4EF] last:border-0">
+                                <td className="py-3 font-semibold text-[#191233] flex items-center gap-3">
                                   <span className="w-3 h-3 rounded-full block shadow-sm" style={{ background: COLORS[s.name as keyof typeof COLORS] }}/>
                                   {s.name}
                                 </td>
-                                <td className="py-3 text-right font-bold text-[#1A1230]">{s.value}%</td>
-                                <td className="py-3 text-right text-sm text-[#7B6BAA]">Stable</td>
+                                <td className="py-3 text-right font-bold text-[#191233]">{s.value}%</td>
+                                <td className="py-3 text-right text-sm text-[#6E6791]">Stable</td>
                               </tr>
                             ))}
                           </tbody>
@@ -402,26 +402,26 @@ export function ReportPage() {
               {/* Module: Top Issues */}
               {modules["Top 5 Issues"] && (
                 <section>
-                  <h2 className="text-lg font-bold border-b border-[#E5E0F1] pb-2 mb-6 text-[#1A1230] flex items-center gap-2">
-                    <span className="w-2 h-6 rounded-full bg-[#0891B2]"></span>
+                  <h2 className="text-lg font-bold border-b border-[#E7E4EF] pb-2 mb-6 text-[#191233] flex items-center gap-2">
+                    <span className="w-2 h-6 rounded-full bg-[#7B2FD6]"></span>
                     Top 5 Issues Tracker
                   </h2>
-                  <div className="bg-[#FAFAFA] rounded-3xl p-6 p-6 border border-[#E5E0F1] mb-4">
+                  <div className="bg-[#F7F6FA] rounded-xl p-6 border border-[#E7E4EF] mb-4">
                     <div className="h-64 w-full">
                       <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={mockTrendData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
-                          <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#7B6BAA' }} tickLine={false} axisLine={false} />
-                          <YAxis yAxisId="left" tick={{ fontSize: 12, fill: '#7B6BAA' }} tickLine={false} axisLine={false} />
-                          <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12, fill: '#7B6BAA' }} tickLine={false} axisLine={false} />
-                          <Tooltip cursor={{ fill: '#F4F2F9' }} contentStyle={{ fontSize: '14px', border: '1px solid #E5E0F1', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }} />
+                          <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#6E6791' }} tickLine={false} axisLine={false} />
+                          <YAxis yAxisId="left" tick={{ fontSize: 12, fill: '#6E6791' }} tickLine={false} axisLine={false} />
+                          <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12, fill: '#6E6791' }} tickLine={false} axisLine={false} />
+                          <Tooltip cursor={{ fill: '#F7F6FA' }} contentStyle={{ fontSize: '14px', border: '1px solid #E7E4EF', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }} />
                           <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
                           <Bar yAxisId="left" dataKey="Index" fill="#7B2FD6" radius={[4, 4, 0, 0]} maxBarSize={40} />
-                          <Bar yAxisId="right" dataKey="Mentions" fill="#D946EF" radius={[4, 4, 0, 0]} maxBarSize={40} />
+                          <Bar yAxisId="right" dataKey="Mentions" fill="#B191E3" radius={[4, 4, 0, 0]} maxBarSize={40} />
                         </BarChart>
                       </ResponsiveContainer>
                     </div>
                   </div>
-                  <p className="text-base text-[#4B3F80]">
+                  <p className="text-base text-[#443C66]">
                     The graph above delineates the primary issues tracked during the period. The Severity Index (Purple) correlates closely with raw mention volume (Pink), indicating significant focus on the top 2 subjects.
                   </p>
                 </section>
@@ -430,12 +430,12 @@ export function ReportPage() {
               {/* Module: Other placeholder modules */}
               {Object.keys(modules).filter(k => !["Executive Summary", "Sentiment Analysis", "Top 5 Issues"].includes(k) && modules[k]).map((mod, i) => (
                 <section key={mod}>
-                  <h2 className="text-lg font-bold border-b border-[#E5E0F1] pb-2 mb-4 text-[#1A1230] flex items-center gap-2">
+                  <h2 className="text-lg font-bold border-b border-[#E7E4EF] pb-2 mb-4 text-[#191233] flex items-center gap-2">
                     <span className="w-2 h-6 rounded-full bg-gray-300"></span>
                     {mod}
                   </h2>
-                  <div className="border border-dashed border-[#E5E0F1] p-6 bg-[#FAFAFA] rounded-3xl p-6 text-center">
-                    <p className="text-base text-[#7B6BAA] font-medium">Data visualization for {mod} will be compiled in the final export.</p>
+                  <div className="border border-dashed border-[#E7E4EF] p-6 bg-[#F7F6FA] rounded-xl text-center">
+                    <p className="text-base text-[#6E6791] font-medium">Data visualization for {mod} will be compiled in the final export.</p>
                   </div>
                 </section>
               ))}
@@ -443,7 +443,7 @@ export function ReportPage() {
             </div>
 
             {/* Footer */}
-            <div className="absolute bottom-[2rem] left-[4rem] right-[4rem] border-t border-[#E5E0F1] pt-4 flex justify-between items-center text-xs font-semibold text-[#9CA3AF]">
+            <div className="absolute bottom-[2rem] left-[4rem] right-[4rem] border-t border-[#E7E4EF] pt-4 flex justify-between items-center text-xs font-semibold text-[#9CA3AF]">
               <span>TEKNOVRA SMART DASHBOARD</span>
               <span>PAGE 1 OF 1</span>
             </div>

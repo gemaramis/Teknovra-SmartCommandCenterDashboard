@@ -77,7 +77,8 @@ export default async function handler(req: any, res: any) {
             pubDate: new Date(item.pubDate || Date.now()).toISOString(),
             source: item.source || 'Google News',
             sentiment: aiData.sentiment || "NEUTRAL",
-            entities: aiData.entities || []
+            entities: aiData.entities || [],
+            target_entity: target
           });
         });
       } catch (err) {
@@ -91,13 +92,22 @@ export default async function handler(req: any, res: any) {
             pubDate: new Date(item.pubDate || Date.now()).toISOString(),
             source: item.source || 'Google News',
             sentiment: "NEUTRAL",
-            entities: []
+            entities: [],
+            target_entity: target
           });
         });
       }
 
       if (processedItems.length > 0) {
-        const { error } = await supabase.from('mentions').insert(processedItems);
+        let { error } = await supabase.from('mentions').insert(processedItems);
+
+        // Fallback for databases that don't have the target_entity column yet
+        if (error && /target_entity/i.test(error.message || '')) {
+          ({ error } = await supabase
+            .from('mentions')
+            .insert(processedItems.map(({ target_entity, ...rest }) => rest)));
+        }
+
         if (error) console.error("Insert error:", error);
         totalProcessed += processedItems.length;
       }

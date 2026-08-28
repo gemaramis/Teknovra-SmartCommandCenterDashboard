@@ -120,76 +120,76 @@ export function GenerateActionPage() {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col text-[#1A1230]" style={{ background: "linear-gradient(135deg, #E6E0F8 0%, #F5E3F0 50%, #E2EDF8 100%)" }}>
+    <div className="w-screen h-screen flex flex-col text-[#191233] bg-[#F7F6FA]">
       {/* Header */}
-      <header className="flex items-center gap-4 px-6 py-4 border-b border-gray-200 shadow-sm z-10" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
-        <button 
+      <header className="flex items-center gap-4 px-6 py-4 border-b border-[#E7E4EF] bg-white z-10">
+        <button
           onClick={() => navigate("/")}
-          className="w-8 h-8 flex items-center justify-center bg-gray-100/50 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors shadow-sm"
+          className="w-8 h-8 flex items-center justify-center text-[#6E6791] rounded-lg border border-[#E7E4EF] hover:bg-[#F7F6FA] hover:text-[#191233] transition-colors"
         >
           <ArrowLeft size={16} />
         </button>
-        <div className="w-px h-5 bg-gray-300" />
-        <div className="flex items-center gap-2 text-purple-600 font-bold uppercase tracking-widest text-sm">
-          <Sparkles size={18} /> Action Generator
+        <div className="w-px h-5 bg-[#E7E4EF]" />
+        <div className="flex items-center gap-2 text-[#7B2FD6] font-semibold uppercase tracking-wider text-xs">
+          <Sparkles size={16} /> Action Generator
         </div>
       </header>
 
       <div className="flex-1 overflow-auto p-6 flex gap-6">
-        
+
         {/* Controls Sidebar */}
-        <div className="w-[400px] flex flex-col gap-6">
-          <div className="rounded-3xl p-6 p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
-            <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">1. Target Issue</h2>
-            <select 
-              value={selectedIssueId} 
+        <div className="w-[400px] flex flex-col gap-4">
+          <div className="rounded-xl p-5 bg-white border border-[#E7E4EF]">
+            <h2 className="text-xs font-medium text-[#9C96B5] uppercase tracking-wider mb-4">1. Target Issue</h2>
+            <select
+              value={selectedIssueId}
               onChange={e => setSelectedIssueId(e.target.value)}
-              className="w-full border border-gray-200 rounded-lg p-2.5 text-sm font-semibold outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 bg-white/50"
+              className="w-full border border-[#E7E4EF] rounded-lg p-2.5 text-sm font-medium outline-none focus:border-[#7B2FD6] bg-white transition-colors"
             >
               {alerts.map(a => <option key={a.id} value={a.id}>{a.title}</option>)}
             </select>
           </div>
 
-          <div className="rounded-3xl p-6 p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
-            <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">2. Target Platform</h2>
+          <div className="rounded-xl p-5 bg-white border border-[#E7E4EF]">
+            <h2 className="text-xs font-medium text-[#9C96B5] uppercase tracking-wider mb-4">2. Target Platform</h2>
             <div className="grid grid-cols-2 gap-2">
               {["Twitter", "TikTok", "Instagram", "News"].map(p => (
-                <button 
-                  key={p} 
+                <button
+                  key={p}
                   onClick={() => setPlatform(p)}
-                  className={`py-2 rounded-lg text-sm font-bold border transition-colors ${platform === p ? "border-purple-600 bg-purple-50 text-purple-700" : "border-gray-200/50 text-gray-600 hover:bg-white/50"}`}
+                  className={`py-2 rounded-lg text-sm font-medium border transition-colors ${platform === p ? "border-[#7B2FD6] bg-[#F3EEFB] text-[#7B2FD6]" : "border-[#E7E4EF] text-[#6E6791] hover:bg-[#F7F6FA]"}`}
                 >
                   {p}
                 </button>
               ))}
             </div>
             {platform === "News" && (
-              <div className="mt-3 flex items-start gap-2 p-3 bg-red-50/80 border border-red-100 rounded-lg text-red-600 text-xs font-semibold">
+              <div className="mt-3 flex items-start gap-2 p-3 bg-[#FEF2F2] border border-red-100 rounded-lg text-[#DC2626] text-xs font-medium">
                 <AlertCircle size={14} className="mt-0.5 shrink-0" />
                 Cannot execute automated responses directly to News publishers.
               </div>
             )}
           </div>
 
-          <div className="rounded-3xl p-6 p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
-            <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">3. Response Strategy</h2>
-            <textarea 
+          <div className="rounded-xl p-5 bg-white border border-[#E7E4EF]">
+            <h2 className="text-xs font-medium text-[#9C96B5] uppercase tracking-wider mb-4">3. Response Strategy</h2>
+            <textarea
               value={prompt}
               onChange={e => setPrompt(e.target.value)}
               placeholder="e.g. Write an apology acknowledging the delay and offering a full refund."
-              className="w-full border border-gray-200 rounded-lg p-3 text-sm min-h-[120px] outline-none focus:border-purple-600 focus:ring-1 focus:ring-purple-600 resize-none bg-white/50"
+              className="w-full border border-[#E7E4EF] rounded-lg p-3 text-sm min-h-[120px] outline-none focus:border-[#7B2FD6] resize-none bg-white transition-colors placeholder-[#9C96B5]"
             />
           </div>
 
-          <div className="rounded-3xl p-6 p-6 border border-white/50 shadow-sm" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
-            <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">4. Content Format</h2>
-            <div className="flex bg-gray-200/50 p-1 rounded-lg">
+          <div className="rounded-xl p-5 bg-white border border-[#E7E4EF]">
+            <h2 className="text-xs font-medium text-[#9C96B5] uppercase tracking-wider mb-4">4. Content Format</h2>
+            <div className="flex bg-[#F1EFF6] p-0.5 rounded-lg">
               {[
                 { id: "Text", icon: Type }, { id: "Image", icon: ImageIcon }, { id: "Both", icon: LayoutTemplate }
               ].map(f => (
                 <button
                   key={f.id} onClick={() => setFormat(f.id)}
-                  className={`flex-1 flex items-center justify-center gap-2 text-xs py-2 font-bold rounded-md transition-all ${format === f.id ? "bg-white shadow text-purple-600" : "text-gray-500 hover:text-gray-700"}`}
+                  className={`flex-1 flex items-center justify-center gap-2 text-xs py-2 font-semibold rounded-md transition-all ${format === f.id ? "bg-white shadow-sm text-[#7B2FD6]" : "text-[#6E6791] hover:text-[#191233]"}`}
                 >
                   <f.icon size={14} /> {f.id}
                 </button>
@@ -197,10 +197,10 @@ export function GenerateActionPage() {
             </div>
           </div>
 
-          <button 
+          <button
             onClick={handleGenerate}
             disabled={isGenerating || platform === "News"}
-            className="w-full py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-3xl p-6 shadow-lg shadow-purple-600/20 transition-all flex justify-center items-center gap-2 uppercase tracking-widest"
+            className="w-full py-3 bg-[#7B2FD6] hover:bg-[#6A28BC] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors flex justify-center items-center gap-2"
           >
             {isGenerating ? <RefreshCw className="animate-spin" size={18} /> : <Send size={18} />}
             {isGenerating ? "Synthesizing..." : "Generate Action"}
@@ -208,51 +208,51 @@ export function GenerateActionPage() {
         </div>
 
         {/* Live Preview Area */}
-        <div className="flex-1 rounded-3xl p-6 border border-white/50 shadow-sm overflow-hidden flex flex-col" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
-          <div className="p-4 border-b border-white/20 flex items-center gap-2">
-            <CheckCircle2 size={18} className="text-green-600" />
-            <h2 className="font-bold text-gray-800">Live Content Review</h2>
+        <div className="flex-1 rounded-xl bg-white border border-[#E7E4EF] overflow-hidden flex flex-col">
+          <div className="p-4 border-b border-[#E7E4EF] flex items-center gap-2">
+            <CheckCircle2 size={16} className="text-[#059669]" />
+            <h2 className="font-semibold text-[#191233] text-sm">Live Content Review</h2>
           </div>
-          
+
           <div className="flex-1 p-8 overflow-y-auto flex flex-col items-center">
             {(!generatedText && !generatedImageUrl && !isGenerating) && (
-              <div className="text-center text-gray-400 flex flex-col items-center mt-20">
+              <div className="text-center text-[#9C96B5] flex flex-col items-center mt-20">
                 <LayoutTemplate size={48} className="mb-4 opacity-20" />
                 <p className="font-medium">Configure parameters and generate to preview content.</p>
               </div>
             )}
 
             {isGenerating && (
-              <div className="flex flex-col items-center gap-4 text-purple-600 mt-20">
-                <RefreshCw className="animate-spin w-10 h-10" />
-                <p className="font-bold animate-pulse">Running Neural Models...</p>
+              <div className="flex flex-col items-center gap-4 text-[#7B2FD6] mt-20">
+                <RefreshCw className="animate-spin w-9 h-9" />
+                <p className="font-medium">Running neural models…</p>
               </div>
             )}
 
             {(generatedText || generatedImageUrl) && !isGenerating && (
               <div className="max-w-2xl w-full flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-500">
                 {generatedImageUrl && (
-                  <div className="w-full mb-6 rounded-3xl p-6 overflow-hidden border border-white/50 shadow-lg" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
+                  <div className="w-full mb-6 rounded-xl overflow-hidden border border-[#E7E4EF]">
                     <img src={generatedImageUrl} alt="Generated UI" className="w-full h-auto object-cover" />
                   </div>
                 )}
                 {generatedText && (
-                  <div className="w-full rounded-3xl p-6 p-6 border border-white/50 shadow-lg" style={{ background: "rgba(255, 255, 255, 0.4)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
-                    <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
+                  <div className="w-full rounded-xl p-6 border border-[#E7E4EF] bg-[#F7F6FA]">
+                    <div className="flex items-center justify-between mb-4 pb-4 border-b border-[#E7E4EF]">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">PR</div>
+                        <div className="w-8 h-8 rounded-full bg-[#F3EEFB] flex items-center justify-center text-[#7B2FD6] font-semibold text-sm">PR</div>
                         <div>
-                          <div className="text-sm font-bold text-gray-900">Official Response</div>
-                          <div className="text-xs text-gray-500">Drafted for {platform}</div>
+                          <div className="text-sm font-semibold text-[#191233]">Official Response</div>
+                          <div className="text-xs text-[#9C96B5]">Drafted for {platform}</div>
                         </div>
                       </div>
                     </div>
-                    <div className="text-gray-800 whitespace-pre-wrap text-sm leading-relaxed mb-6">
+                    <div className="text-[#191233] whitespace-pre-wrap text-sm leading-relaxed mb-6">
                       {generatedText}
                     </div>
                     <div className="flex justify-end gap-2">
-                      <button className="px-4 py-1.5 text-sm font-bold text-gray-600 hover:bg-gray-200/50 rounded transition-colors">Edit</button>
-                      <button className="px-4 py-1.5 text-sm font-bold text-white bg-green-600 hover:bg-green-700 rounded transition-colors shadow-sm">Approve & Publish</button>
+                      <button className="px-4 py-1.5 text-sm font-medium text-[#6E6791] hover:bg-[#F1EFF6] rounded-lg transition-colors">Edit</button>
+                      <button className="px-4 py-1.5 text-sm font-semibold text-white bg-[#7B2FD6] hover:bg-[#6A28BC] rounded-lg transition-colors">Approve &amp; Publish</button>
                     </div>
                   </div>
                 )}

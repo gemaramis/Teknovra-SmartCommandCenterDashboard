@@ -35,17 +35,17 @@ export function EscalationPage() {
 
   if (!issue) {
     return (
-      <div className="w-screen h-screen flex flex-col items-center justify-center bg-[#F4F2F9]">
+      <div className="w-screen h-screen flex flex-col items-center justify-center bg-[#F7F6FA]">
         <h1 className="text-xl font-bold text-gray-800 mb-4">Issue Not Found</h1>
-        <button onClick={() => navigate("/")} className="px-4 py-2 bg-purple-600 text-white rounded-lg">Return to Dashboard</button>
+        <button onClick={() => navigate("/")} className="px-4 py-2 bg-[#7B2FD6] text-white rounded-lg">Return to Dashboard</button>
       </div>
     );
   }
 
   return (
-    <div className="w-screen h-screen flex flex-col bg-[#F4F2F9] text-[#1A1230]">
+    <div className="w-screen h-screen flex flex-col bg-[#F7F6FA] text-[#191233]">
       {/* Header */}
-      <header className="flex items-center gap-4 px-6 py-4 bg-white border-b border-gray-200">
+      <header className="flex items-center gap-4 px-6 py-4 bg-white border-b border-[#E7E4EF]">
         <button onClick={() => navigate("/")} className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-gray-800 transition-colors">
           <ArrowLeft size={16} /> Dashboard
         </button>
@@ -56,7 +56,7 @@ export function EscalationPage() {
       <div className="flex-1 overflow-auto p-8 flex justify-center">
         <div className="w-full max-w-2xl">
           
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-6">
+          <div className="bg-white rounded-xl border border-[#E7E4EF] shadow-sm p-6 mb-6">
             <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Selected Issue</h2>
             <div className="flex justify-between items-start">
               <div>
@@ -70,7 +70,7 @@ export function EscalationPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+          <div className="bg-white rounded-xl border border-[#E7E4EF] shadow-sm p-6">
             <h2 className="text-sm font-bold text-gray-800 mb-4">How do you want this to be escalated?</h2>
             
             <div className="flex flex-col gap-3 mb-6">
@@ -80,16 +80,16 @@ export function EscalationPage() {
                 <button
                   key={dept.id}
                   onClick={() => toggleDept(dept.id)}
-                  className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${isSelected ? "border-purple-600 bg-purple-50" : "border-gray-100 hover:border-purple-200 hover:bg-gray-50"}`}
+                  className={`flex items-center gap-4 p-4 rounded-xl border transition-colors text-left ${isSelected ? "border-[#7B2FD6] bg-[#F3EEFB]" : "border-[#E7E4EF] hover:border-[#C9B2EE]"}`}
                 >
-                  <div className={`p-2 rounded-lg ${isSelected ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-600"}`}>
+                  <div className={`p-2 rounded-lg ${isSelected ? "bg-[#7B2FD6] text-white" : "bg-[#F1EFF6] text-[#6E6791]"}`}>
                     <dept.icon size={20} />
                   </div>
                   <div className="flex-1">
-                    <div className="font-bold text-gray-900">{dept.name}</div>
-                    <div className="text-xs text-gray-500">{dept.desc}</div>
+                    <div className="font-semibold text-[#191233]">{dept.name}</div>
+                    <div className="text-xs text-[#6E6791]">{dept.desc}</div>
                   </div>
-                  <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${isSelected ? "border-purple-600 bg-purple-600" : "border-gray-300 bg-white"}`}>
+                  <div className={`w-5 h-5 rounded border flex items-center justify-center ${isSelected ? "border-[#7B2FD6] bg-[#7B2FD6]" : "border-[#D8D3E6] bg-white"}`}>
                     {isSelected && <Check size={14} className="text-white" />}
                   </div>
                 </button>
@@ -102,13 +102,13 @@ export function EscalationPage() {
                 value={notes}
                 onChange={e => setNotes(e.target.value)}
                 placeholder="Add any specific instructions for the team..."
-                className="w-full border border-gray-200 rounded-lg p-3 text-sm min-h-[100px] outline-none focus:border-purple-600 focus:ring-1 focus:ring-purple-600"
+                className="w-full border border-[#E7E4EF] rounded-lg p-3 text-sm min-h-[100px] outline-none focus:border-[#7B2FD6] focus:ring-1 focus:ring-[#7B2FD6]"
               />
             </div>
 
             <button 
               onClick={handleEscalate}
-              className={`w-full py-3 rounded-lg flex justify-center items-center gap-2 font-bold uppercase tracking-widest transition-all ${selectedDepts.length > 0 ? "bg-red-600 hover:bg-red-700 text-white shadow-md" : "bg-gray-200 text-gray-400 cursor-not-allowed"}`}
+              className={`w-full py-3 rounded-lg flex justify-center items-center gap-2 font-semibold transition-colors ${selectedDepts.length > 0 ? "bg-[#DC2626] hover:bg-[#B91C1C] text-white" : "bg-[#F1EFF6] text-[#9C96B5] cursor-not-allowed"}`}
             >
               <Send size={16} />
               Confirm Escalation

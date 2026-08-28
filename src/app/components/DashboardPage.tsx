@@ -53,88 +53,73 @@ export function DashboardPage() {
   const timeStr = `${String(now.getHours()).padStart(2, "0")}.${String(now.getMinutes()).padStart(2, "0")} WIB`;
 
   return (
-    <div
-      className="flex flex-col h-screen w-screen overflow-hidden select-none"
-      style={{ background: "linear-gradient(135deg, #E6E0F8 0%, #F5E3F0 50%, #E2EDF8 100%)", color: "#1A1230" }}
-    >
+    <div className="flex flex-col h-screen w-screen overflow-hidden select-none bg-[#F7F6FA] text-[#191233]">
       {/* Header */}
       <header
-        className="flex items-center gap-4 px-4 py-2 flex-shrink-0"
-        style={{ background: "rgba(255, 255, 255, 0.7)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderBottom: "1px solid rgba(255, 255, 255, 0.5)", height: "56px", boxShadow: "0 4px 24px -4px rgba(123,47,214,0.08)", zIndex: 50 }}
+        className="flex items-center gap-4 px-4 py-2 flex-shrink-0 bg-white border-b border-[#E7E4EF]"
+        style={{ height: "56px", zIndex: 50 }}
       >
         {/* Logo */}
         <div className="flex items-center gap-4 flex-shrink-0">
-          <button 
+          <button
             onClick={() => navigate("/")}
-            className="w-8 h-8 flex items-center justify-center bg-gray-100/50 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors shadow-sm"
+            className="w-8 h-8 flex items-center justify-center text-[#6E6791] rounded-lg border border-[#E7E4EF] hover:bg-[#F7F6FA] hover:text-[#191233] transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
           </button>
           <img src={logoTeknovra} alt="Teknovra" className="h-6 object-contain" />
         </div>
 
-        <div style={{ width: "1px", height: "24px", background: "rgba(123,47,214,0.2)" }} />
+        <div className="w-px h-6 bg-[#E7E4EF]" />
 
         <div>
-          <div style={{ color: "#1A1230", fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+          <div className="text-[0.8rem] font-semibold tracking-tight text-[#191233]">
             Smart Dashboard
           </div>
-          <div style={{ color: "#7B6BAA", fontSize: "0.65rem" }}>UPDATE {timeStr}</div>
+          <div className="text-[0.65rem] text-[#9C96B5]">Update {timeStr}</div>
         </div>
 
         <div className="flex-1" />
 
-        <button onClick={() => navigate("/report")} className="p-1.5 rounded hover:bg-[#EDE8F9] transition-colors" title="Generate Report">
-          <FileText size={16} style={{ color: "#7B6BAA" }} />
+        <button onClick={() => navigate("/report")} className="p-1.5 rounded-md hover:bg-[#F1EFF6] transition-colors" title="Generate Report">
+          <FileText size={16} className="text-[#6E6791]" />
         </button>
-        <button onClick={() => setIsSettingsOpen(true)} className="p-1.5 rounded hover:bg-[#EDE8F9] transition-colors" title="Project Settings">
-          <Settings size={16} style={{ color: "#7B6BAA" }} />
+        <button onClick={() => setIsSettingsOpen(true)} className="p-1.5 rounded-md hover:bg-[#F1EFF6] transition-colors" title="Project Settings">
+          <Settings size={16} className="text-[#6E6791]" />
         </button>
-        <button onClick={() => toast.success("Dashboard layout refreshed")} className="p-1.5 rounded hover:bg-[#EDE8F9] transition-colors">
-          <LayoutDashboard size={16} style={{ color: "#7B6BAA" }} />
+        <button onClick={() => toast.success("Dashboard layout refreshed")} className="p-1.5 rounded-md hover:bg-[#F1EFF6] transition-colors">
+          <LayoutDashboard size={16} className="text-[#6E6791]" />
         </button>
-        <button onClick={() => setIsSearchOpen(true)} className="p-1.5 rounded hover:bg-[#EDE8F9] transition-colors">
-          <Search size={16} style={{ color: "#7B6BAA" }} />
+        <button onClick={() => setIsSearchOpen(true)} className="p-1.5 rounded-md hover:bg-[#F1EFF6] transition-colors">
+          <Search size={16} className="text-[#6E6791]" />
         </button>
 
         {/* Tabs */}
-        <div className="flex rounded-lg overflow-hidden" style={{ border: "1px solid rgba(123,47,214,0.25)" }}>
+        <div className="flex rounded-lg bg-[#F1EFF6] p-0.5">
           {(["general", "crisis"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className="px-4 py-1.5 transition-all"
-              style={{
-                background: activeTab === tab
-                  ? "linear-gradient(135deg, #7B2FD6, #D946EF)"
-                  : "transparent",
-                color: activeTab === tab ? "#fff" : "#7B6BAA",
-                fontSize: "0.85rem",
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-              }}
+              className={`px-4 py-1 rounded-md text-[0.75rem] font-semibold tracking-wide transition-all ${
+                activeTab === tab ? "bg-white text-[#7B2FD6] shadow-sm" : "text-[#6E6791] hover:text-[#191233]"
+              }`}
             >
               {tab.toUpperCase()}
             </button>
           ))}
         </div>
 
-        <div style={{ width: "1px", height: "24px", background: "rgba(123,47,214,0.2)" }} />
+        <div className="w-px h-6 bg-[#E7E4EF]" />
 
         {/* Time filters */}
-        <div className="flex gap-1">
+        <div className="flex rounded-lg bg-[#F1EFF6] p-0.5">
           {TIME_FILTERS.map((t) => (
             <button
               key={t}
               onClick={() => setTimeFilter(t)}
-              className="px-2.5 py-1 rounded transition-all"
-              style={{
-                background: timeFilter === t ? "linear-gradient(135deg, #7B2FD6, #D946EF)" : "transparent",
-                color: timeFilter === t ? "#fff" : "#7B6BAA",
-                fontSize: "0.75rem",
-                fontWeight: 700,
-                border: timeFilter === t ? "none" : "1px solid rgba(123,47,214,0.2)",
-              }}
+              className={`px-2.5 py-1 rounded-md text-[0.7rem] font-semibold transition-all ${
+                timeFilter === t ? "bg-white text-[#7B2FD6] shadow-sm" : "text-[#6E6791] hover:text-[#191233]"
+              }`}
             >
               {t}
             </button>
@@ -144,12 +129,9 @@ export function DashboardPage() {
         {/* Date/time */}
         <Popover>
           <PopoverTrigger asChild>
-            <button
-              className="flex items-center gap-2 rounded-lg px-3 py-1.5 transition-colors hover:opacity-80"
-              style={{ background: "#EDE8F9", border: "1px solid rgba(123,47,214,0.18)" }}
-            >
-              <Clock size={12} style={{ color: "#7B6BAA" }} />
-              <span style={{ color: "#7B6BAA", fontSize: "0.75rem" }}>
+            <button className="flex items-center gap-2 rounded-lg px-3 py-1.5 bg-white border border-[#E7E4EF] hover:border-[#C9B2EE] transition-colors">
+              <Clock size={12} className="text-[#6E6791]" />
+              <span className="text-[0.75rem] text-[#6E6791]">
                 {dateRange?.from ? (
                   dateRange.to ? (
                     `${format(dateRange.from, "d MMM yyyy", { locale: id })} - ${format(dateRange.to, "d MMM yyyy", { locale: id })}`
@@ -160,15 +142,7 @@ export function DashboardPage() {
                   dayStr
                 )}
               </span>
-              <span
-                style={{
-                  background: "linear-gradient(135deg, #7B2FD6, #D946EF)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  fontSize: "0.6875rem",
-                  fontWeight: 700,
-                }}
-              >
+              <span className="text-[0.6875rem] font-semibold text-[#7B2FD6]">
                 {timeStr}
               </span>
             </button>
@@ -217,17 +191,10 @@ export function DashboardPage() {
       ) : (
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
-            <div
-              className="text-4xl font-bold mb-3"
-              style={{
-                background: "linear-gradient(135deg, #7B2FD6, #D946EF)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              CRISIS MODE
+            <div className="text-3xl font-semibold tracking-tight text-[#7B2FD6] mb-3">
+              Crisis Mode
             </div>
-            <div style={{ color: "#7B6BAA", fontSize: "0.875rem" }}>Tab Crisis dalam pengembangan</div>
+            <div className="text-sm text-[#6E6791]">Tab Crisis dalam pengembangan</div>
           </div>
         </div>
       )}
@@ -244,18 +211,18 @@ export function DashboardPage() {
             <DialogDescription>Enter an issue, keyword, or entity to scrape comprehensive trend data.</DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSearchSubmit} className="flex gap-2 mt-2">
-            <div className="flex-1 flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:border-purple-500 focus-within:ring-1 focus-within:ring-purple-500 transition-all">
-              <Search className="text-gray-400 mr-2" size={18} />
-              <input 
-                type="text" 
+            <div className="flex-1 flex items-center bg-white border border-[#E7E4EF] rounded-lg px-3 py-2 focus-within:border-[#7B2FD6] focus-within:ring-1 focus-within:ring-[#7B2FD6] transition-all">
+              <Search className="text-[#9C96B5] mr-2" size={18} />
+              <input
+                type="text"
                 autoFocus
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search across all channels..."
-                className="flex-1 outline-none text-sm text-gray-800 bg-transparent placeholder-gray-400"
+                className="flex-1 outline-none text-sm text-[#191233] bg-transparent placeholder-[#9C96B5]"
               />
             </div>
-            <button type="submit" className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold rounded-lg transition-colors shadow-sm">
+            <button type="submit" className="px-4 py-2 bg-[#7B2FD6] hover:bg-[#6A28BC] text-white text-sm font-semibold rounded-lg transition-colors">
               Scrape
             </button>
           </form>

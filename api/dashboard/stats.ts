@@ -4,19 +4,36 @@ const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
 const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+// A mention belongs to an entity if it was tagged by the scraper;
+// legacy rows (no target_entity) fall back to a title match
+const matchesEntity = (m: any, entity: string) =>
+  m.target_entity
+    ? m.target_entity === entity
+    : (m.title || '').toLowerCase().includes(entity.toLowerCase());
+
 export default async function handler(req: any, res: any) {
   const { entity } = req.query;
 
-  let query = supabase.from('mentions').select('*');
-  
-  if (entity && entity !== 'All Projects') {
-    query = query.ilike('title', `%${entity}%`);
-  }
-
-  const { data, error } = await query;
+  const { data, error } = await supabase.from('mentions').select('*');
   if (error) return res.status(500).json({ error: error.message });
 
-  const mentions = data || [];
+  let mentions = data || [];
+
+  if (entity && entity !== 'All Projects') {
+    mentions = mentions.filter(m => matchesEntity(m, entity));
+  } else {
+    // "All Projects" only aggregates data for the currently configured targets
+    const { data: settingsData } = await supabase
+      .from('settings')
+      .select('target_entities')
+      .eq('id', 1)
+      .single();
+
+    const targets: string[] = settingsData?.target_entities || [];
+    if (targets.length > 0) {
+      mentions = mentions.filter(m => targets.some(t => matchesEntity(m, t)));
+    }
+  }
 
   // 1. Calculate KPI (Total Mentions, Reach, Interactions)
   const totalMentions = mentions.length;

@@ -88,18 +88,13 @@ export function OperationalDashboardPage() {
   }, [activeProject]);
 
   const glassStyle = {
-    background: "rgba(255, 255, 255, 0.4)",
-    backdropFilter: "blur(16px)",
-    WebkitBackdropFilter: "blur(16px)",
-    border: "1px solid rgba(255, 255, 255, 0.8)",
+    background: "#FFFFFF",
+    border: "1px solid #E7E4EF",
   };
 
   const activeGlassStyle = {
-    background: "rgba(255, 255, 255, 0.7)",
-    backdropFilter: "blur(24px)",
-    WebkitBackdropFilter: "blur(24px)",
-    border: "1px solid rgba(123, 47, 214, 0.3)",
-    boxShadow: "0 4px 12px rgba(123, 47, 214, 0.1)"
+    background: "#F3EEFB",
+    border: "1px solid transparent",
   };
 
   const renderSummaryTab = () => (
@@ -112,10 +107,10 @@ export function OperationalDashboardPage() {
           { label: "Negative Sentiment", value: dashboardStats.kpis.negative, trend: "-2.1%", color: "text-red-500" },
           { label: "Neutral Sentiment", value: dashboardStats.kpis.neutral, trend: "+8.4%", color: "text-sky-500" }
         ].map((kpi, idx) => (
-          <div key={idx} className="bg-white/60 backdrop-blur-md border border-white/80 rounded-2xl p-4 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">{kpi.label}</h3>
-            <div className={`text-2xl font-black ${kpi.color}`}>{kpi.value}</div>
-            <div className={`text-xs font-bold mt-2 flex items-center gap-1 ${kpi.trend.startsWith('+') ? 'text-emerald-500' : 'text-red-500'}`}>
+          <div key={idx} className="bg-white border border-[#E7E4EF] rounded-xl p-4 relative overflow-hidden group hover:border-[#C9B2EE] transition-colors">
+            <h3 className="text-xs font-medium uppercase tracking-wider text-[#6E6791] mb-2">{kpi.label}</h3>
+            <div className={`text-2xl font-semibold tracking-tight ${kpi.color}`}>{kpi.value}</div>
+            <div className={`text-xs font-medium mt-2 flex items-center gap-1 ${kpi.trend.startsWith('+') ? 'text-emerald-600' : 'text-red-600'}`}>
               {kpi.trend.startsWith('+') ? <TrendingUp size={12}/> : <TrendingUp size={12} className="rotate-180"/>} {kpi.trend} vs last week
             </div>
           </div>
@@ -124,14 +119,14 @@ export function OperationalDashboardPage() {
 
       <div className="grid grid-cols-3 gap-6">
         {/* Timeline Chart */}
-        <div className="col-span-2 rounded-2xl p-6" style={glassStyle}>
+        <div className="col-span-2 rounded-xl p-6" style={glassStyle}>
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2">
-              <TrendingUp size={16} /> Timeline of Mentions
+            <h3 className="text-xs font-medium text-[#6E6791] uppercase tracking-wider flex items-center gap-2">
+              <TrendingUp size={14} /> Timeline of Mentions
             </h3>
-            <div className="flex gap-2">
-              <button className="text-xs font-bold bg-white/50 px-3 py-1 rounded text-purple-700">HOURLY</button>
-              <button className="text-xs font-bold px-3 py-1 rounded text-gray-500 hover:bg-white/50">DAILY</button>
+            <div className="flex rounded-lg bg-[#F1EFF6] p-0.5">
+              <button className="text-xs font-semibold bg-white px-3 py-1 rounded-md text-[#7B2FD6] shadow-sm">HOURLY</button>
+              <button className="text-xs font-semibold px-3 py-1 rounded-md text-[#6E6791] hover:text-[#191233]">DAILY</button>
             </div>
           </div>
           <div className="h-64 w-full">
@@ -142,34 +137,34 @@ export function OperationalDashboardPage() {
               ]}>
                 <defs>
                   <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#7B2FD6" stopOpacity={0.25}/>
+                    <stop offset="95%" stopColor="#7B2FD6" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <Tooltip contentStyle={glassStyle} />
-                <Area type="monotone" dataKey="value" stroke="#10B981" fillOpacity={1} fill="url(#colorUv)" />
+                <Tooltip contentStyle={{ background: "#FFFFFF", border: "1px solid #E7E4EF", borderRadius: "8px", boxShadow: "0 4px 12px rgba(23,15,46,0.08)" }} />
+                <Area type="monotone" dataKey="value" stroke="#7B2FD6" strokeWidth={2} fillOpacity={1} fill="url(#colorUv)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Source of Mentions */}
-        <div className="col-span-1 rounded-2xl p-6 flex flex-col" style={glassStyle}>
-          <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2 mb-6">
-            <PieChart size={16} /> Source Breakdown
+        <div className="col-span-1 rounded-xl p-6 flex flex-col" style={glassStyle}>
+          <h3 className="text-xs font-medium text-[#6E6791] uppercase tracking-wider flex items-center gap-2 mb-6">
+            <PieChart size={14} /> Source Breakdown
           </h3>
           <div className="flex-1 flex flex-col gap-4 overflow-y-auto">
-            {dashboardStats.sources.length === 0 && <div className="text-gray-400 font-bold text-sm">No data available</div>}
+            {dashboardStats.sources.length === 0 && <div className="text-[#9C96B5] font-medium text-sm">No data available</div>}
             {dashboardStats.sources.map((src: any, idx: number) => (
               <div key={idx} className="flex flex-col gap-1">
-                <div className="flex justify-between items-center text-sm font-bold">
-                  <span className="text-gray-700">{src.name}</span>
-                  <span className="text-purple-600">{src.val}</span>
+                <div className="flex justify-between items-center text-sm font-medium">
+                  <span className="text-[#191233]">{src.name}</span>
+                  <span className="text-[#7B2FD6] font-semibold">{src.val}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-gray-500">{src.count} mentions</span>
-                  <div className="flex-1 h-1.5 bg-white rounded-full overflow-hidden">
-                    <div className="h-full bg-purple-500" style={{ width: src.val }} />
+                  <span className="text-xs text-[#9C96B5]">{src.count} mentions</span>
+                  <div className="flex-1 h-1 bg-[#F1EFF6] rounded-full overflow-hidden">
+                    <div className="h-full bg-[#7B2FD6]" style={{ width: src.val }} />
                   </div>
                 </div>
               </div>
@@ -185,14 +180,14 @@ export function OperationalDashboardPage() {
       {/* Channel Filters */}
       <div className="flex gap-2 w-full overflow-x-auto pb-2">
         {[
-          { name: "All", color: "bg-gray-700" },
-          { name: "Facebook", color: "bg-blue-600" },
-          { name: "X (Twitter)", color: "bg-sky-500" },
-          { name: "News", color: "bg-green-600" },
-          { name: "Blogs/Forums", color: "bg-orange-500" },
-          { name: "Youtube", color: "bg-red-600" },
-          { name: "Instagram", color: "bg-fuchsia-600" },
-          { name: "Tiktok", color: "bg-black" },
+          { name: "All", color: "#7B2FD6" },
+          { name: "Facebook", color: "#1877F2" },
+          { name: "X (Twitter)", color: "#0EA5E9" },
+          { name: "News", color: "#059669" },
+          { name: "Blogs/Forums", color: "#EA580C" },
+          { name: "Youtube", color: "#DC2626" },
+          { name: "Instagram", color: "#C026D3" },
+          { name: "Tiktok", color: "#191233" },
         ].map((c, i) => {
           let count = 0;
           if (c.name === "All") count = dashboardStats.kpis.totalMentions;
@@ -203,13 +198,18 @@ export function OperationalDashboardPage() {
           const isZero = count === 0;
 
           return (
-            <button 
-              key={i} 
+            <button
+              key={i}
               disabled={isZero}
-              className={`${isZero ? 'bg-gray-300 text-gray-500' : c.color + ' text-white'} px-6 py-3 rounded-xl font-bold text-sm shadow-md flex flex-col items-center min-w-[100px] ${!isZero && 'hover:scale-105 transition-transform cursor-pointer'}`}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg border text-sm min-w-fit whitespace-nowrap transition-colors ${
+                isZero
+                  ? 'bg-[#F7F6FA] border-[#E7E4EF] text-[#9C96B5]'
+                  : 'bg-white border-[#E7E4EF] text-[#191233] hover:border-[#C9B2EE] cursor-pointer'
+              }`}
             >
-              <span>{c.name}</span>
-              <span className="text-xs font-normal opacity-80 mt-1">{count.toLocaleString()}</span>
+              <span className="w-2 h-2 rounded-full shrink-0" style={{ background: isZero ? "#D8D3E6" : c.color }} />
+              <span className="font-medium">{c.name}</span>
+              <span className="text-xs text-[#9C96B5]">{count.toLocaleString()}</span>
             </button>
           );
         })}
@@ -219,29 +219,29 @@ export function OperationalDashboardPage() {
         {/* Main Stream */}
         <div className="flex-1 flex flex-col gap-4 overflow-y-auto pr-2">
           {mentionsData.length === 0 && (
-            <div className="p-8 text-center text-gray-500 font-bold" style={glassStyle}>
+            <div className="p-8 rounded-xl text-center text-[#6E6791] font-medium" style={glassStyle}>
               No data collected yet. Wait for the engine to finish its crawl...
             </div>
           )}
           {mentionsData.map((item, idx) => (
-            <div key={item.id || idx} className="p-5 rounded-2xl flex flex-col gap-3 transition-all hover:bg-white/60" style={glassStyle}>
+            <div key={item.id || idx} className="p-5 rounded-xl flex flex-col gap-3 transition-colors hover:border-[#C9B2EE]" style={glassStyle}>
               <div className="flex justify-between items-start">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500">N</div>
+                  <div className="w-10 h-10 rounded-full bg-[#F3EEFB] flex items-center justify-center font-semibold text-[#7B2FD6]">N</div>
                   <div>
-                    <a href={item.link} target="_blank" rel="noreferrer" className="font-bold text-gray-900 hover:text-purple-600 transition-colors line-clamp-1">{item.title}</a>
-                    <div className="text-xs text-gray-500">{new Date(item.pubDate).toLocaleString()} • {item.source}</div>
+                    <a href={item.link} target="_blank" rel="noreferrer" className="font-semibold text-[#191233] hover:text-[#7B2FD6] transition-colors line-clamp-1">{item.title}</a>
+                    <div className="text-xs text-[#9C96B5]">{new Date(item.pubDate).toLocaleString()} • {item.source}</div>
                   </div>
                 </div>
-                <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${
-                  item.sentiment === 'POSITIVE' ? 'bg-emerald-100 text-emerald-700' :
-                  item.sentiment === 'NEGATIVE' ? 'bg-red-100 text-red-700' :
-                  'bg-gray-200 text-gray-600'
+                <span className={`px-2 py-1 rounded text-xs font-semibold uppercase ${
+                  item.sentiment === 'POSITIVE' ? 'bg-emerald-50 text-emerald-700' :
+                  item.sentiment === 'NEGATIVE' ? 'bg-red-50 text-red-700' :
+                  'bg-[#F1EFF6] text-[#6E6791]'
                 }`}>
                   {item.sentiment}
                 </span>
               </div>
-              <p className="text-gray-700 text-sm">
+              <p className="text-[#443C66] text-sm">
                 Entities detected: {item.entities && item.entities.length > 0 ? item.entities.join(", ") : "None"}
               </p>
             </div>
@@ -250,15 +250,15 @@ export function OperationalDashboardPage() {
 
         {/* Right Filter Sidebar */}
         <div className="w-[300px] flex flex-col gap-4">
-          <div className="p-4 rounded-2xl" style={glassStyle}>
-            <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+          <div className="p-4 rounded-xl" style={glassStyle}>
+            <h3 className="text-xs font-medium text-[#6E6791] uppercase tracking-wider mb-4 flex items-center gap-2">
               <Filter size={14} /> Advanced Filters
             </h3>
             <div className="flex flex-col gap-3">
-              <input type="text" placeholder="Filter by text..." className="w-full bg-white/50 border border-white/60 rounded-xl p-2.5 text-sm outline-none focus:bg-white" />
-              <input type="text" placeholder="Filter by author..." className="w-full bg-white/50 border border-white/60 rounded-xl p-2.5 text-sm outline-none focus:bg-white" />
-              <input type="text" placeholder="Filter by location..." className="w-full bg-white/50 border border-white/60 rounded-xl p-2.5 text-sm outline-none focus:bg-white" />
-              <button className="w-full py-2.5 bg-purple-600 text-white font-bold rounded-xl mt-2 shadow-md">Apply Filters</button>
+              <input type="text" placeholder="Filter by text..." className="w-full bg-white border border-[#E7E4EF] rounded-lg p-2.5 text-sm outline-none focus:border-[#7B2FD6] transition-colors placeholder-[#9C96B5]" />
+              <input type="text" placeholder="Filter by author..." className="w-full bg-white border border-[#E7E4EF] rounded-lg p-2.5 text-sm outline-none focus:border-[#7B2FD6] transition-colors placeholder-[#9C96B5]" />
+              <input type="text" placeholder="Filter by location..." className="w-full bg-white border border-[#E7E4EF] rounded-lg p-2.5 text-sm outline-none focus:border-[#7B2FD6] transition-colors placeholder-[#9C96B5]" />
+              <button className="w-full py-2.5 bg-[#7B2FD6] hover:bg-[#6A28BC] text-white font-semibold rounded-lg mt-2 transition-colors">Apply Filters</button>
             </div>
           </div>
         </div>
@@ -270,16 +270,16 @@ export function OperationalDashboardPage() {
 
   const renderGeoTab = () => (
     <div className="animate-in fade-in h-full flex flex-col gap-6">
-      <div className="flex-1 rounded-2xl p-6 flex flex-col items-center justify-center relative" style={glassStyle}>
-        <h3 className="absolute top-6 left-6 text-sm font-bold text-gray-500 uppercase tracking-widest">Buzz Geo Distribution</h3>
-        <Map className="w-64 h-64 text-emerald-600 opacity-20" />
-        <p className="text-emerald-700 font-bold mt-4">Geospatial Mapping Engine Online</p>
-        <p className="text-sm text-gray-500">Live heatmap overlay active for Indonesia Region.</p>
+      <div className="flex-1 rounded-xl p-6 flex flex-col items-center justify-center relative" style={glassStyle}>
+        <h3 className="absolute top-6 left-6 text-xs font-medium text-[#6E6791] uppercase tracking-wider">Buzz Geo Distribution</h3>
+        <Map className="w-64 h-64 text-[#7B2FD6] opacity-10" />
+        <p className="text-[#7B2FD6] font-semibold mt-4">Geospatial Mapping Engine Online</p>
+        <p className="text-sm text-[#6E6791]">Live heatmap overlay active for Indonesia Region.</p>
       </div>
-      <div className="h-1/3 rounded-2xl p-6" style={glassStyle}>
-        <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Top Provinces by Mention</h3>
-        <div className="flex flex-col items-center justify-center h-32 text-gray-400">
-          <p className="font-bold">Awaiting geospatial extraction module</p>
+      <div className="h-1/3 rounded-xl p-6" style={glassStyle}>
+        <h3 className="text-xs font-medium text-[#6E6791] uppercase tracking-wider mb-4">Top Provinces by Mention</h3>
+        <div className="flex flex-col items-center justify-center h-32 text-[#9C96B5]">
+          <p className="font-medium">Awaiting geospatial extraction module</p>
           <p className="text-sm">Location data will appear here once identified in news articles.</p>
         </div>
       </div>
@@ -287,140 +287,136 @@ export function OperationalDashboardPage() {
   );
 
   return (
-    <div className="w-screen h-screen flex text-[#1A1230]" style={{ background: "linear-gradient(135deg, #E6E0F8 0%, #F5E3F0 50%, #E2EDF8 100%)" }}>
-      
+    <div className="w-screen h-screen flex text-[#191233] bg-[#F7F6FA]">
+
       {/* Left Sidebar Architecture */}
-      <div className="w-[280px] flex flex-col h-full border-r border-white/40" style={{ background: "rgba(255, 255, 255, 0.3)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
-        
+      <div className="w-[260px] flex flex-col h-full border-r border-[#E7E4EF] bg-white">
+
         {/* Logo Area */}
-        <div className="p-6 border-b border-white/30 flex items-center gap-3">
-          <div className="w-8 h-8 rounded bg-gradient-to-br from-emerald-400 to-purple-500 flex items-center justify-center shadow-lg">
-            <BarChart2 className="w-5 h-5 text-white" />
+        <div className="p-6 border-b border-[#E7E4EF] flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-[#7B2FD6] flex items-center justify-center">
+            <BarChart2 className="w-4 h-4 text-white" />
           </div>
-          <span className="font-black text-xl tracking-tight text-gray-800">Operational</span>
+          <span className="font-semibold text-lg tracking-tight text-[#191233]">Operational</span>
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex-1 overflow-y-auto py-6 flex flex-col gap-2 px-4">
-          <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 px-2">Data Modules</div>
+        <div className="flex-1 overflow-y-auto py-6 flex flex-col gap-1 px-4">
+          <div className="text-xs font-medium text-[#9C96B5] uppercase tracking-wider mb-2 px-2">Data Modules</div>
           {SIDEBAR_TABS.map(tab => {
             const isActive = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left"
-                style={isActive ? activeGlassStyle : {}}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-left ${
+                  isActive ? "bg-[#F3EEFB]" : "hover:bg-[#F7F6FA]"
+                }`}
               >
-                <tab.icon size={18} className={isActive ? "text-purple-600" : "text-gray-500"} />
-                <span className={`font-bold ${isActive ? "text-purple-800" : "text-gray-600"}`}>{tab.label}</span>
+                <tab.icon size={17} className={isActive ? "text-[#7B2FD6]" : "text-[#9C96B5]"} />
+                <span className={`text-sm font-medium ${isActive ? "text-[#7B2FD6]" : "text-[#6E6791]"}`}>{tab.label}</span>
               </button>
             );
           })}
         </div>
 
         {/* Exit Button */}
-        <div className="p-4 border-t border-white/30">
-          <button 
+        <div className="p-4 border-t border-[#E7E4EF]">
+          <button
             onClick={() => navigate("/")}
-            className="flex items-center gap-2 w-full px-4 py-3 rounded-xl font-bold text-gray-600 hover:bg-white/50 transition-colors"
+            className="flex items-center gap-2 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-[#6E6791] hover:bg-[#F7F6FA] hover:text-[#191233] transition-colors"
           >
-            <ArrowLeft size={16} /> Exit to Hub
+            <ArrowLeft size={15} /> Exit to Hub
           </button>
         </div>
       </div>
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col h-full overflow-hidden">
-        
+
         {/* Top Navbar */}
-        <header className="relative z-50 h-20 border-b border-white/40 flex items-center justify-between px-8" style={{ background: "rgba(255, 255, 255, 0.2)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
-          
+        <header className="relative z-50 h-16 border-b border-[#E7E4EF] bg-white flex items-center justify-between px-8">
+
           <div className="flex items-center gap-4">
             <div className="relative">
-              <button 
+              <button
                 onClick={() => { setTrackerDropdownOpen(!isTrackerDropdownOpen); setDateDropdownOpen(false); setProfileDropdownOpen(false); }}
-                className="flex items-center gap-2 bg-white/70 hover:bg-white px-4 py-2 rounded-lg font-bold text-sm text-purple-700 shadow-sm transition-colors border border-white/80"
+                className="flex items-center gap-2 bg-white hover:border-[#C9B2EE] px-4 py-2 rounded-lg font-medium text-sm text-[#7B2FD6] transition-colors border border-[#E7E4EF]"
               >
-                <Plus size={16} /> {activeProject}
+                <Plus size={15} /> {activeProject}
               </button>
               
               {isTrackerDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-100 rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
-                  <div className="p-3 border-b border-gray-100">
-                    <div className="flex items-center bg-gray-100/50 rounded-lg px-3 py-2">
-                      <SearchIcon size={14} className="text-gray-400 mr-2" />
-                      <input type="text" placeholder="Search projects..." className="bg-transparent text-sm w-full outline-none" />
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-[#E7E4EF] rounded-xl shadow-[0_12px_32px_rgba(23,15,46,0.1)] z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                  <div className="p-3 border-b border-[#E7E4EF]">
+                    <div className="flex items-center bg-[#F7F6FA] rounded-lg px-3 py-2">
+                      <SearchIcon size={14} className="text-[#9C96B5] mr-2" />
+                      <input type="text" placeholder="Search projects..." className="bg-transparent text-sm w-full outline-none placeholder-[#9C96B5]" />
                     </div>
                   </div>
                   <div className="py-2 max-h-48 overflow-y-auto">
                     {availableProjects.map((p, idx) => (
-                      <button 
+                      <button
                         key={idx}
                         onClick={() => { setActiveProject(p); setTrackerDropdownOpen(false); }}
-                        className={`w-full text-left px-4 py-2 text-sm font-medium transition-colors flex items-center justify-between ${
-                          activeProject === p ? 'text-gray-800 bg-purple-50 font-bold' : 'text-gray-600 hover:bg-gray-50'
+                        className={`w-full text-left px-4 py-2 text-sm transition-colors flex items-center justify-between ${
+                          activeProject === p ? 'text-[#7B2FD6] bg-[#F3EEFB] font-semibold' : 'text-[#6E6791] font-medium hover:bg-[#F7F6FA]'
                         }`}
                       >
-                        {p} {activeProject === p && <Check size={14} className="text-purple-600" />}
+                        {p} {activeProject === p && <Check size={14} className="text-[#7B2FD6]" />}
                       </button>
                     ))}
                   </div>
-                  <div className="p-3 border-t border-gray-100">
-                    <button onClick={() => navigate("/engine")} className="w-full py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-bold text-purple-700 transition-colors flex justify-center items-center gap-2">
+                  <div className="p-3 border-t border-[#E7E4EF]">
+                    <button onClick={() => navigate("/engine")} className="w-full py-2 bg-[#F3EEFB] hover:bg-[#EBE2F8] rounded-lg text-sm font-semibold text-[#7B2FD6] transition-colors flex justify-center items-center gap-2">
                       <Plus size={14} /> Configure Entities
                     </button>
                   </div>
                 </div>
               )}
             </div>
-            
-            <div className="text-gray-400">/</div>
-            <span className="font-bold text-gray-600 uppercase tracking-widest text-sm">
+
+            <div className="text-[#D8D3E6]">/</div>
+            <span className="font-medium text-[#6E6791] uppercase tracking-wider text-xs">
               {SIDEBAR_TABS.find(t => t.id === activeTab)?.label}
             </span>
           </div>
 
           <div className="flex items-center gap-4">
-            
+
             {/* Engine Status Indicator */}
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/30 border border-white/40 shadow-inner mr-2" title={engineStatus.isScraping ? "Engine is currently scraping data..." : `Idle. Last run: ${engineStatus.lastRun ? new Date(engineStatus.lastRun).toLocaleTimeString() : 'Never'}`}>
-              <div className="relative flex h-3 w-3">
-                {engineStatus.isScraping && (
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-                )}
-                <span className={`relative inline-flex rounded-full h-3 w-3 ${engineStatus.isScraping ? 'bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]' : 'bg-gray-400'}`}></span>
-              </div>
-              <span className="text-xs font-bold text-gray-700 uppercase tracking-widest">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F7F6FA] border border-[#E7E4EF] mr-2" title={engineStatus.isScraping ? "Engine is currently scraping data..." : `Idle. Last run: ${engineStatus.lastRun ? new Date(engineStatus.lastRun).toLocaleTimeString() : 'Never'}`}>
+              <span className={`inline-flex rounded-full h-2 w-2 ${engineStatus.isScraping ? 'bg-[#7B2FD6]' : 'bg-[#C9C4D9]'}`}></span>
+              <span className="text-[0.65rem] font-medium text-[#6E6791] uppercase tracking-wider">
                 {engineStatus.isScraping ? 'Scraping...' : 'Idle'}
               </span>
             </div>
 
             <div className="relative">
-              <button 
+              <button
                 onClick={() => { setDateDropdownOpen(!isDateDropdownOpen); setShowCustomCalendar(false); setTrackerDropdownOpen(false); setProfileDropdownOpen(false); }}
-                className="flex items-center gap-2 bg-white/40 hover:bg-white/60 px-4 py-2 rounded-lg text-sm font-bold text-gray-600 border border-white/50 transition-colors cursor-pointer"
+                className="flex items-center gap-2 bg-white hover:border-[#C9B2EE] px-4 py-2 rounded-lg text-sm font-medium text-[#6E6791] border border-[#E7E4EF] transition-colors cursor-pointer"
               >
                 {getDisplayDate()} <ChevronDown size={14} />
               </button>
               
               {isDateDropdownOpen && (
-                <div className="absolute top-full right-0 mt-2 w-auto min-w-[224px] bg-white border border-gray-100 rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                <div className="absolute top-full right-0 mt-2 w-auto min-w-[224px] bg-white border border-[#E7E4EF] rounded-xl shadow-[0_12px_32px_rgba(23,15,46,0.1)] z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
                   {!showCustomCalendar ? (
                     <>
                       <div className="py-2">
-                        <button onClick={() => { setDateRange({ from: new Date(), to: new Date() }); setDateDropdownOpen(false); }} className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
-                          <CalendarIcon size={14} className="text-gray-400" /> Today
+                        <button onClick={() => { setDateRange({ from: new Date(), to: new Date() }); setDateDropdownOpen(false); }} className="w-full text-left px-4 py-2 text-sm font-medium text-[#6E6791] hover:bg-[#F7F6FA] transition-colors flex items-center gap-3">
+                          <CalendarIcon size={14} className="text-[#9C96B5]" /> Today
                         </button>
-                        <button onClick={() => { setDateRange({ from: subDays(new Date(), 7), to: new Date() }); setDateDropdownOpen(false); }} className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
-                          <CalendarIcon size={14} className="text-gray-400" /> Last 7 Days
+                        <button onClick={() => { setDateRange({ from: subDays(new Date(), 7), to: new Date() }); setDateDropdownOpen(false); }} className="w-full text-left px-4 py-2 text-sm font-medium text-[#6E6791] hover:bg-[#F7F6FA] transition-colors flex items-center gap-3">
+                          <CalendarIcon size={14} className="text-[#9C96B5]" /> Last 7 Days
                         </button>
-                        <button onClick={() => { setDateRange({ from: subDays(new Date(), 30), to: new Date() }); setDateDropdownOpen(false); }} className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
-                          <CalendarIcon size={14} className="text-gray-400" /> Last 30 Days
+                        <button onClick={() => { setDateRange({ from: subDays(new Date(), 30), to: new Date() }); setDateDropdownOpen(false); }} className="w-full text-left px-4 py-2 text-sm font-medium text-[#6E6791] hover:bg-[#F7F6FA] transition-colors flex items-center gap-3">
+                          <CalendarIcon size={14} className="text-[#9C96B5]" /> Last 30 Days
                         </button>
                       </div>
-                      <div className="p-3 border-t border-gray-100">
-                        <button onClick={() => setShowCustomCalendar(true)} className="w-full py-2 bg-purple-50 hover:bg-purple-100 rounded-lg text-sm font-bold text-purple-700 transition-colors">
+                      <div className="p-3 border-t border-[#E7E4EF]">
+                        <button onClick={() => setShowCustomCalendar(true)} className="w-full py-2 bg-[#F3EEFB] hover:bg-[#EBE2F8] rounded-lg text-sm font-semibold text-[#7B2FD6] transition-colors">
                           Custom Range...
                         </button>
                       </div>
@@ -428,8 +424,8 @@ export function OperationalDashboardPage() {
                   ) : (
                     <div className="p-3">
                       <div className="flex justify-between items-center mb-2 px-2">
-                         <span className="text-xs font-bold text-gray-500 uppercase">Select Range</span>
-                         <button onClick={() => setShowCustomCalendar(false)} className="text-xs text-purple-600 font-bold">Back</button>
+                         <span className="text-xs font-medium text-[#6E6791] uppercase">Select Range</span>
+                         <button onClick={() => setShowCustomCalendar(false)} className="text-xs text-[#7B2FD6] font-semibold">Back</button>
                       </div>
                       <Calendar
                         initialFocus
@@ -455,39 +451,39 @@ export function OperationalDashboardPage() {
               )}
             </div>
 
-            <div className="w-px h-8 bg-white/40" />
-            
+            <div className="w-px h-8 bg-[#E7E4EF]" />
+
             <div className="relative">
-              <button 
+              <button
                 onClick={() => { setProfileDropdownOpen(!isProfileDropdownOpen); setTrackerDropdownOpen(false); setDateDropdownOpen(false); }}
-                className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 font-bold border-2 border-white shadow-sm hover:scale-105 transition-transform cursor-pointer"
+                className="w-9 h-9 rounded-full bg-[#F3EEFB] flex items-center justify-center text-[#7B2FD6] text-sm font-semibold hover:bg-[#EBE2F8] transition-colors cursor-pointer"
               >
                 IA
               </button>
-              
+
               {isProfileDropdownOpen && (
-                <div className="absolute top-full right-0 mt-2 w-64 bg-white border border-gray-100 rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
-                  <div className="p-4 border-b border-gray-100 flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 font-black text-xl border-2 border-white shadow-sm">
+                <div className="absolute top-full right-0 mt-2 w-64 bg-white border border-[#E7E4EF] rounded-xl shadow-[0_12px_32px_rgba(23,15,46,0.1)] z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                  <div className="p-4 border-b border-[#E7E4EF] flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-full bg-[#F3EEFB] flex items-center justify-center text-[#7B2FD6] font-semibold text-lg">
                       IA
                     </div>
                     <div>
-                      <div className="font-bold text-gray-900">Teknovra Analyst</div>
-                      <div className="text-xs text-gray-500">Administrator</div>
+                      <div className="font-semibold text-[#191233]">Teknovra Analyst</div>
+                      <div className="text-xs text-[#9C96B5]">Administrator</div>
                     </div>
                   </div>
                   <div className="py-2">
-                    <button 
+                    <button
                       onClick={() => navigate("/settings")}
-                      className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3"
+                      className="w-full text-left px-4 py-2 text-sm font-medium text-[#6E6791] hover:bg-[#F7F6FA] transition-colors flex items-center gap-3"
                     >
-                      <Settings size={16} className="text-gray-400" /> Engine Settings
+                      <Settings size={16} className="text-[#9C96B5]" /> Engine Settings
                     </button>
-                    <button 
+                    <button
                       onClick={() => navigate("/")}
-                      className="w-full text-left px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors flex items-center gap-3"
+                      className="w-full text-left px-4 py-2 text-sm font-medium text-[#DC2626] hover:bg-red-50 transition-colors flex items-center gap-3"
                     >
-                      <LogOut size={16} className="text-red-400" /> Switch to Exec Hub
+                      <LogOut size={16} className="text-[#DC2626]" /> Switch to Exec Hub
                     </button>
                   </div>
                 </div>
@@ -502,9 +498,9 @@ export function OperationalDashboardPage() {
           {activeTab === "mentions" && renderMentionsTab()}
           {activeTab === "analysis" && renderGeoTab()}
           {activeTab === "authors" && (
-            <div className="flex flex-col items-center justify-center h-full text-gray-400 animate-in fade-in">
+            <div className="flex flex-col items-center justify-center h-full text-[#9C96B5] animate-in fade-in">
               <Users size={64} className="opacity-20 mb-4" />
-              <p className="font-bold text-xl">Author Demographics Module Ready for API Hookup</p>
+              <p className="font-medium text-lg">Author Demographics Module Ready for API Hookup</p>
             </div>
           )}
         </main>
